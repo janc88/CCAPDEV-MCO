@@ -1,5 +1,5 @@
 import React from 'react';
-import { ProfilePic, UserCardContainer, UserName } from '../styles/UserCard.styled';
+import { ProfilePic, UserCardContainer, UserName, UserLink } from '../styles/UserCard.styled';
 import pic from '../imgs/banana.svg'  //sample only
 
 
@@ -7,7 +7,9 @@ function UserCard() {
   return (
    <UserCardContainer>
         <UserName>Username here</UserName>
-        <ProfilePic src={pic}/>
+        <UserLink to='/'>
+            <ProfilePic src={pic}/>
+        </UserLink>       
     </UserCardContainer>
   );
 }

@@ -1,18 +1,22 @@
-import React from 'react';
-import { Container } from '../styles/Container.styled';
+import React, {useState} from 'react';
 import { SearchBar } from '../styles/SearchBar.styled';
-import { Background } from '../styles/Background.styled';
-import bg from '../imgs/food-bg.png'
+import { SearchContainer } from '../styles/SearchSection.styled';
 
 function SearchSection() {
+    const [inputValue, setInputValue] = useState('');
+
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setInputValue(event.target.value);
+    };
 
   return (
-    <Container>
-      
-        <SearchBar/>
- 
-        
-    </Container>
+    <SearchContainer> 
+      <SearchBar
+        value={inputValue}
+        onChange={handleInputChange}
+        hasInput={inputValue.length > 0}
+      />
+    </SearchContainer>
   );
 }
 

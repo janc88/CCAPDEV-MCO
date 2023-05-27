@@ -25,6 +25,7 @@ export const NavbarLink = styled(LogoLink)`
     color: white;
 `;
 
+
 export const NavSection = styled.div`
     display: flex;
     align-items: center;

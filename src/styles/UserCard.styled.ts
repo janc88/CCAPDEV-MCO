@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { Link } from 'react-router-dom';
+
 
 export const UserCardContainer = styled.div`
     display: flex;
@@ -9,7 +11,13 @@ export const UserCardContainer = styled.div`
 
 export const UserName = styled.div`
     font-weight: bold;
-    padding: 10px 12px 10px 25px;
+    padding: 10px 12px 10px 25px; 
+`;
+
+export const UserLink = styled(Link)`
+    display: flex;
+    align-items: center; 
+    text-decoration: none;
 `;
 
 export const ProfilePic = styled.img.attrs(({src}) => ({src: src}))`
