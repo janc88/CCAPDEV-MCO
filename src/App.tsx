@@ -1,25 +1,25 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { Button } from './styles/Button.styled';
+import { Container } from './styles/Container.styled';
+import { SearchBar } from './styles/SearchBar.styled';
+import { BrowserRouter } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import SearchSection from './components/SearchSection';
 
 function App() {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+        <Container>
+            <Navbar/>
+            {/* <Button color="red">
+                Search
+            </Button> */}
+            <SearchSection/>
+        </Container>
+    </BrowserRouter>
   );
 }
 
