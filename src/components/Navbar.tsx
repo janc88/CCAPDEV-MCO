@@ -1,9 +1,12 @@
-import React from 'react';
-import { Logo, LogoLink, Nav, NavMenu, NavbarLink } from '../styles/Nav.styled';
+import React, {useState} from 'react';
+import { Logo, LogoLink, Nav, NavSection, NavMenu, NavbarLink } from '../styles/Nav.styled';
 import { Button } from '../styles/Button.styled';
 import logo from '../imgs/banana.svg'
+import UserCard from './UserCard';
 
 function Navbar() {
+    const [isLoggedIn, setIsLoggedIn] = useState(true);
+
   return (
     <Nav>        
         <LogoLink to='/home'>
@@ -24,9 +27,22 @@ function Navbar() {
                 Contact Us
             </NavbarLink>
         </NavMenu>
-        <Button color="green">
-            Sign up
-        </Button>
+        <NavSection>
+
+            {!isLoggedIn ?
+            <>
+                <NavbarLink to='/'>
+                    Log In
+                </NavbarLink>
+                <Button bgcolor="white" tcolor="black">
+                    Sign up
+                </Button> 
+            </>
+            :
+            <UserCard/>}
+
+        </NavSection>
+        
     </Nav>
   );
 }

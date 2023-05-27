@@ -1,13 +1,18 @@
 import styled from "styled-components";
 
-export const Button = styled.button`
+interface buttonProps {
+    bgcolor: string;
+    tcolor: string;
+}
+
+export const Button = styled.button<buttonProps>`
   font-size: larger;
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
-  background-color: ${({color}) => color};
-  color: white;
+  background-color: ${({bgcolor}) => bgcolor};
+  color: ${({tcolor}) => tcolor};
   border-radius: 16px;
-  padding: 11px; 
+  padding: 10px 18px 10px 18px; 
   transition: .2s ease-in-out 0s;
   border: none;
   outline: none;
@@ -16,7 +21,6 @@ export const Button = styled.button`
     cursor: pointer;
     transform: scale(1.05);
     border-radius: 11px;
-    color: darkred;
   }
 
   &:active{

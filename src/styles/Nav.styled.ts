@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 export const Nav = styled.nav`
     display: flex;
     height: 60px;
-    background-color: red;
+    background-color: #FF794F;
     justify-content: space-between;
     padding: 10px;
 `;
@@ -25,8 +25,11 @@ export const NavbarLink = styled(LogoLink)`
     color: white;
 `;
 
-export const NavMenu = styled.div`
+export const NavSection = styled.div`
     display: flex;
     align-items: center;
-    margin-right: 40px;
+`;
+
+export const NavMenu = styled(NavSection)`
+    margin-left: 80px;
 `;
