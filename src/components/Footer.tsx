@@ -1,12 +1,8 @@
-import React from 'react'
-import { FooterContainer } from '../styles/Footer.styled'
+import React from "react";
+import { FooterContainer } from "../styles/Footer.styled";
 
 function Footer() {
-  return (
-    <FooterContainer>
-       
-    </FooterContainer>
-  )
+  return <FooterContainer></FooterContainer>;
 }
 
-export default Footer
+export default Footer;
