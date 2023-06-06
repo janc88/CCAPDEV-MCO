@@ -7,6 +7,7 @@ export const Nav = styled.nav`
     background-color: #FF794F;
     justify-content: space-between;
     padding: 10px;
+    overflow: visible;
 `;
 
 export const Logo = styled.img.attrs(({src}) => ({src: src}))`
@@ -28,9 +29,9 @@ export const NavbarLink = styled(LogoLink)`
 
 export const NavSection = styled.div`
     display: flex;
-    align-items: center;
+    /* align-items: center; */
 `;
 
 export const NavMenu = styled(NavSection)`
-    margin-left: 80px;
+    margin-left: 130px;
 `;

@@ -5,7 +5,7 @@ import logo from '../imgs/banana.svg'
 import UserCard from './UserCard';
 
 function Navbar() {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   return (
     <Nav>        

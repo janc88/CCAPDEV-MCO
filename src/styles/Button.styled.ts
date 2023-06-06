@@ -20,7 +20,7 @@ export const Button = styled.button<buttonProps>`
   &:hover{
     cursor: pointer;
     transform: scale(1.05);
-    border-radius: 11px;
+    border-radius: 13px;
   }
 
   &:active{
