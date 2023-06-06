@@ -40,6 +40,10 @@ export const UserLink = styled(Link)`
     align-items: center; 
     text-decoration: none;
     color: black;
+
+    &:hover{
+        color: #FF794F;
+    }
 `;
 
 export const ProfilePic = styled(motion.img).attrs(({src}) => ({src: src}))`

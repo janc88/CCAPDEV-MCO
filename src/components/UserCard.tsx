@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { ProfilePic, UserCardContainer, UserName, UserLink, MainContainer, UserOptionsContainer, UserOption } from '../styles/UserCard.styled';
 import pic from '../imgs/banana.svg'  //sample only
 
@@ -6,13 +6,28 @@ import pic from '../imgs/banana.svg'  //sample only
 function UserCard() {
 
     const [isOpen, setIsOpen] = useState<boolean>(false);
+    const actionRef = useRef<HTMLDivElement>(null);
+
+    const handleClickOutside = (event: MouseEvent) => {
+        if (actionRef.current && !actionRef.current.contains(event.target as Node)) {
+            setIsOpen(false);
+        }
+    };
 
     const handleOpen = () => {
         setIsOpen(!isOpen)
     }
 
+    useEffect(() => {
+        const handleMouseDown = (event: MouseEvent) => handleClickOutside(event);
+        document.addEventListener("mousedown", handleMouseDown);
+        return () => {
+            document.removeEventListener("mousedown", handleMouseDown);
+        };
+    }, []);
+
   return (
-    <div>
+    <div ref={actionRef}>
         <MainContainer 
             layout
             style={{borderRadius:"27px"}}
@@ -26,7 +41,7 @@ function UserCard() {
             </UserCardContainer>
 
             {isOpen &&
-                <UserOptionsContainer 
+                <UserOptionsContainer   
                     initial={{ x: -160, opacity: 0 }} 
                     animate={{ x: 0, opacity: 1 }}     
                     transition={{
