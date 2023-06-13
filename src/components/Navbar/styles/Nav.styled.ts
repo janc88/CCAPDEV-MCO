@@ -24,6 +24,12 @@ export const NavbarLink = styled(LogoLink)`
     font-weight: bold;
     padding: 0 30px;
     color: white;
+
+	transition: background-color 0.5s;
+	&:hover {
+		//background-color: rgba(0, 0, 0, 0.2);
+		transform: scale(1.05);
+	}
 `;
 
 
