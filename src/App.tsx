@@ -6,16 +6,20 @@ import SearchSection from './components/SearchSection';
 import RestoCarousel from './components/RestoCarousel';
 import Footer from './components/Footer';
 
+import RestaurantPage from './pages/RestaurantPage/RestaurantPage'
+
 function App() {
 
   return (
     <BrowserRouter>
         <Container>
             <Navbar/>
-
-            <SearchSection/>
-            <RestoCarousel/>
+            {/* <SearchSection/>
+            <RestoCarousel/> 
             <Footer/>
+            */}
+            <RestaurantPage/>
+            
         </Container>
     </BrowserRouter>
   );

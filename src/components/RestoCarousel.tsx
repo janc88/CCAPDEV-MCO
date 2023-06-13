@@ -19,13 +19,13 @@ import {
   RightArrow,
 } from "../styles/RestoCarousel.styled";
 
-function RestoCarousel() {
-  const details = {
-    name: "Mcdonalds DLSU",
-    rating: 3.5,
-    numrating: 1340,
-    desc: "best resto in DLSU! really good food. highly recommended ",
-  };
+import { RestoProps } from "./RestoCard";
+
+interface RestoCarouselProps {
+  restoList: RestoProps[];
+}
+
+const RestoCarousel: React.FC<RestoCarouselProps> = ({restoList}) => {
   const [swiperRef, setSwiperRef] = useState<SwiperClass>();
 
   const prevHandler = () => {
@@ -53,26 +53,10 @@ function RestoCarousel() {
         className="mySwiper"
       >
         <SwiperSlide>
-          <RestoCard {...details} />
-        </SwiperSlide>
-        <SwiperSlide>
-          <RestoCard {...details} />
-        </SwiperSlide>
-        <SwiperSlide>
-          <RestoCard {...details} />
-        </SwiperSlide>
-        <SwiperSlide>
-          <RestoCard {...details} />
-        </SwiperSlide>
-        <SwiperSlide>
-          <RestoCard {...details} />
-        </SwiperSlide>
-        <SwiperSlide>
-          <RestoCard {...details} />
-        </SwiperSlide>
-        <SwiperSlide>
-          <RestoCard {...details} />
-        </SwiperSlide>
+          {restoList.map((resto) => (
+            <RestoCard {...resto}/>
+          ))}
+        </SwiperSlide>   
       </Swiper>
       <NavigationContainer>
         <NavButton onClick={prevHandler}>

@@ -11,29 +11,26 @@ import {
 import bg from "../imgs/food-bg-light.jpeg";
 import StarRating from "./StarRating";
 
-interface RestoCardProps {
+export interface RestoProps {
   name: string;
   rating: number;
   numrating: number;
+  ratings: number[];
   desc: string;
+  address: string;
 }
 
-const RestoCard: React.FC<RestoCardProps> = ({
-  name,
-  rating,
-  numrating,
-  desc,
-}) => {
+const RestoCard: React.FC<RestoProps> = (resto) => {
   return (
     <RestoCardContainer>
       <RestoImg image={bg}>
-        <RestoName>{name}</RestoName>
+        <RestoName>{resto.name}</RestoName>
         <RestoRating>
-          <StarRating rating={rating} />
-          <RatingsCount>({numrating})</RatingsCount>
+          <StarRating rating={resto.rating} size='md'/>
+          <RatingsCount>({resto.numrating})</RatingsCount>
         </RestoRating>
       </RestoImg>
-      <RestoDescription>{desc}</RestoDescription>
+      <RestoDescription>{resto.desc}</RestoDescription>
       <RestoCardFooter />
     </RestoCardContainer>
   );
