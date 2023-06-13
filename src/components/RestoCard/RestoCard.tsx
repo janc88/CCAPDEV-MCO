@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   RatingsCount,
   RestoCardContainer,
@@ -7,9 +7,9 @@ import {
   RestoImg,
   RestoName,
   RestoRating,
-} from "../styles/RestoCard.styled";
-import bg from "../imgs/food-bg-light.jpeg";
-import StarRating from "./StarRating";
+} from "./RestoCard.styled";
+import StarRating from "../StarRating/StarRating";
+import { ImageProps } from "../ReviewsCard/ReviewsCard";
 
 export interface RestoProps {
   name: string;
@@ -18,15 +18,26 @@ export interface RestoProps {
   ratings: number[];
   desc: string;
   address: string;
+  img: ImageProps;
 }
 
 const RestoCard: React.FC<RestoProps> = (resto) => {
+  const [backgroundImage, setBackgroundImage] = useState<string>("");
+
+  useEffect(() => {
+    const fetchBackgroundImage = async () => {
+      const image = await import(`../../imgs/${resto.img.src}`);
+      setBackgroundImage(image.default);
+    };
+    fetchBackgroundImage();
+  }, []);
+
   return (
     <RestoCardContainer>
-      <RestoImg image={bg}>
+      <RestoImg image={backgroundImage}>
         <RestoName>{resto.name}</RestoName>
         <RestoRating>
-          <StarRating rating={resto.rating} size='md'/>
+          <StarRating rating={resto.rating} size="md" />
           <RatingsCount>({resto.numrating})</RatingsCount>
         </RestoRating>
       </RestoImg>

@@ -4,12 +4,12 @@ import {
   Header,
   ImageContainer,
   RestoGalleryContainer,
-} from "../../styles/RestoGallery.styled";
+} from "./styles/RestoGallery.styled";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import "../../styles/swiper2.css";
+import "./styles/swiper-resto-gallery.css";
 
 import { Navigation, Pagination } from "swiper";
 

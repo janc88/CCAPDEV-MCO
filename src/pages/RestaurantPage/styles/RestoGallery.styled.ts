@@ -21,14 +21,14 @@ export const Header = styled.div`
 `;
 
 export const GalleryImage = styled.img`
-  width: 8.5rem;
-  height: 8.5rem;
+  max-width: 8.4rem;
+  max-height: 8.4rem;
   object-fit: cover;
-  border-radius: 0.3rem;
+  border-radius: 0.5rem;
 `;
 
 export const ImageContainer = styled.div`
   max-width: 25vw;
   height: 100%;
-  overflow: hidden;
+
 `;

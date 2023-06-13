@@ -1,27 +1,105 @@
-import React from 'react';
-import { Container } from './styles/Container.styled';
-import { BrowserRouter } from 'react-router-dom';
-import Navbar from './components/Navbar';
-import SearchSection from './components/SearchSection';
-import RestoCarousel from './components/RestoCarousel';
-import Footer from './components/Footer';
-
-import RestaurantPage from './pages/RestaurantPage/RestaurantPage'
+import React from "react";
+import Navbar from "./components/Navbar/Navbar";
+import RestaurantPage from "./pages/RestaurantPage/RestaurantPage";
+import ProfilePage from "./pages/ProfilePage/ProfilePage";
+import HomePage from "./pages/HomePage/HomePage";
+import { Route, Routes } from "react-router-dom";
 
 function App() {
+  const userInfo = {
+    username: "username here",
+    description:
+      "hello my name is username. im a computer science student at dlsu hello my name is username. im a computer science student at dlsu hello my name is username. im a computer science student at dlsu",
+    profilePic: { id: 1, src: "food-bg-dark.jpeg", alt: "Image 1" },
+    reviews: [
+      {
+        id: 1,
+        title: "best food in DLSU",
+        resto: "tinuhog",
+        username: "username",
+        profilepic: { id: 1, src: "food-bg-dark.jpeg", alt: "Image 1" },
+        datePosted: new Date(2023, 5, 13, 11, 5, 0),
+        description:
+          "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?",
+        stars: 5,
+        helpful: 3,
+        response: "thank you",
+        imgs: [{ id: 1, src: "food-bg-dark.jpeg", alt: "Image 1" }],
+      },
+      {
+        id: 1,
+        title: "best food in DLSU",
+        resto: "Mcdonald's DLSU",
+        username: "username",
+        profilepic: { id: 1, src: "food-bg-dark.jpeg", alt: "Image 1" },
+        datePosted: new Date(2023, 5, 12, 10, 30, 0),
+        description: "nice place",
+        stars: 5,
+        helpful: 3,
+        response: "thank you",
+        imgs: [{ id: 1, src: "food-bg-dark.jpeg", alt: "Image 1" }],
+      },
+      {
+        id: 1,
+        title: "best food in DLSU",
+        resto: "tapa king",
+        username: "username",
+        profilepic: { id: 1, src: "food-bg-dark.jpeg", alt: "Image 1" },
+        datePosted: new Date(2023, 5, 12, 10, 30, 0),
+        description: "nice place",
+        stars: 5,
+        helpful: 3,
+        response: "thank you",
+        imgs: [{ id: 1, src: "food-bg-dark.jpeg", alt: "Image 1" }],
+      },
+      {
+        id: 1,
+        title: "best food in DLSU",
+        resto: "tapa king",
+        username: "username",
+        profilepic: { id: 1, src: "food-bg-dark.jpeg", alt: "Image 1" },
+        datePosted: new Date(2023, 5, 12, 10, 30, 0),
+        description: "nice place",
+        stars: 5,
+        helpful: 3,
+        response: "thank you",
+        imgs: [{ id: 1, src: "food-bg-dark.jpeg", alt: "Image 1" }],
+      },
+      {
+        id: 1,
+        title: "best food in DLSU",
+        resto: "tapa king",
+        username: "username",
+        profilepic: { id: 1, src: "food-bg-dark.jpeg", alt: "Image 1" },
+        datePosted: new Date(2023, 5, 12, 10, 30, 0),
+        description: "nice place",
+        stars: 5,
+        helpful: 3,
+        response: "thank you",
+        imgs: [{ id: 1, src: "food-bg-dark.jpeg", alt: "Image 1" }],
+      },
+    ],
+  };
 
   return (
-    <BrowserRouter>
-        <Container>
-            <Navbar/>
-            {/* <SearchSection/>
-            <RestoCarousel/> 
-            <Footer/>
-            */}
-            <RestaurantPage/>
-            
-        </Container>
-    </BrowserRouter>
+    <>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/restaurants" element={<RestaurantPage />} />
+        <Route
+          path="/profile"
+          element={
+            <ProfilePage
+              username={userInfo.username}
+              description={userInfo.description}
+              profilePic={userInfo.profilePic}
+              reviews={userInfo.reviews}
+            />
+          }
+        />
+      </Routes>
+    </>
   );
 }
 

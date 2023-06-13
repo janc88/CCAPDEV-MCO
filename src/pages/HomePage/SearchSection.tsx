@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { SearchBar } from "../styles/SearchBar.styled";
+import { SearchBar } from "../../styles/SearchBar.styled";
 import {
   SearchContainer,
   SearchSectionText,
-} from "../styles/SearchSection.styled";
+} from "./styles/SearchSection.styled";
 
 function SearchSection() {
   const [inputValue, setInputValue] = useState("");

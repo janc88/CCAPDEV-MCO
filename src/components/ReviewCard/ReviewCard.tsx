@@ -19,13 +19,17 @@ import {
   ThumbsUpIcon,
   ThumbsDownIcon,
   Helpful,
-} from "../../styles/ReviewCard.styled";
-import StarRating from "../../components/StarRating";
-import { ReviewProps, ImageProps } from "./RestoReviews";
+  RestoNameContainer,
+  RestoName,
+} from "./ReviewCard.styled";
+import StarRating from "../StarRating/StarRating";
+import { ReviewProps, ImageProps } from "../ReviewsCard/ReviewsCard";
 
+interface ReviewCardProps extends ReviewProps {
+  showOverlay?: boolean;
+}
 
-
-const ReviewCard: React.FC<ReviewProps> = (review) => {
+const ReviewCard: React.FC<ReviewCardProps> = (review) => {
   const [loadedImage, setLoadedImage] = useState<string>();
   const [profilePic, setProfilePic] = useState<string>();
   const image = review.imgs[0];
@@ -98,9 +102,9 @@ const ReviewCard: React.FC<ReviewProps> = (review) => {
         <ReviewDescription>{review.description}</ReviewDescription>
         <Footer>
           <HelpfulContainer>
-            <ThumbsUpIcon/>
+            <ThumbsUpIcon />
             /
-            <ThumbsDownIcon/>
+            <ThumbsDownIcon />
             <Helpful>Helpful ({review.helpful})</Helpful>
           </HelpfulContainer>
           <OwnersResponse>View Owner's Response</OwnersResponse>
@@ -108,6 +112,9 @@ const ReviewCard: React.FC<ReviewProps> = (review) => {
       </ReviewContentContainer>
       <ReviewImgContainer>
         <ReviewImg src={loadedImage} />
+        <RestoNameContainer showOverlay={review.showOverlay}>
+          <RestoName>{review.resto}</RestoName>
+        </RestoNameContainer>
       </ReviewImgContainer>
     </ReviewCardContainer>
   );

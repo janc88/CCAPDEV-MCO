@@ -7,10 +7,10 @@ import {
   RatingGroup,
   BarContainer,
   Bar,
-} from "../../styles/SummaryCard.styled";
-import { Header } from "../../styles/RestoReviews.styled";
-import { StarIcon } from "../../styles/Star.styled";
-import { RestoProps } from "../../components/RestoCard";
+} from "./styles/SummaryCard.styled";
+import { Header } from "../../components/ReviewsCard/ReviewsCard.styled";
+import { StarIcon } from "../../components/StarRating/Star.styled";
+import { RestoProps } from "../../components/RestoCard/RestoCard";
 
 const SummaryCard: React.FC<RestoProps> = (resto) => {
   const renderBars = () => {

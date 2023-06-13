@@ -1,8 +1,13 @@
 import styled from "styled-components";
 
-export const RestoReviewsContainer = styled.div`
+
+interface ReviewsContainerProps {
+  isUserReview?: boolean;
+}
+
+export const RestoReviewsContainer = styled.div<ReviewsContainerProps>`
   background-color: white;
-  height: 90%;
+  height: ${({ isUserReview }) => (isUserReview ? "100%" : "90%")};
   width: 100%;
   overflow: hidden;
   display: flex;
@@ -33,8 +38,9 @@ export const WriteReview = styled.input.attrs({
   margin-top: auto;
 `;
 
-export const ReviewsContainer = styled.div`
-  height: 80%;
+
+export const ReviewsContainer = styled.div<ReviewsContainerProps>`
+  height: ${({ isUserReview }) => (isUserReview ? "100%" : "80%")};
   overflow: hidden;
-  overflow-y:scroll;
+  overflow-y: scroll;
 `;

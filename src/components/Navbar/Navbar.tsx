@@ -6,9 +6,9 @@ import {
   NavSection,
   NavMenu,
   NavbarLink,
-} from "../styles/Nav.styled";
-import { Button } from "../styles/Button.styled";
-import logo from "../imgs/banana.svg";
+} from "./styles/Nav.styled";
+import { Button } from "../../styles/Button.styled";
+import logo from "../../imgs/banana.svg";
 import UserCard from "./UserCard";
 
 function Navbar() {
@@ -22,7 +22,7 @@ function Navbar() {
 
       <NavMenu>
         <NavbarLink to="/">Home</NavbarLink>
-        <NavbarLink to="/">Restaurants</NavbarLink>
+        <NavbarLink to="/restaurants">Restaurants</NavbarLink>
         <NavbarLink to="/">About Us</NavbarLink>
         <NavbarLink to="/">Contact Us</NavbarLink>
       </NavMenu>

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import bgImage from '../imgs/food-bg.png'
+import bgImage from '../../../imgs/food-bg.png'
 
 
 export const SearchContainer = styled.div`

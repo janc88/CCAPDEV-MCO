@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import RestoCard from "./RestoCard";
+import RestoCard from "../../components/RestoCard/RestoCard";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Swiper as SwiperClass } from "swiper/types";
 
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import "../styles/swiper.css";
+import "./styles/swiper-resto-carousel.css";
 
 import { Navigation, Pagination } from "swiper";
 
@@ -17,15 +17,15 @@ import {
   RestoCarouselContainer,
   RestoCarouselHeader,
   RightArrow,
-} from "../styles/RestoCarousel.styled";
+} from "./styles/RestoCarousel.styled";
 
-import { RestoProps } from "./RestoCard";
+import { RestoProps } from "../../components/RestoCard/RestoCard";
 
 interface RestoCarouselProps {
   restoList: RestoProps[];
 }
 
-const RestoCarousel: React.FC<RestoCarouselProps> = ({restoList}) => {
+const RestoCarousel: React.FC<RestoCarouselProps> = ({ restoList }) => {
   const [swiperRef, setSwiperRef] = useState<SwiperClass>();
 
   const prevHandler = () => {
@@ -52,11 +52,11 @@ const RestoCarousel: React.FC<RestoCarouselProps> = ({restoList}) => {
         grabCursor={true}
         className="mySwiper"
       >
-        <SwiperSlide>
-          {restoList.map((resto) => (
-            <RestoCard {...resto}/>
-          ))}
-        </SwiperSlide>   
+        {restoList.map((resto) => (
+          <SwiperSlide>
+            <RestoCard {...resto} />
+          </SwiperSlide>
+        ))}
       </Swiper>
       <NavigationContainer>
         <NavButton onClick={prevHandler}>
@@ -69,6 +69,6 @@ const RestoCarousel: React.FC<RestoCarouselProps> = ({restoList}) => {
       </NavigationContainer>
     </RestoCarouselContainer>
   );
-}
+};
 
 export default RestoCarousel;

@@ -1,7 +1,8 @@
 import styled from "styled-components";
-import bgImage from '../imgs/food-bg.png'
+import bgImage from '../../../imgs/food-bg.png';
 
-export const RestaurantPageContainer = styled.div`
+
+export const ProfilePageContainer = styled.div`
     display: flex;
     width: 100%;
     height: calc(100vh - 80px);
@@ -25,7 +26,8 @@ export const LeftContainer = styled.div`
     }
 `;
 
-export const MiddleContainer = styled.div`
+
+export const RightContainer = styled.div`
     display: flex;
     flex: 3;
     width: 100%;
@@ -36,9 +38,11 @@ export const MiddleContainer = styled.div`
         box-shadow: 6px 7px 14px -2px rgba(0, 0, 0, 0.3);
         background-color: white;
     }
+
 `;
 
-export const RightContainer = styled.div`
+
+export const EmptyContainer = styled.div`
     display: flex;
     flex: 1;
     width: 100%;

@@ -8,10 +8,10 @@ import {
   RestoAddress,
   Divider,
   RestoDescription,
-} from "../../styles/AboutRestoCard.styled";
-import StarRating from "../../components/StarRating";
+} from "./styles/AboutRestoCard.styled";
+import StarRating from "../../components/StarRating/StarRating";
 import restoimg from "../../imgs/food-bg-light.jpeg";
-import { RestoProps } from "../../components/RestoCard";
+import { RestoProps } from "../../components/RestoCard/RestoCard";
 
 const AboutRestoCard: React.FC<RestoProps> = (resto) => {
   return (
