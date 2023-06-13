@@ -10,14 +10,18 @@ import {
 } from "./styles/SummaryCard.styled";
 import { Header } from "../../components/ReviewsCard/ReviewsCard.styled";
 import { StarIcon } from "../../components/StarRating/Star.styled";
-import { RestoProps } from "../../components/RestoCard/RestoCard";
 
-const SummaryCard: React.FC<RestoProps> = (resto) => {
+interface SummaryCardProps {
+  ratings: number[];
+  numrating: number;
+  rating: number;
+}
+
+const SummaryCard: React.FC<SummaryCardProps> = ({ratings, numrating, rating}) => {
   const renderBars = () => {
     const bars = [];
 
     for (let i = 5; i >= 1; i--) {
-      const ratings = resto.ratings;
       const totalCount = ratings.length;
       const occurrences = ratings.reduce((count, num) => {
         if (num === i) {
@@ -41,10 +45,10 @@ const SummaryCard: React.FC<RestoProps> = (resto) => {
   return (
     <SummaryCardContainer>
       <Header>Summary</Header>
-      <NumRating>{resto.numrating} reviews</NumRating>
+      <NumRating>{numrating} reviews</NumRating>
       <RatingContainer>
         <StarIcon size="lg" fillPercentage={100} />
-        <Rating>{resto.rating}</Rating>
+        <Rating>{rating}</Rating>
       </RatingContainer>
       <RatingGroup>{renderBars()}</RatingGroup>
     </SummaryCardContainer>

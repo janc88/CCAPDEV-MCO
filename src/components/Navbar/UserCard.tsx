@@ -27,6 +27,10 @@ function UserCard() {
     setIsOpen(!isOpen);
   };
 
+  const handleInsideClick = () => {
+    setIsOpen(false);
+  };
+
   useEffect(() => {
     const handleMouseDown = (event: MouseEvent) => handleClickOutside(event);
     document.addEventListener("mousedown", handleMouseDown);
@@ -55,13 +59,13 @@ function UserCard() {
               opacity: { duration: 0.8 },
             }}
           >
-            <UserLink to="/profile">
+            <UserLink to="/profile" onClick={handleInsideClick}>
               <UserOption>View My Profile</UserOption>
             </UserLink>
-            <UserLink to="/">
+            <UserLink to="/" onClick={handleInsideClick}>
               <UserOption>Edit My Profile</UserOption>
             </UserLink>
-            <UserLink to="/">
+            <UserLink to="/" onClick={handleInsideClick}>
               <UserOption>Logout</UserOption>
             </UserLink>
           </UserOptionsContainer>

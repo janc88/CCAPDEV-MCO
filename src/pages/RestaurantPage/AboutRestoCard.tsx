@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import {
   AboutRestoContainer,
   RatingContainer,
@@ -14,6 +14,24 @@ import restoimg from "../../imgs/food-bg-light.jpeg";
 import { RestoProps } from "../../components/RestoCard/RestoCard";
 
 const AboutRestoCard: React.FC<RestoProps> = (resto) => {
+
+  const [loadedImages, setLoadedImages] = useState<string[]>([]);
+
+  const imageList = resto.coverImg;
+  const loadImages = async () => {
+    const loadedImages = await Promise.all(
+      [imageList].map(async (image) => {
+        const loadedImage = await import(`../../imgs/${image.src}`);
+        return loadedImage.default;
+      })
+    );
+    setLoadedImages(loadedImages);
+  };
+
+  useEffect(() => {
+    loadImages();
+  }, [imageList]);
+
   return (
     <AboutRestoContainer>
       <RestoName>{resto.name}</RestoName>
@@ -21,7 +39,7 @@ const AboutRestoCard: React.FC<RestoProps> = (resto) => {
         <StarRating rating={resto.rating} size="sm" />
         <NumRating>({resto.numrating})</NumRating>
       </RatingContainer>
-      <RestoImage src={restoimg} />
+      <RestoImage src={loadedImages[0]} />
       <RestoAddress>{resto.address}</RestoAddress>
       <Divider />
       <RestoDescription>{resto.desc}</RestoDescription>

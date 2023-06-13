@@ -15,10 +15,10 @@ export interface RestoProps {
   name: string;
   rating: number;
   numrating: number;
-  ratings: number[];
   desc: string;
+  ratings: number[];
   address: string;
-  img: ImageProps;
+  coverImg: ImageProps;
 }
 
 const RestoCard: React.FC<RestoProps> = (resto) => {
@@ -26,7 +26,7 @@ const RestoCard: React.FC<RestoProps> = (resto) => {
 
   useEffect(() => {
     const fetchBackgroundImage = async () => {
-      const image = await import(`../../imgs/${resto.img.src}`);
+      const image = await import(`../../imgs/${resto.coverImg.src}`);
       setBackgroundImage(image.default);
     };
     fetchBackgroundImage();

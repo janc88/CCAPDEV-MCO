@@ -5,6 +5,7 @@ import {motion} from 'framer-motion'
 
 export const MainContainer = styled(motion.div)`
     margin-top: 4px;
+    margin-right: 1rem;
     background-color: white;
     color: black;
     /* border-radius: 27px; */

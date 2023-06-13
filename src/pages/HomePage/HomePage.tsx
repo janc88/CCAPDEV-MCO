@@ -12,7 +12,7 @@ function HomePage() {
       ratings: [1, 2, 3, 4],
       desc: "the best",
       address: "123 taft",
-      img: { id: 1, src: "food-bg-light.jpeg", alt: "Image 1" },
+      coverImg: { id: 1, src: "food-bg-light.jpeg", alt: "Image 1" },
     },
     {
       name: "Mcdonald's",
@@ -21,7 +21,7 @@ function HomePage() {
       ratings: [1, 2, 3, 4],
       desc: "the best",
       address: "123 taft",
-      img: { id: 1, src: "food-bg-dark.jpeg", alt: "Image 1" },
+      coverImg: { id: 1, src: "food-bg-dark.jpeg", alt: "Image 1" },
     },
     {
       name: "Mcdonald's",
@@ -30,7 +30,7 @@ function HomePage() {
       ratings: [1, 2, 3, 4],
       desc: "the best",
       address: "123 taft",
-      img: { id: 1, src: "food-bg-dark.jpeg", alt: "Image 1" },
+      coverImg: { id: 1, src: "food-bg-dark.jpeg", alt: "Image 1" },
     },
     {
       name: "Mcdonald's",
@@ -39,7 +39,7 @@ function HomePage() {
       ratings: [1, 2, 3, 4],
       desc: "the best",
       address: "123 taft",
-      img: { id: 1, src: "food-bg-dark.jpeg", alt: "Image 1" },
+      coverImg: { id: 1, src: "food-bg-dark.jpeg", alt: "Image 1" },
     },
     {
       name: "Mcdonald's",
@@ -48,7 +48,7 @@ function HomePage() {
       ratings: [1, 2, 3, 4],
       desc: "the best",
       address: "123 taft",
-      img: { id: 1, src: "food-bg-dark.jpeg", alt: "Image 1" },
+      coverImg: { id: 1, src: "food-bg-dark.jpeg", alt: "Image 1" },
     },
     {
       name: "Mcdonald's",
@@ -57,16 +57,16 @@ function HomePage() {
       ratings: [1, 2, 3, 4],
       desc: "the best",
       address: "123 taft",
-      img: { id: 1, src: "food-bg-dark.jpeg", alt: "Image 1" },
+      coverImg: { id: 1, src: "food-bg-dark.jpeg", alt: "Image 1" },
     },
   ];
 
   return (
-    <div>
+    <>
       <SearchSection />
       <RestoCarousel restoList={featuredRestos} />
       <Footer />
-    </div>
+    </>
   );
 }
 
