@@ -7,23 +7,18 @@ import {
   NavMenu,
   NavbarLink,
 } from "./styles/Nav.styled";
-import { LogoContainer } from "./styles/NavSearch.styled";
 import { Button } from "../../styles/Button.styled";
 import logo from "../../imgs/banana.svg";
 import UserCard from "./UserCard";
-import NavSearch from "./NavSearch";
 
 function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   return (
     <Nav>
-	  <LogoContainer>
-		<LogoLink to="/home">
-			<Logo src={logo} />
-		</LogoLink>
-		<NavSearch/>
-	  </LogoContainer>
+	  <LogoLink to="/home">
+		<Logo src={logo} />
+	  </LogoLink>
 
       <NavMenu>
         <NavbarLink to="/">Home</NavbarLink>
