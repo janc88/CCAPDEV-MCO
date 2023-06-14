@@ -35,9 +35,10 @@ export const NavbarLink = styled(LogoLink)`
 
 export const NavSection = styled.div`
     display: flex;
+    margin-right: 1rem;
     /* align-items: center; */
 `;
 
 export const NavMenu = styled(NavSection)`
-    margin-left: 130px;
+    margin-left: -8rem;
 `;

@@ -14,16 +14,16 @@ import UserCard from "./UserCard";
 import NavSearch from "./NavSearch";
 
 function Navbar() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   return (
     <Nav>
-	  <LogoContainer>
-		<LogoLink to="/home">
-			<Logo src={logo} />
-		</LogoLink>
-		<NavSearch/>
-	  </LogoContainer>
+      <LogoContainer>
+        <LogoLink to="/home">
+          <Logo src={logo} />
+        </LogoLink>
+        <NavSearch />
+      </LogoContainer>
 
       <NavMenu>
         <NavbarLink to="/">Home</NavbarLink>

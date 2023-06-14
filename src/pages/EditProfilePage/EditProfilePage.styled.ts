@@ -91,7 +91,6 @@ export const ButtonContainer = styled.div`
   display: flex;
   align-items: center;
   margin-right: 1.4rem;
-  margin-top: 0.8rem;
 `;
 
 export const CancelButton = styled(Button)`
