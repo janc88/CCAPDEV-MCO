@@ -62,7 +62,7 @@ function UserCard() {
             <UserLink to="/profile" onClick={handleInsideClick}>
               <UserOption>View My Profile</UserOption>
             </UserLink>
-            <UserLink to="/" onClick={handleInsideClick}>
+            <UserLink to="/edit-profile" onClick={handleInsideClick}>
               <UserOption>Edit My Profile</UserOption>
             </UserLink>
             <UserLink to="/" onClick={handleInsideClick}>

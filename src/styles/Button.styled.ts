@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 interface buttonProps {
-  bgcolor: string;
-  tcolor: string;
+  bgcolor?: string;
+  tcolor?: string;
 }
 
 export const Button = styled.button<buttonProps>`
@@ -13,7 +13,7 @@ export const Button = styled.button<buttonProps>`
   color: ${({ tcolor }) => tcolor};
   border-radius: 16px;
   padding: 10px 18px 10px 18px;
-  transition: 0.3s ease-in-out 0s;
+  transition: 0.2s ease-in-out 0s;
   border: none;
   outline: none;
 

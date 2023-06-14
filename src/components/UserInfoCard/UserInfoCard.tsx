@@ -4,22 +4,25 @@ import {
   ProfilePic,
   ProfilePicContainer,
   SettingIcon,
+  SettingsLink,
   UserDescription,
   UserInfoCardContainer,
   UserName,
-} from "./styles/UserInfoCard.styled";
-import { ImageProps } from "../../components/ReviewsCard/ReviewsCard";
+} from "./UserInfoCard.styled";
+import { ImageProps } from "../ReviewsCard/ReviewsCard";
 
 interface UserInfoCardProps {
   username: string;
   description: string;
   profilePic: ImageProps;
+  isEditProfile?: boolean;
 }
 
 const UserInfoCard: React.FC<UserInfoCardProps> = ({
   username,
   description,
   profilePic,
+  isEditProfile,
 }) => {
   const [loadedProfilePic, setloadedProfilePic] = useState<string[]>([]);
 
@@ -41,14 +44,19 @@ const UserInfoCard: React.FC<UserInfoCardProps> = ({
     <UserInfoCardContainer>
       <ProfilePicContainer>
         <ProfilePic src={loadedProfilePic[0]} alt={profilePic.alt} />
-        <SettingIcon />
+        {!isEditProfile && (
+          <SettingsLink to='/edit-profile'>
+            <SettingIcon />
+          </SettingsLink>
+        )}
       </ProfilePicContainer>
-
       <UserName>{username}</UserName>
       <UserDescription>{description}</UserDescription>
-      <LogOutButton bgcolor="white" tcolor="black">
-        Log Out
-      </LogOutButton>
+      {!isEditProfile && (
+        <LogOutButton bgcolor="white" tcolor="black">
+          Log Out
+        </LogOutButton>
+      )}
     </UserInfoCardContainer>
   );
 };

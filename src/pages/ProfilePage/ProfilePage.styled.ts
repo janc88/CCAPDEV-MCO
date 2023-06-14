@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import bgImage from '../../../imgs/food-bg.png';
+import bgImage from '../../imgs/food-bg.png';
+
 
 
 export const ProfilePageContainer = styled.div`
@@ -54,3 +55,6 @@ export const EmptyContainer = styled.div`
         background-color: white;
     }
 `;
+
+
+

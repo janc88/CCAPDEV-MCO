@@ -1,6 +1,7 @@
 import styled from "styled-components";
-import { Button } from "../../../styles/Button.styled";
+import { Button } from "../../styles/Button.styled";
 import { SettingsOutline } from "@styled-icons/evaicons-outline/SettingsOutline";
+import { Link } from "react-router-dom";
 
 export const UserInfoCardContainer = styled.div`
   max-height: 62%;
@@ -59,4 +60,8 @@ export const SettingIcon = styled(SettingsOutline)`
   height: 4.5rem;
   width: 4.5rem;
   padding: 0.2rem;
+`;
+
+export const SettingsLink = styled(Link)`
+
 `;

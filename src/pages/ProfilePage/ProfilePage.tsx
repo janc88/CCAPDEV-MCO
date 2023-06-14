@@ -4,13 +4,13 @@ import {
   LeftContainer,
   ProfilePageContainer,
   RightContainer,
-} from "./styles/ProfilePage.styled";
+} from "./ProfilePage.styled";
 import ReviewsCard from "../../components/ReviewsCard/ReviewsCard";
 import {
   ImageProps,
   ReviewProps,
 } from "../../components/ReviewsCard/ReviewsCard";
-import UserInfoCard from "./UserInfoCard";
+import UserInfoCard from "../../components/UserInfoCard/UserInfoCard";
 
 interface ProfilePageProps {
   username: string;

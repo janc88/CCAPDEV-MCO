@@ -6,7 +6,7 @@ export const SearchContainer = styled.div`
     background-image: url(${bgImage}) ;
     background-size: cover;
     background-position: center;
-    height: 70vh;
+    height: 50vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
