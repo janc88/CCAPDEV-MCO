@@ -5,6 +5,8 @@ import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import HomePage from "./pages/HomePage/HomePage";
 import { Route, Routes } from "react-router-dom";
 import EditProfilePage from "./pages/EditProfilePage/EditProfilePage";
+import LoginPage from "./pages/LoginPage/LoginPage";
+import SignupPage from "./pages/LoginPage/SignupPage";
 
 function App() {
   const userInfo = {
@@ -146,6 +148,9 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<HomePage />} />
+		<Route path="/home" element={<HomePage />} />
+		<Route path="/login" element={<LoginPage />} />
+		<Route path="/signup" element={<SignupPage />}/>
         <Route
           path="/restaurants"
           element={<RestaurantPage {...restoPageInfo} />}
