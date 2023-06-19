@@ -94,4 +94,5 @@ export const Image = styled.img<{px: number}>`
 	border-radius: 30px;
 	display: block;
 	margin: auto;
+	cursor: pointer;
 `;
