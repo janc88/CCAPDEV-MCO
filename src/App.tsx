@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Navbar from "./components/Navbar/Navbar";
 import RestaurantPage from "./pages/RestaurantPage/RestaurantPage";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
@@ -7,6 +7,7 @@ import { Route, Routes } from "react-router-dom";
 import EditProfilePage from "./pages/EditProfilePage/EditProfilePage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import SignupPage from "./pages/LoginPage/SignupPage";
+import Modal from "./components/Modal/Modal";
 
 function App() {
   const userInfo = {
@@ -143,31 +144,35 @@ function App() {
     ],
   };
 
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <>
       <Navbar />
       <Routes>
-        <Route path="/" element={<HomePage />} />
-		<Route path="/home" element={<HomePage />} />
-		<Route path="/login" element={<LoginPage />} />
-		<Route path="/signup" element={<SignupPage />}/>
-        <Route
-          path="/restaurants"
-          element={<RestaurantPage {...restoPageInfo} />}
-        />
-        <Route
-          path="/profile"
-          element={
-            <ProfilePage
-              username={userInfo.username}
-              description={userInfo.description}
-              profilePic={userInfo.profilePic}
-              reviews={userInfo.reviews}
-            />
-          }
-        />
-        <Route path="/edit-profile" element={<EditProfilePage />} />
+      <Route path="/" element={<HomePage />} />
+      <Route path="/home" element={<HomePage />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/signup" element={<SignupPage />}/>
+      <Route
+        path="/restaurants"
+        element={<RestaurantPage {...restoPageInfo} />}
+      />
+      <Route
+        path="/profile"
+        element={
+          <ProfilePage
+            username={userInfo.username}
+            description={userInfo.description}
+            profilePic={userInfo.profilePic}
+            reviews={userInfo.reviews}
+          />
+        }
+      />
+      <Route path="/edit-profile" element={<EditProfilePage />} />
       </Routes>
+      <Modal />
+
     </>
   );
 }
