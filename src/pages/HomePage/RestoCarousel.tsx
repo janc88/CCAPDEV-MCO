@@ -3,9 +3,6 @@ import RestoCard from "../../components/RestoCard/RestoCard";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Swiper as SwiperClass } from "swiper/types";
 
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
 import "./styles/swiper-resto-carousel.css";
 
 import { Navigation, Pagination } from "swiper";
@@ -37,7 +34,7 @@ const RestoCarousel: React.FC<RestoCarouselProps> = ({ restoList }) => {
   };
 
   return (
-    <RestoCarouselContainer>
+    <RestoCarouselContainer className='resto-carousel'>
       <RestoCarouselHeader>Featured Restaurants</RestoCarouselHeader>
       <Swiper
         onSwiper={setSwiperRef}

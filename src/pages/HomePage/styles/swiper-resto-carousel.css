@@ -1,19 +1,19 @@
-:root {
+.resto-carousel :root {
   --swiper-theme-color: #ff794f;
 }
 
-.swiper {
+.resto-carousel .swiper {
   width: 100%;
   height: 100%;
 }
 
-.swiper-slide {
+.resto-carousel .swiper-slide {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.swiper-slide img {
+.resto-carousel .swiper-slide img {
   display: block;
   width: 100%;
   height: 100%;
