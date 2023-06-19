@@ -19,8 +19,8 @@ export const Header = styled.div`
   display: flex;
   align-items: center;
   font-weight: 700;
-  font-size: 2rem;
-  padding: 1.1rem 2rem;
+  font-size: 1.5rem;
+  padding: 0.9rem 2rem;
   box-shadow: 6px 7px 14px -2px rgba(0, 0, 0, 0.1);
 `;
 

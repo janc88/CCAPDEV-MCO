@@ -10,15 +10,7 @@ export const RestoGalleryContainer = styled.div`
   overflow: hidden;
 `;
 
-export const Header = styled.div`
-  background-color: #ff794f;
-  display: flex;
-  align-items: center;
-  font-weight: 600;
-  font-size: 1.5rem;
-  padding: 0.8rem 1.3rem;
-  box-shadow: 6px 7px 14px -2px rgba(0, 0, 0, 0.1);
-`;
+
 
 export const GalleryImage = styled.img`
   max-width: 8.4rem;

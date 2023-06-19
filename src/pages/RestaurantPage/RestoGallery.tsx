@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
   GalleryImage,
-  Header,
   ImageContainer,
   RestoGalleryContainer,
 } from "./styles/RestoGallery.styled";
@@ -12,6 +11,7 @@ import "swiper/css/pagination";
 import "./styles/swiper-resto-gallery.css";
 
 import { Navigation, Pagination } from "swiper";
+import { Header } from "../../components/ReviewsCard/ReviewsCard.styled";
 
 interface ImageProps {
   id: number;
