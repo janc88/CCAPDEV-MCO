@@ -7,6 +7,7 @@ import { Route, Routes } from "react-router-dom";
 import EditProfilePage from "./pages/EditProfilePage/EditProfilePage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import SignupPage from "./pages/LoginPage/SignupPage";
+import { UserProvider } from "./components/UserContext/UserContext";
 
 function App() {
   const userInfo = {
@@ -144,7 +145,7 @@ function App() {
   };
 
   return (
-    <>
+    <UserProvider>
       <Navbar />
       <Routes>
         <Route path="/" element={<HomePage />} />
@@ -166,9 +167,9 @@ function App() {
             />
           }
         />
-        <Route path="/edit-profile" element={<EditProfilePage />} />
+	<Route path="/edit-profile" element={<EditProfilePage />} />
       </Routes>
-    </>
+    </UserProvider>
   );
 }
 
