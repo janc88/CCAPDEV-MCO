@@ -6,8 +6,8 @@ import HomePage from "./pages/HomePage/HomePage";
 import { Route, Routes } from "react-router-dom";
 import EditProfilePage from "./pages/EditProfilePage/EditProfilePage";
 import LoginPage from "./pages/LoginPage/LoginPage";
-import SignupPage from "./pages/LoginPage/SignupPage";
-import { UserProvider } from "./components/UserContext/UserContext";
+import SignupPage from "./pages/SignupPage/SignupPage";
+import { UserProvider } from "./contexts/UserContext";
 
 function App() {
   const userInfo = {
