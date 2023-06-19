@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { Image } from "./styles/Input.styled";
 
@@ -11,7 +11,15 @@ interface ImageInputProps {
 export const ImageInput = ({ id, px, defaultSrc, name = id}: ImageInputProps) => {
 	const { control, setValue, getValues } = useFormContext();
 	const [imageFile, setImageFile] = useState<File | null>(getValues(name) || null);
-  
+	const [imageSrc, setImageSrc] = useState<string | null>(null);
+
+	useEffect(() => {
+		const newSrc = imageFile && URL.createObjectURL(imageFile);
+		setImageSrc(newSrc)
+		if (newSrc)
+			return () => URL.revokeObjectURL(newSrc);
+	}, [imageFile]);
+
 	const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 	  const file = event.target.files?.[0];
 	  if (file) {
@@ -37,7 +45,7 @@ export const ImageInput = ({ id, px, defaultSrc, name = id}: ImageInputProps) =>
 		  )}
 		/>
 		<label htmlFor={id}>
-		  <Image src={imageFile ? URL.createObjectURL(imageFile) : defaultSrc} px={px} />
+		  <Image src={imageSrc || defaultSrc} px={px} />
 		</label>
 	  </>
 	);
