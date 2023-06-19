@@ -13,7 +13,7 @@ import { Button } from "../../styles/Button.styled";
 import logo from "../../imgs/banana.svg";
 import UserCard from "./UserCard";
 import NavSearch from "./NavSearch";
-import { UserContext } from "../UserContext/UserContext";
+import { UserContext } from "../../contexts/UserContext";
 
 function Navbar() {
   const {user} = useContext(UserContext)
