@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { PageContainer } from "./styles/LoginPage.styled";
 import { SignupCard, SignupDetailsCard } from "./SignupCard";
 
@@ -7,10 +7,14 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Swiper as SwiperClass } from "swiper/types";
 
 import './styles/swiper.css'
+import { UserContext } from "../../components/UserContext/UserContext";
+import { useNavigate } from "react-router-dom";
 
 function SignupPage() {
+  const { setUser } = useContext(UserContext);
   const [swiperRef, setSwiperRef] = useState<SwiperClass>();
   const [formData, setFormData] = useState({})
+  const navigate = useNavigate()
 
   const handleNextClick = (data: any) => {
 	swiperRef?.slideNext()
@@ -23,7 +27,13 @@ function SignupPage() {
   const handleSubmit = (data: any) => {
 	data = {...formData, ...data}
 	console.log(data)
-	//do stuff
+	const user = {
+		userName: data.username,
+		profilePicture: data.profilepicture,
+		accountDesc: data.accountdesc,
+	}
+	setUser(user)
+	navigate('/home');
   }
 
   return (
