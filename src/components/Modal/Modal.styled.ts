@@ -12,7 +12,7 @@ export const ModalBG = styled.div`
   overflow: auto;
   background-color: rgb(0,0,0);
   background-color: rgba(0,0,0,0.4);
-  animation: fade-in 0.5s;
+  /* animation: fade-in 0.5s; */
 `;
 
 export const ModalContainer = styled.div`
