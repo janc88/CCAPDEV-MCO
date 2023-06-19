@@ -31,9 +31,11 @@ export const UserOption = styled(motion.div)`
 `;
 
 export const UserName = styled(motion.div)`
+    text-align: center;
     font-weight: bold;
     padding: 15px 12px 15px 25px; 
     user-select: none;
+    min-width: 5.5rem;
 `;
 
 export const UserLink = styled(Link)`
