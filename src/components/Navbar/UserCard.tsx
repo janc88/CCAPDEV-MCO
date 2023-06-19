@@ -9,7 +9,7 @@ import {
   UserOption,
 } from "./styles/UserCard.styled";
 import pic from "../../imgs/banana.svg"; //sample only
-import { UserContext } from "../UserContext/UserContext";
+import { UserContext } from "../../contexts/UserContext";
 
 function UserCard() {
   const { user, setUser } = useContext(UserContext);
