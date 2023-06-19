@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
+import { useNavigate } from 'react-router-dom';
 import {
   Logo,
   LogoLink,
@@ -12,18 +13,20 @@ import { Button } from "../../styles/Button.styled";
 import logo from "../../imgs/banana.svg";
 import UserCard from "./UserCard";
 import NavSearch from "./NavSearch";
+import { UserContext } from "../UserContext/UserContext";
 
 function Navbar() {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const {user} = useContext(UserContext)
+  const navigate = useNavigate()
 
   return (
     <Nav>
-      <LogoContainer>
-        <LogoLink to="/home">
-          <Logo src={logo} />
-        </LogoLink>
-        <NavSearch />
-      </LogoContainer>
+	  <LogoContainer>
+		<LogoLink to="/home">
+			<Logo src={logo} />
+		</LogoLink>
+		<NavSearch/>
+	  </LogoContainer>
 
       <NavMenu>
         <NavbarLink to="/">Home</NavbarLink>
@@ -32,10 +35,10 @@ function Navbar() {
         <NavbarLink to="/">Contact Us</NavbarLink>
       </NavMenu>
       <NavSection>
-        {!isLoggedIn ? (
+        {!user ? (
           <>
-            <NavbarLink to="/">Log In</NavbarLink>
-            <Button bgcolor="white" tcolor="black">
+            <NavbarLink to="/login">Log In</NavbarLink>
+            <Button bgcolor="white" tcolor="black" onClick={()=>navigate('/signup')}>
               Sign up
             </Button>
           </>
