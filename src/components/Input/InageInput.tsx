@@ -25,7 +25,7 @@ export const ImageInput = ({ id, px, defaultSrc, name = id}: ImageInputProps) =>
 		<Controller
 		  name={name}
 		  control={control}
-		  defaultValue=""
+		  defaultValue={null}
 		  render={() => (
 			<input
 			  id={id}
@@ -41,5 +41,5 @@ export const ImageInput = ({ id, px, defaultSrc, name = id}: ImageInputProps) =>
 		</label>
 	  </>
 	);
-  };
+};
 
