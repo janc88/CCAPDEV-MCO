@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import {
   Logo,
   LogoLink,
@@ -7,6 +7,7 @@ import {
   NavSection,
   NavMenu,
   NavbarLink,
+  NavButton,
 } from "./styles/Nav.styled";
 import { LogoContainer } from "./styles/NavSearch.styled";
 import { Button } from "../../styles/Button.styled";
@@ -15,30 +16,54 @@ import UserCard from "./UserCard";
 import NavSearch from "./NavSearch";
 import { UserContext } from "../../contexts/UserContext";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faHouse,
+  faUtensils,
+  faAddressCard,
+  faPhone,
+} from "@fortawesome/free-solid-svg-icons";
+
 function Navbar() {
-  const {user} = useContext(UserContext)
-  const navigate = useNavigate()
+  const { user } = useContext(UserContext);
+  const navigate = useNavigate();
 
   return (
     <Nav>
-	  <LogoContainer>
-		<LogoLink to="/home">
-			<Logo src={logo} />
-		</LogoLink>
-		<NavSearch/>
-	  </LogoContainer>
+      <LogoContainer>
+        <LogoLink to="/home">
+          <Logo src={logo} />
+        </LogoLink>
+        <NavSearch />
+      </LogoContainer>
 
       <NavMenu>
-        <NavbarLink to="/">Home</NavbarLink>
-        <NavbarLink to="/restaurants">Restaurants</NavbarLink>
-        <NavbarLink to="/">About Us</NavbarLink>
-        <NavbarLink to="/">Contact Us</NavbarLink>
+        <NavbarLink to="/">
+          <FontAwesomeIcon icon={faHouse} size="lg" fixedWidth />
+          <NavButton marginleft={5}>Home</NavButton>
+        </NavbarLink>
+        <NavbarLink to="/restaurants">
+          <FontAwesomeIcon icon={faUtensils} size="lg" fixedWidth />
+          <NavButton marginleft={5}>Restaurants</NavButton>
+        </NavbarLink>
+        <NavbarLink to="/">
+          <FontAwesomeIcon icon={faAddressCard} size="lg" fixedWidth />
+          <NavButton marginleft={7}>About Us</NavButton>
+        </NavbarLink>
+        <NavbarLink to="/">
+          <FontAwesomeIcon icon={faPhone} size="lg" fixedWidth />
+          <NavButton marginleft={5}>Contact Us</NavButton>
+        </NavbarLink>
       </NavMenu>
       <NavSection>
         {!user ? (
           <>
             <NavbarLink to="/login">Log In</NavbarLink>
-            <Button bgcolor="white" tcolor="black" onClick={()=>navigate('/signup')}>
+            <Button
+              bgcolor="white"
+              tcolor="black"
+              onClick={() => navigate("/signup")}
+            >
               Sign up
             </Button>
           </>

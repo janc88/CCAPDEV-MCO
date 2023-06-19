@@ -42,3 +42,12 @@ export const NavSection = styled.div`
 export const NavMenu = styled(NavSection)`
     margin-left: -8rem;
 `;
+
+
+interface NavButtonProps {
+    marginleft: number;
+}
+
+export const NavButton = styled.span<NavButtonProps>`
+    margin-left: ${({marginleft}) => `${marginleft}px`}
+`;
