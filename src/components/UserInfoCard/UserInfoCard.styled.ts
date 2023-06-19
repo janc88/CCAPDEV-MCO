@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Button } from "../../styles/Button.styled";
-import { SettingsOutline } from "@styled-icons/evaicons-outline/SettingsOutline";
+import { Gear } from "@styled-icons/fa-solid/Gear";
 import { Link } from "react-router-dom";
 
 export const UserInfoCardContainer = styled.div`
@@ -50,16 +50,31 @@ export const LogOutButton = styled(Button)`
   font-size: 1rem;
 `;
 
-export const SettingIcon = styled(SettingsOutline)`
+export const SettingIcon = styled(Gear)`
   position: absolute;
   top: -1rem;
   right: -1rem;
   color: white;
-  background-color: rgb(0, 0, 0, 0.5);
+  background-color: rgb(255, 121, 79, 0.8);
   border-radius: 50%;
-  height: 4.5rem;
-  width: 4.5rem;
-  padding: 0.2rem;
+  height: 3.5rem;
+  width: 3.5rem;
+  padding: 0.5rem;
+
+  &:hover {
+    animation-name: spin;
+    animation-duration: 1000ms;
+    animation-timing-function: ease-in-out;
+
+    @keyframes spin {
+      from {
+          transform:rotate(0deg);
+      }
+      to {
+          transform:rotate(360deg);
+      }
+    }
+  }
 `;
 
 export const SettingsLink = styled(Link)`

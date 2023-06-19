@@ -8,6 +8,11 @@ export const Nav = styled.nav`
     justify-content: space-between;
     padding: 10px;
     overflow: visible;
+    font-size: 1.3rem;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1;
 `;
 
 export const Logo = styled.img.attrs(({src}) => ({src: src}))`

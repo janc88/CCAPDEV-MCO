@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const SummaryCardContainer = styled.div`
-  width: 100%;
+  width: 90%;
   max-height: 70%;
   height: fit-content;
   overflow: hidden;

@@ -9,6 +9,7 @@ import AboutRestoCard from "./AboutRestoCard";
 import RestoGallery from "./RestoGallery";
 import ReviewsCard from "../../components/ReviewsCard/ReviewsCard";
 import SummaryCard from "./SummaryCard";
+import Footer from "../../components/Footer/Footer";
 
 import {
   ImageProps,
@@ -24,22 +25,26 @@ interface RestoPageProps {
 
 const RestaurantPage: React.FC<RestoPageProps> = (props) => {
   return (
-    <RestaurantPageContainer className="resto-gallery">
-      <LeftContainer>
-        <AboutRestoCard {...props.details} />
-        <RestoGallery imageList={props.restoImgs} />
-      </LeftContainer>
-      <MiddleContainer>
-        <ReviewsCard reviewList={props.reviews} />
-      </MiddleContainer>
-      <RightContainer>
-        <SummaryCard
-          numrating={props.details.numrating}
-          rating={props.details.rating}
-          ratings={props.details.ratings}
-        />
-      </RightContainer>
-    </RestaurantPageContainer>
+    <>
+      <RestaurantPageContainer className="resto-gallery">
+        <LeftContainer>
+          <AboutRestoCard {...props.details} />
+          <RestoGallery imageList={props.restoImgs} />
+        </LeftContainer>
+        <MiddleContainer>
+          <ReviewsCard reviewList={props.reviews} />
+        </MiddleContainer>
+        <RightContainer>
+          <SummaryCard
+            numrating={props.details.numrating}
+            rating={props.details.rating}
+            ratings={props.details.ratings}
+          />
+        </RightContainer>
+      </RestaurantPageContainer>
+      <Footer />
+    </>
+    
   );
 };
 

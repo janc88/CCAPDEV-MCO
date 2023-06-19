@@ -41,7 +41,7 @@ export const SearchInput = styled.input.attrs({
 })<SearchInputProps>`
   width: ${({ hasIcon }) => (hasIcon ? "200px" : "246px")};
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.075);
+  background-color: rgba(0, 0, 0, 0);
   padding-left: ${({ hasIcon }) => (hasIcon ? "71px" : "25px")};
   padding-right: 25px;
 

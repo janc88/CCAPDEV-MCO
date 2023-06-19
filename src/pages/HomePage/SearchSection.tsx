@@ -14,7 +14,7 @@ function SearchSection() {
 
   return (
     <SearchContainer>
-      <SearchSectionText>yum yum for my tum</SearchSectionText>
+      <SearchSectionText>Where to grab a bite next?</SearchSectionText>
       <SearchBar
         value={inputValue}
         onChange={handleInputChange}

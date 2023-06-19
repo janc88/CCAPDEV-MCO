@@ -3,7 +3,7 @@ import { BackgroundPic } from "../../styles/BackgroundPic.styled";
 
 
 export const ProfilePageContainer = styled(BackgroundPic)`
-
+    margin-top: 70px;
 `;
 
 export const LeftContainer = styled.div`

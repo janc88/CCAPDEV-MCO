@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { BackgroundPic } from "../../../styles/BackgroundPic.styled";
 
 export const RestaurantPageContainer = styled(BackgroundPic)`
-   
+   margin-top: 70px;
 `;
 
 export const LeftContainer = styled.div`
