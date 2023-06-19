@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import {
   ProfilePic,
   UserCardContainer,
@@ -9,10 +9,20 @@ import {
   UserOption,
 } from "./styles/UserCard.styled";
 import pic from "../../imgs/banana.svg"; //sample only
+import { UserContext } from "../UserContext/UserContext";
 
 function UserCard() {
+  const { user, setUser } = useContext(UserContext);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const actionRef = useRef<HTMLDivElement>(null);
+  const [pfpSrc, setPfpSrc] = useState<string | null>();
+
+  useEffect(() => {
+	const newPfpSrc = user?.profilePicture && URL.createObjectURL(user.profilePicture);
+	setPfpSrc(newPfpSrc)
+    if (newPfpSrc)
+		return () => URL.revokeObjectURL(newPfpSrc);
+  }, [user]);
 
   const handleClickOutside = (event: MouseEvent) => {
     if (
@@ -30,6 +40,10 @@ function UserCard() {
   const handleInsideClick = () => {
     setIsOpen(false);
   };
+  const handleLogOut = () => {
+	setUser(null);
+	handleInsideClick();
+  }
 
   useEffect(() => {
     const handleMouseDown = (event: MouseEvent) => handleClickOutside(event);
@@ -43,8 +57,8 @@ function UserCard() {
     <div ref={actionRef}>
       <MainContainer layout style={{ borderRadius: "27px" }}>
         <UserCardContainer layout={"position"} onClick={handleOpen}>
-          <UserName>Username here</UserName>
-          <ProfilePic src={pic} />
+          <UserName>{user?.userName}</UserName>
+          <ProfilePic src={pfpSrc || pic} />
         </UserCardContainer>
 
         {isOpen && (
@@ -65,7 +79,7 @@ function UserCard() {
             <UserLink to="/edit-profile" onClick={handleInsideClick}>
               <UserOption>Edit My Profile</UserOption>
             </UserLink>
-            <UserLink to="/" onClick={handleInsideClick}>
+            <UserLink to="/" onClick={handleLogOut}>
               <UserOption>Logout</UserOption>
             </UserLink>
           </UserOptionsContainer>
