@@ -41,7 +41,7 @@ function UserCard() {
 
   return (
     <div ref={actionRef}>
-      <MainContainer layout style={{ borderRadius: "27px" }}>
+      <MainContainer layout style={{ borderRadius: "15px" }}>
         <UserCardContainer layout={"position"} onClick={handleOpen}>
           <UserName>Username here</UserName>
           <ProfilePic src={pic} />

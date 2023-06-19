@@ -13,6 +13,9 @@ import logo from "../../imgs/banana.svg";
 import UserCard from "./UserCard";
 import NavSearch from "./NavSearch";
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faHouse, faUtensils, faAddressCard, faPhone } from '@fortawesome/free-solid-svg-icons'
+
 function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
 
@@ -26,10 +29,26 @@ function Navbar() {
       </LogoContainer>
 
       <NavMenu>
-        <NavbarLink to="/">Home</NavbarLink>
-        <NavbarLink to="/restaurants">Restaurants</NavbarLink>
-        <NavbarLink to="/">About Us</NavbarLink>
-        <NavbarLink to="/">Contact Us</NavbarLink>
+        <NavbarLink to="/">
+          <FontAwesomeIcon icon={faHouse} size="lg" fixedWidth />
+          <span style={{margin: "0px 0px 0px 5px"}}>Home</span>
+        </NavbarLink>
+
+        <NavbarLink to="/restaurants">
+          <FontAwesomeIcon icon={faUtensils} size="lg" fixedWidth />
+          <span style={{margin: "0px 0px 0px 5px"}}>Restaurants</span>
+        </NavbarLink>
+
+        <NavbarLink to="/">
+          <FontAwesomeIcon icon={faAddressCard} size="lg" fixedWidth />
+          <span style={{margin: "0px 0px 0px 7px"}}>About Us</span>
+        </NavbarLink>
+
+        <NavbarLink to="/">
+          <FontAwesomeIcon icon={faPhone} size="lg" fixedWidth />
+          <span style={{margin: "0px 0px 0px 5px"}}>Contact Us</span>
+        </NavbarLink>
+
       </NavMenu>
       <NavSection>
         {!isLoggedIn ? (

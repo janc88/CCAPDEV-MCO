@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 export const Nav = styled.nav`
     display: flex;
-    height: 60px;
+    height: 40px;
     background-color: #FF794F;
     justify-content: space-between;
     padding: 10px;
@@ -11,7 +11,7 @@ export const Nav = styled.nav`
 `;
 
 export const Logo = styled.img.attrs(({src}) => ({src: src}))`
-    width: 80px;
+    width: 60px;
 `;
 
 export const LogoLink = styled(Link)`

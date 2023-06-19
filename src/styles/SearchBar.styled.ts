@@ -5,10 +5,10 @@ interface SearchBarProps {
 }
 
 export const SearchBar = styled.input.attrs({type: "text", placeholder: "Search for your favorite restaurants",})<SearchBarProps>`
-    width: 650px;
-    background-color: ${({hasInput}) => hasInput ? 'rgba(255, 121, 79, 0.75)' : 'rgba(0, 0, 0, 0.35)'};
+    width: 600px;
+    background-color: ${({hasInput}) => hasInput ? 'rgba(255, 121, 79, 0.7)' : 'rgba(140, 133, 133, 0.7)'};
     font-size: large;
-    padding: 25px;
+    padding: 15px;
     border-radius: 40px;
     text-align: center;
     transition: .2s ease-in-out 0s;

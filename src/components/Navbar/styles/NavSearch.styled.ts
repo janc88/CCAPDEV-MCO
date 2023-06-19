@@ -13,7 +13,7 @@ export const SearchContainer = styled.div`
   background-color: white;
   color: black;
   border-radius: 27px;
-  height: 3rem;
+  height: 2rem;
   overflow: hidden;
   position: relative;
 `;
@@ -22,8 +22,8 @@ export const SearchContainer = styled.div`
 //padding	10 + 28 + 8 + 25 = 71
 //			ic_left_pad, ic_width, ic_pad, left_pad
 export const SearchIcon = styled(Search)`
-  width: 28px;
-  height: 28px;
+  width: 25px;
+  height: 25px;
 
   padding: 4px;
   position: absolute;
@@ -41,12 +41,12 @@ export const SearchInput = styled.input.attrs({
 })<SearchInputProps>`
   width: ${({ hasIcon }) => (hasIcon ? "200px" : "246px")};
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.075);
+  background-color: rgba(0, 0, 0, 0);
   padding-left: ${({ hasIcon }) => (hasIcon ? "71px" : "25px")};
   padding-right: 25px;
 
   color: #444;
-  font-size: large;
+  font-size: 16px;
 
   border-radius: 27px;
   transition: 0.2s ease-in-out 0s;

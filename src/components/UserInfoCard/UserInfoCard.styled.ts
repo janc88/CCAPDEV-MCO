@@ -4,7 +4,7 @@ import { SettingsOutline } from "@styled-icons/evaicons-outline/SettingsOutline"
 import { Link } from "react-router-dom";
 
 export const UserInfoCardContainer = styled.div`
-  max-height: 62%;
+  max-height: 100%;
   height: fit-content;
   display: flex;
   flex-direction: column;
@@ -31,6 +31,7 @@ export const UserName = styled.h1`
 
 export const UserDescription = styled.h2`
   margin: 0.5rem;
+  font-size: 1.3rem;
   font-weight: 300;
   max-height: 20%;
   overflow: hidden;
@@ -55,11 +56,26 @@ export const SettingIcon = styled(SettingsOutline)`
   top: -1rem;
   right: -1rem;
   color: white;
-  background-color: rgb(0, 0, 0, 0.5);
+  background-color: rgb(255, 121, 79, 0.8);
   border-radius: 50%;
-  height: 4.5rem;
-  width: 4.5rem;
+  height: 3.5rem;
+  width: 3.5rem;
   padding: 0.2rem;
+
+  &:hover{
+    animation-name: spin;
+    animation-duration: 1000ms;
+    animation-timing-function: ease-in-out;
+
+  @keyframes spin {
+    from {
+        transform:rotate(0deg);
+    }
+    to {
+        transform:rotate(360deg);
+    }
+  }
+}
 `;
 
 export const SettingsLink = styled(Link)`

@@ -11,11 +11,12 @@ export const MainContainer = styled(motion.div)`
     /* border-radius: 27px; */
     overflow: hidden;
     position: relative;
+    width: 200px;
 `;
 
 export const UserCardContainer = styled(motion.div)`
     display: flex;
-    border-radius: 27px;
+    border-radius: 15px;
     box-shadow: 3px 5px 12px -4px rgba(0,0,0,0.43);
     -webkit-box-shadow: 3px 5px 12px -4px rgba(0,0,0,0.43);
     -moz-box-shadow: 3px 5px 12px -4px rgba(0,0,0,0.43);
@@ -27,12 +28,13 @@ export const UserOptionsContainer = styled(motion.div)`
 `;
 
 export const UserOption = styled(motion.div)`
-    margin: 0.7rem 0;
+    margin: 0.5rem 0;
 `;
 
 export const UserName = styled(motion.div)`
     font-weight: bold;
-    padding: 15px 12px 15px 25px; 
+    font-size: 16px;
+    padding: 5px 30px 0px 25px; 
     user-select: none;
 `;
 
@@ -49,7 +51,7 @@ export const UserLink = styled(Link)`
 
 export const ProfilePic = styled(motion.img).attrs(({src}) => ({src: src}))`
     border-radius: 50%;
-    width: 47px;
-    height: 47px;
+    width: 30px;
+    height: 30px;
     border: 1px solid #555;
 `;

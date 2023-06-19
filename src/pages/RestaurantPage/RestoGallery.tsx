@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import {
   GalleryImage,
-  Header,
   ImageContainer,
   RestoGalleryContainer,
 } from "./styles/RestoGallery.styled";
+import { Header } from "../../components/ReviewsCard/ReviewsCard.styled";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
