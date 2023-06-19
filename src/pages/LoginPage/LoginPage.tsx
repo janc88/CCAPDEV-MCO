@@ -6,7 +6,7 @@ import {
 	Divider,
 	SideText,
 	Send
-} from "./styles/LoginPage.styled";
+} from "../styles/LoginPage.styled";
 import { useNavigate } from "react-router-dom";
 import { FlexRight } from "../../styles/Flex.styled";
 import { FormProvider, useForm } from "react-hook-form";

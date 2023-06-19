@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { PageContainer } from "./styles/SignupPage.styled";
+import { PageContainer } from "../styles/LoginPage.styled";
 import { SignupCard, SignupDetailsCard } from "./SignupCard";
 
 

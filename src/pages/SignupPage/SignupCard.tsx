@@ -7,7 +7,7 @@ import {
 	ActionsContainer,
 	ActionCancel,
 	ActionNext
-} from "./styles/SignupPage.styled";
+} from "../styles/LoginPage.styled";
 import default_pfp from '../../../src/imgs/banana.svg'
 import { useNavigate } from "react-router-dom";
 import { FlexRight } from "../../styles/Flex.styled";
