@@ -1,16 +1,8 @@
 import styled from "styled-components";
-import bgImage from '../../imgs/food-bg.png'
 import { Button } from "../../styles/Button.styled";
+import { BackgroundPic } from "../../styles/BackgroundPic.styled";
 
-export const PageContainer = styled.div`
-    width: 100%;
-    height: calc(100vh - 80px);
-    background-image: url(${bgImage});
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center center;
-
-	display: flex;
+export const PageContainer = styled(BackgroundPic)`
 	justify-content: center;
 	align-items: center;
 `;

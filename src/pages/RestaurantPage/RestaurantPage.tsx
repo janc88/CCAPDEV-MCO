@@ -24,7 +24,7 @@ interface RestoPageProps {
 
 const RestaurantPage: React.FC<RestoPageProps> = (props) => {
   return (
-    <RestoGalleryContainer className="resto-gallery">
+    <RestaurantPageContainer className="resto-gallery">
       <LeftContainer>
         <AboutRestoCard {...props.details} />
         <RestoGallery imageList={props.restoImgs} />
