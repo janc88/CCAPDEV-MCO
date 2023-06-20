@@ -125,9 +125,9 @@ export const Helpful = styled.div`
   margin: 0 0.5rem;
 `;
 
-export const ThumbsUpIcon = styled(ThumbsUp)`
+export const ThumbsUpIcon = styled(ThumbsUp)<{ isClicked: boolean }>`
   margin: 0 0.3rem;
-  color: black;
+  color: ${({ isClicked }) => (isClicked ? "#ff794f" : "black")};
   height: 1.3rem;
   width: 1.3rem;
 
@@ -136,9 +136,9 @@ export const ThumbsUpIcon = styled(ThumbsUp)`
   }
 `;
 
-export const ThumbsDownIcon = styled(ThumbsDown)`
-  color: black;
+export const ThumbsDownIcon = styled(ThumbsDown)<{ isClicked: boolean }>`
   margin: 0 0.3rem;
+  color: ${({ isClicked }) => (isClicked ? "#ff794f" : "black")};
   height: 1.3rem;
   width: 1.3rem;
 
@@ -147,7 +147,7 @@ export const ThumbsDownIcon = styled(ThumbsDown)`
   }
 `;
 
-export const OwnersResponse = styled.h4`
+export const OwnersResponse = styled.h5`
   margin: 0;
   color: #ff794f;
   font-weight: 800;

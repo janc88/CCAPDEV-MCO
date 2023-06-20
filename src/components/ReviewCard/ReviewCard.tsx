@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   Footer,
   Header,
@@ -24,14 +24,23 @@ import {
 } from "./ReviewCard.styled";
 import StarRating from "../StarRating/StarRating";
 import { ReviewProps, ImageProps } from "../ReviewsCard/ReviewsCard";
+import { Button } from "../../styles/Button.styled";
+import BaseModalWrapper from "../ViewModalPopup/SmallModal";
+import { UserContext } from "../../contexts/UserContext";
 
 interface ReviewCardProps extends ReviewProps {
   showOverlay?: boolean;
 }
 
 const ReviewCard: React.FC<ReviewCardProps> = (review) => {
+  const [thumbsUpCount, setThumbsUpCount] = useState(review.helpful);
+  const [thumbsDownCount, setThumbsDownCount] = useState(0);
+  const [isThumbsUpClicked, setIsThumbsUpClicked] = useState(false);
+  const [isThumbsDownClicked, setIsThumbsDownClicked] = useState(false);
+
   const [loadedImage, setLoadedImage] = useState<string>();
   const [profilePic, setProfilePic] = useState<string>();
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const image = review.imgs[0];
   const ppic = review.profilepic;
 
@@ -76,12 +85,54 @@ const ReviewCard: React.FC<ReviewCardProps> = (review) => {
       : `${yearsDifference} ${yearsDifference === 1 ? "year" : "years"} ago`;
   };
 
+  const handleThumbsUpClick = () => {
+    if (isThumbsUpClicked) {
+      // Deselect thumbs-up
+      setIsThumbsUpClicked(false);
+      setThumbsUpCount((prevCount) => prevCount - 1);
+    } else if (isThumbsDownClicked) {
+      // Change from thumbs-down to thumbs-up
+      setIsThumbsUpClicked(true);
+      setIsThumbsDownClicked(false);
+      setThumbsUpCount((prevCount) => prevCount + 1);
+      setThumbsDownCount((prevCount) => prevCount - 1);
+    } else {
+      // Select thumbs-up
+      setIsThumbsUpClicked(true);
+      setThumbsUpCount((prevCount) => prevCount + 1);
+    }
+  };
+
+  const handleThumbsDownClick = () => {
+    if (isThumbsDownClicked) {
+      // Deselect thumbs-down
+      setIsThumbsDownClicked(false);
+      setThumbsDownCount((prevCount) => prevCount - 1);
+    } else if (isThumbsUpClicked) {
+      // Change from thumbs-up to thumbs-down
+      setIsThumbsUpClicked(false);
+      setIsThumbsDownClicked(true);
+      setThumbsUpCount((prevCount) => prevCount - 1);
+      setThumbsDownCount((prevCount) => prevCount + 1);
+    } else {
+      // Select thumbs-down
+      setIsThumbsDownClicked(true);
+      setThumbsDownCount((prevCount) => prevCount + 1);
+    }
+  };
+
   const relativeTime = getTimeDifference(review.datePosted);
+
+  const toggleModal = () => {
+    setIsModalVisible((wasModalVisible) => !wasModalVisible);
+  };
 
   useEffect(() => {
     loadImages(image, ppic);
     console.log(new Date());
   }, [image, ppic]);
+
+  const { user } = useContext(UserContext);
 
   return (
     <ReviewCardContainer>
@@ -102,12 +153,34 @@ const ReviewCard: React.FC<ReviewCardProps> = (review) => {
         <ReviewDescription>{review.description}</ReviewDescription>
         <Footer>
           <HelpfulContainer>
-            <ThumbsUpIcon />
+            <ThumbsUpIcon
+              onClick={() => {
+                if (user) { handleThumbsUpClick(); }  // If logged in
+                else { toggleModal(); }
+              }}
+              isClicked={isThumbsUpClicked}
+            />
             /
-            <ThumbsDownIcon />
-            <Helpful>Helpful ({review.helpful})</Helpful>
+            <ThumbsDownIcon
+              onClick={() => {
+                if (user) { handleThumbsDownClick(); }  // If logged in
+                else { toggleModal(); }
+              }}
+              isClicked={isThumbsDownClicked}
+            />
+            <Helpful>Helpful ({thumbsUpCount - thumbsDownCount})</Helpful>
           </HelpfulContainer>
-          <OwnersResponse>View Owner's Response</OwnersResponse>
+          <div className="openRev">
+            <Button onClick={toggleModal} bgcolor="white" tcolor="black">
+              <OwnersResponse>View Owner's Response</OwnersResponse>
+            </Button>
+            <BaseModalWrapper
+              {...review}
+              isModalVisible={isModalVisible}
+              onBackdropClick={toggleModal}
+              relativeTime={relativeTime}
+            />
+          </div>
         </Footer>
       </ReviewContentContainer>
       <ReviewImgContainer>
