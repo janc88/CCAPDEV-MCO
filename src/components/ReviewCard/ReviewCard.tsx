@@ -25,7 +25,8 @@ import {
 import StarRating from "../StarRating/StarRating";
 import { ReviewProps, ImageProps } from "../ReviewsCard/ReviewsCard";
 import { Button } from "../../styles/Button.styled";
-import BaseModalWrapper from "../ViewModalPopup/SmallModal";
+import BaseModalWrapper from "../ViewModalPopup/BaseModalWrapper";
+import SmallModal from "../ViewModalPopup/SmallModal";
 import { UserContext } from "../../contexts/UserContext";
 
 interface ReviewCardProps extends ReviewProps {
@@ -41,6 +42,7 @@ const ReviewCard: React.FC<ReviewCardProps> = (review) => {
   const [loadedImage, setLoadedImage] = useState<string>();
   const [profilePic, setProfilePic] = useState<string>();
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isSmallModalVisible, setIsSmallModalVisible] = useState(false);
   const image = review.imgs[0];
   const ppic = review.profilepic;
 
@@ -127,6 +129,10 @@ const ReviewCard: React.FC<ReviewCardProps> = (review) => {
     setIsModalVisible((wasModalVisible) => !wasModalVisible);
   };
 
+  const toggleSmallModal = () => {
+    setIsSmallModalVisible((wasModalVisible) => !wasModalVisible);
+  };
+
   useEffect(() => {
     loadImages(image, ppic);
     console.log(new Date());
@@ -156,7 +162,7 @@ const ReviewCard: React.FC<ReviewCardProps> = (review) => {
             <ThumbsUpIcon
               onClick={() => {
                 if (user) { handleThumbsUpClick(); }  // If logged in
-                else { toggleModal(); }
+                else { toggleSmallModal(); }
               }}
               isClicked={isThumbsUpClicked}
             />
@@ -164,7 +170,7 @@ const ReviewCard: React.FC<ReviewCardProps> = (review) => {
             <ThumbsDownIcon
               onClick={() => {
                 if (user) { handleThumbsDownClick(); }  // If logged in
-                else { toggleModal(); }
+                else { toggleSmallModal(); }
               }}
               isClicked={isThumbsDownClicked}
             />
@@ -179,6 +185,10 @@ const ReviewCard: React.FC<ReviewCardProps> = (review) => {
               isModalVisible={isModalVisible}
               onBackdropClick={toggleModal}
               relativeTime={relativeTime}
+            />
+            <SmallModal 
+              isModalVisible={isSmallModalVisible}
+              onBackdropClick={toggleSmallModal}
             />
           </div>
         </Footer>

@@ -4,7 +4,6 @@ import {
   Title,
   BodyText,
 } from "./SmallModal.styled";
-import { ReviewProps } from "../ReviewsCard/ReviewsCard";
 
 import { 
 	Divider,
@@ -17,10 +16,9 @@ import { FlexRight } from "../../styles/Flex.styled";
 interface BaseModalWrapperProps {
   isModalVisible: boolean;
   onBackdropClick: () => void;
-  relativeTime: string;
 }
 
-const BaseModalWrapper: React.FC<BaseModalWrapperProps & ReviewProps> = ({
+const BaseModalWrapper: React.FC<BaseModalWrapperProps> = ({
   onBackdropClick,
   isModalVisible,
 }) => {
