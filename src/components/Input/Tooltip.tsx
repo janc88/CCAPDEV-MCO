@@ -13,7 +13,7 @@ export function Tooltip({
 }: TooltipProps) {
 	return (
 		<><TooltipIcon
-			size={size}
+			size={size * 0.8}
 			data-tooltip-id={id}
 			data-tooltip-content={text}
 			data-tooltip-place="top"
