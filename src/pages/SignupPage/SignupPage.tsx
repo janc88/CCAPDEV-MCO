@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { PageContainer } from "../styles/LoginPage.styled";
+import { CenterContainer, PageContainer } from "../styles/LoginPage.styled";
 import { SignupCard, SignupDetailsCard } from "./SignupCard";
 
 
@@ -37,22 +37,26 @@ function SignupPage() {
   }
 
   return (
-    <PageContainer className='signup-page'>
+    <PageContainer className='signup-page'> 
 	  <Swiper
 	  	onSwiper={setSwiperRef}
 		grabCursor={true}
 		allowTouchMove={false}>
 		  <SwiperSlide>
+			<CenterContainer>
 			<SignupCard onSubmit={handleNextClick} values={formData}/>
+			</CenterContainer>
 		  </SwiperSlide>
 		  <SwiperSlide>
+			<CenterContainer>
 			<SignupDetailsCard 
 				values={formData}
 				onPrev={handlePreviousClick} 
 				onSubmit={handleSubmit} />
+			</CenterContainer>
 		  </SwiperSlide>
 	  </Swiper>
-    </PageContainer>
+	</PageContainer>
   );
 }
 
