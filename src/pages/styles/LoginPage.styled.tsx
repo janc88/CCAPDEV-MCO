@@ -24,6 +24,8 @@ export const Card = styled.div`
 	border-radius: 0.7rem;
 	box-shadow: 6px 7px 14px -2px rgba(0, 0, 0, 0.3);
 	background-color: #FBFBFB;
+	
+	margin: 80px;
 `;
 
 
