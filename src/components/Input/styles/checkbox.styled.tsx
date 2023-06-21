@@ -11,9 +11,7 @@ export const Check = styled.input.attrs({
 	width: ${({px})=>px.toString()}px;
 	height: ${({px})=>px.toString()}px;
 `;
-export const TooltipIcon: React.FC<{ size: number }> = ({ size, ...props }) => {
-	return <QuestionCircle size={size * 0.8} {...props} />;
-};
+export const TooltipIcon = QuestionCircle;
 
 export const CheckboxLabel = styled.label<CheckboxProps>`
   color: #3B3B3B;
