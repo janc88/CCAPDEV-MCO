@@ -3,8 +3,10 @@ import { Button } from "../../styles/Button.styled";
 import { BackgroundPic } from "../../styles/BackgroundPic.styled";
 
 export const PageContainer = styled(BackgroundPic)`
-	justify-content: center;
-	align-items: center;
+	overflow: auto;
+`;
+export const CenterContainer = styled.div`
+	margin: auto;
 `;
 
 export const Card = styled.div`
