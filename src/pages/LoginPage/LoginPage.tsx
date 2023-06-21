@@ -1,6 +1,6 @@
 import React from "react";
 import { 
-	PageContainer, 
+	PageContainer, CenterContainer,
 	Card, 
 	Title, 
 	Divider,
@@ -21,7 +21,7 @@ function LoginPage() {
 		console.log(data)
 	})
 	return (
-		<PageContainer>
+		<PageContainer> <CenterContainer>
 		  <FormProvider {...methods}>
 			<form
 			  onSubmit={e => e.preventDefault()}
@@ -49,8 +49,8 @@ function LoginPage() {
 			  </Card>
 			</form>
 		  </FormProvider>
-		</PageContainer>
-  );
+		</CenterContainer></PageContainer>
+	);
 }
 
 export default LoginPage;
