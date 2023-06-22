@@ -54,7 +54,7 @@ export const Send = ({ ...props }) => (
 		bgcolor={'rgb(255, 121, 79)'} 
 		tcolor={'white'} 
 		style={{
-			width: '300px', 
+			width: '250px', 
 			margin: '0 auto',
 			marginTop: '15px'
 		}}

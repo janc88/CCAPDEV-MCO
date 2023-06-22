@@ -1,4 +1,4 @@
-import styled, {css} from "styled-components";
+import styled, { css } from "styled-components";
 import { ThumbsUp, ThumbsDown } from "@styled-icons/fa-solid";
 
 export const ReviewCardContainer = styled.div`
@@ -47,7 +47,7 @@ export const RestoNameContainer = styled.div<RestoNameContainerProps>`
   transition: opacity 0.3s ease;
   border-radius: 0.3rem;
 
-  ${({showOverlay}) =>
+  ${({ showOverlay }) =>
     showOverlay &&
     css`
       opacity: 1;
@@ -125,9 +125,9 @@ export const Helpful = styled.div`
   margin: 0 0.5rem;
 `;
 
-export const ThumbsUpIcon = styled(ThumbsUp)`
+export const ThumbsUpIcon = styled(ThumbsUp)<{ isClicked: boolean }>`
   margin: 0 0.3rem;
-  color: black;
+  color: ${({ isClicked }) => (isClicked ? "#ff794f" : "black")};
   height: 1.3rem;
   width: 1.3rem;
 
@@ -136,8 +136,8 @@ export const ThumbsUpIcon = styled(ThumbsUp)`
   }
 `;
 
-export const ThumbsDownIcon = styled(ThumbsDown)`
-  color: black;
+export const ThumbsDownIcon = styled(ThumbsDown)<{ isClicked: boolean }>`
+  color: ${({ isClicked }) => (isClicked ? "#ff794f" : "black")};
   margin: 0 0.3rem;
   height: 1.3rem;
   width: 1.3rem;
