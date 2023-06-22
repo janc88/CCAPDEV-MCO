@@ -9,34 +9,38 @@ import AboutRestoCard from "./AboutRestoCard";
 import RestoGallery from "./RestoGallery";
 import ReviewsCard from "../../components/ReviewsCard/ReviewsCard";
 import SummaryCard from "./SummaryCard";
+import { useParams } from "react-router-dom";
 
-import {
-  ImageProps,
-  ReviewProps,
-} from "../../components/ReviewsCard/ReviewsCard";
-import { RestoProps } from "../../components/RestoCard/RestoCard";
+import { restoList } from "../../data/data";
 
-interface RestoPageProps {
-  details: RestoProps;
-  restoImgs: ImageProps[];
-  reviews: ReviewProps[];
-}
+const RestaurantPage: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
 
-const RestaurantPage: React.FC<RestoPageProps> = (props) => {
+  const resto = restoList.find((resto) => resto.details.id === parseInt(id!));
+
   return (
     <RestaurantPageContainer className="resto-gallery">
       <LeftContainer>
-        <AboutRestoCard {...props.details} />
-        <RestoGallery imageList={props.restoImgs} />
+        <AboutRestoCard
+          id={resto!.details.id}
+          name={resto!.details.name}
+          rating={resto!.details.rating}
+          numrating={resto!.details.numrating}
+          desc={resto!.details.desc}
+          ratings={resto!.details.ratings}
+          address={resto!.details.address}
+          coverImg={resto!.details.coverImg}
+        />
+        <RestoGallery imageList={resto!.restoImgs} />
       </LeftContainer>
       <MiddleContainer>
-        <ReviewsCard reviewList={props.reviews} />
+        <ReviewsCard reviewList={resto!.reviews} />
       </MiddleContainer>
       <RightContainer>
         <SummaryCard
-          numrating={props.details.numrating}
-          rating={props.details.rating}
-          ratings={props.details.ratings}
+          numrating={resto!.details.numrating}
+          rating={resto!.details.rating}
+          ratings={resto!.details.ratings}
         />
       </RightContainer>
     </RestaurantPageContainer>

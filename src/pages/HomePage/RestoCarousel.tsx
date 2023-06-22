@@ -41,12 +41,12 @@ const RestoCarousel: React.FC<RestoCarouselProps> = ({ restoList }) => {
         slidesPerView={3}
         spaceBetween={30}
         loop={true}
+        allowTouchMove={false}
         modules={[Navigation, Pagination]}
         pagination={{
           el: ".swiper-custom-pagination",
           clickable: true,
         }}
-        grabCursor={true}
         className="mySwiper"
       >
         {restoList.map((resto) => (

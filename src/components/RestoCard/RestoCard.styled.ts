@@ -1,6 +1,7 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
-export const RestoCardContainer = styled.div`
+export const RestoCardContainer = styled(Link)`
   /* margin: 50px 10px; */
   display: flex;
   border-radius: 10px;
@@ -11,6 +12,7 @@ export const RestoCardContainer = styled.div`
   height: 335px;
   flex-direction: column;
   overflow: hidden;
+  text-decoration: none;
 `;
 
 interface RestoImgProps {

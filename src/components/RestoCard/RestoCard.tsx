@@ -12,6 +12,7 @@ import StarRating from "../StarRating/StarRating";
 import { ImageProps } from "../ReviewsCard/ReviewsCard";
 
 export interface RestoProps {
+  id: number;
   name: string;
   rating: number;
   numrating: number;
@@ -33,7 +34,7 @@ const RestoCard: React.FC<RestoProps> = (resto) => {
   }, []);
 
   return (
-    <RestoCardContainer>
+    <RestoCardContainer to={`/restaurants/${resto.id}`}>
       <RestoImg image={backgroundImage}>
         <RestoName>{resto.name}</RestoName>
         <RestoRating>
