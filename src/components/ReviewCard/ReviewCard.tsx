@@ -25,7 +25,8 @@ import {
 import StarRating from "../StarRating/StarRating";
 import { ReviewProps, ImageProps } from "../ReviewsCard/ReviewsCard";
 import { Button } from "../../styles/Button.styled";
-import BaseModalWrapper from "../ReviewModal/ReviewModal";
+import BaseModalWrapper from "../ModalPopups/ViewBaseModal";
+import ViewReviewModal from "../ModalPopups/ViewReviewModal";
 import SmallModal from "../SmallModal/SmallModal";
 import { UserContext } from "../../contexts/UserContext";
 
@@ -38,11 +39,11 @@ const ReviewCard: React.FC<ReviewCardProps> = (review) => {
   const [thumbsDownCount, setThumbsDownCount] = useState(0);
   const [isThumbsUpClicked, setIsThumbsUpClicked] = useState(false);
   const [isThumbsDownClicked, setIsThumbsDownClicked] = useState(false);
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [isSmallModalVisible, setIsSmallModalVisible] = useState(false);
 
   const [loadedImage, setLoadedImage] = useState<string>();
   const [profilePic, setProfilePic] = useState<string>();
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isSmallModalVisible, setIsSmallModalVisible] = useState(false);
   const image = review.imgs[0];
   const ppic = review.profilepic;
 
@@ -55,6 +56,36 @@ const ReviewCard: React.FC<ReviewCardProps> = (review) => {
     } catch (error) {
       console.error("Error loading image:", error);
     }
+  };
+
+  const getTimeDifference = (specificDate: Date): string => {
+    const currentDate: Date = new Date();
+    const timeDifference: number =
+      currentDate.getTime() - specificDate.getTime();
+
+    if (timeDifference < 0) {
+      return "Invalid date";
+    }
+
+    const secondsDifference: number = Math.floor(timeDifference / 1000);
+    const minutesDifference: number = Math.floor(secondsDifference / 60);
+    const hoursDifference: number = Math.floor(minutesDifference / 60);
+    const daysDifference: number = Math.floor(hoursDifference / 24);
+    const yearsDifference: number = Math.floor(daysDifference / 365);
+
+    return secondsDifference < 60
+      ? `${secondsDifference} ${
+          secondsDifference === 1 ? "second" : "seconds"
+        } ago`
+      : minutesDifference < 60
+      ? `${minutesDifference} ${
+          minutesDifference === 1 ? "minute" : "minutes"
+        } ago`
+      : hoursDifference < 24
+      ? `${hoursDifference} ${hoursDifference === 1 ? "hour" : "hours"} ago`
+      : daysDifference < 365
+      ? `${daysDifference} ${daysDifference === 1 ? "day" : "days"} ago`
+      : `${yearsDifference} ${yearsDifference === 1 ? "year" : "years"} ago`;
   };
 
   const handleThumbsUpClick = () => {
@@ -93,6 +124,19 @@ const ReviewCard: React.FC<ReviewCardProps> = (review) => {
     }
   };
 
+  const relativeTime = getTimeDifference(review.datePosted);
+
+  const [showReviewModal, setShowReviewModal] = useState(false);
+  const [showBaseModal, setShowBaseModal] = useState(false);
+
+  const toggleReviewModal = () => {
+    setShowReviewModal((prevShowReviewModal) => !prevShowReviewModal);
+  };
+
+  const toggleBaseModal = () => {
+    setShowBaseModal((prevShowBaseModal) => !prevShowBaseModal);
+  };
+
   const toggleModal = () => {
     setIsModalVisible((wasModalVisible) => !wasModalVisible);
   };
@@ -102,38 +146,6 @@ const ReviewCard: React.FC<ReviewCardProps> = (review) => {
   };
 
   const { user } = useContext(UserContext);
-
-  const getTimeDifference = (specificDate: Date): string => {
-    const currentDate: Date = new Date();
-    const timeDifference: number =
-      currentDate.getTime() - specificDate.getTime();
-
-    if (timeDifference < 0) {
-      return "Invalid date";
-    }
-
-    const secondsDifference: number = Math.floor(timeDifference / 1000);
-    const minutesDifference: number = Math.floor(secondsDifference / 60);
-    const hoursDifference: number = Math.floor(minutesDifference / 60);
-    const daysDifference: number = Math.floor(hoursDifference / 24);
-    const yearsDifference: number = Math.floor(daysDifference / 365);
-
-    return secondsDifference < 60
-      ? `${secondsDifference} ${
-          secondsDifference === 1 ? "second" : "seconds"
-        } ago`
-      : minutesDifference < 60
-      ? `${minutesDifference} ${
-          minutesDifference === 1 ? "minute" : "minutes"
-        } ago`
-      : hoursDifference < 24
-      ? `${hoursDifference} ${hoursDifference === 1 ? "hour" : "hours"} ago`
-      : daysDifference < 365
-      ? `${daysDifference} ${daysDifference === 1 ? "day" : "days"} ago`
-      : `${yearsDifference} ${yearsDifference === 1 ? "year" : "years"} ago`;
-  };
-
-  const relativeTime = getTimeDifference(review.datePosted);
 
   useEffect(() => {
     loadImages(image, ppic);
@@ -156,7 +168,18 @@ const ReviewCard: React.FC<ReviewCardProps> = (review) => {
             <RelativeTime>{relativeTime}</RelativeTime>
           </RightContainer>
         </Header>
-        <ReviewDescription>{review.description}</ReviewDescription>
+
+        <ReviewDescription onClick={toggleReviewModal}>
+          {review.description}
+        </ReviewDescription>
+
+        <ViewReviewModal
+          {...review}
+          isModalVisible={showReviewModal}
+          onBackdropClick={toggleReviewModal}
+          relativeTime={relativeTime}
+        />
+
         <Footer>
           <HelpfulContainer>
             <ThumbsUpIcon
@@ -188,12 +211,14 @@ const ReviewCard: React.FC<ReviewCardProps> = (review) => {
             <Button onClick={toggleModal} bgcolor="white" tcolor="black">
               <OwnersResponse>View Owner's Response</OwnersResponse>
             </Button>
+
             <BaseModalWrapper
               {...review}
               isModalVisible={isModalVisible}
               onBackdropClick={toggleModal}
               relativeTime={relativeTime}
             />
+
             <SmallModal
               isModalVisible={isSmallModalVisible}
               onBackdropClick={toggleSmallModal}
@@ -201,9 +226,9 @@ const ReviewCard: React.FC<ReviewCardProps> = (review) => {
           </div>
         </Footer>
       </ReviewContentContainer>
-      <ReviewImgContainer>
+      <ReviewImgContainer>  
         <ReviewImg src={loadedImage} />
-        <RestoNameContainer showOverlay={review.showOverlay}>
+        <RestoNameContainer showOverlay={review.showOverlay}> 
           <RestoName>{review.resto}</RestoName>
         </RestoNameContainer>
       </ReviewImgContainer>

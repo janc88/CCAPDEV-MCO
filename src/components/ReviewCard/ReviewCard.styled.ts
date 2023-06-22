@@ -18,12 +18,14 @@ export const ReviewContentContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin-right: 1rem;
+  cursor: pointer;
 `;
 
 export const ReviewImgContainer = styled.div`
   flex: 1;
   position: relative;
   display: inline-block;
+  cursor: default;
 `;
 
 export const ReviewImg = styled.img`
@@ -64,6 +66,7 @@ export const RestoName = styled.div`
 export const Header = styled.div`
   display: flex;
   justify-content: space-between;
+  cursor: default;
 `;
 
 export const ReviewTitle = styled.h1`
@@ -106,7 +109,7 @@ export const RelativeTime = styled.div`
 `;
 
 export const ReviewDescription = styled.p`
-  max-height: 50%;
+  height: 110px;
   overflow: hidden;
   text-overflow: ellipsis;
   -webkit-line-clamp: 5;
@@ -128,8 +131,8 @@ export const Helpful = styled.div`
 export const ThumbsUpIcon = styled(ThumbsUp)<{ isClicked: boolean }>`
   margin: 0 0.3rem;
   color: ${({ isClicked }) => (isClicked ? "#ff794f" : "black")};
-  height: 1.3rem;
-  width: 1.3rem;
+  height: 1.5rem;
+  width: 1.5rem;
 
   &:hover {
     color: #ff794f;
@@ -137,17 +140,18 @@ export const ThumbsUpIcon = styled(ThumbsUp)<{ isClicked: boolean }>`
 `;
 
 export const ThumbsDownIcon = styled(ThumbsDown)<{ isClicked: boolean }>`
-  color: ${({ isClicked }) => (isClicked ? "#ff794f" : "black")};
+  color: black;
   margin: 0 0.3rem;
-  height: 1.3rem;
-  width: 1.3rem;
+  color: ${({ isClicked }) => (isClicked ? "#ff794f" : "black")};
+  height: 1.5rem;
+  width: 1.5rem;
 
   &:hover {
     color: #ff794f;
   }
 `;
 
-export const OwnersResponse = styled.h4`
+export const OwnersResponse = styled.h5`
   margin: 0;
   color: #ff794f;
   font-weight: 800;
@@ -158,4 +162,9 @@ export const Footer = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-top: auto;
+  cursor: default;
+`;
+
+export const ClickableContainer = styled.div`
+  cursor: pointer;
 `;

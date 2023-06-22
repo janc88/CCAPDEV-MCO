@@ -26,3 +26,9 @@ export const BodyText = styled.div`
 	display: inline-block;
     margin-bottom: 15px;
 `;
+
+export const DeleteText = styled.div`
+  font-size: 1.8rem;
+  display: inline-block;
+  margin-top: 15px;
+`;

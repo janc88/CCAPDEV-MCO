@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Header,
   RestoReviewsContainer,
@@ -6,6 +6,7 @@ import {
   WriteReview,
 } from "./ReviewsCard.styled";
 import ReviewCard from "../ReviewCard/ReviewCard";
+import ViewWriteModal from "../ModalPopups/ViewWriteModal";
 
 interface ReviewsCardProps {
   reviewList: ReviewProps[];
@@ -36,6 +37,12 @@ const ReviewsCard: React.FC<ReviewsCardProps> = ({
   reviewList,
   showOverLay = false,
 }) => {
+  const [showWriteModal, setshowWriteModal] = useState(false);
+
+  const toggleWriteModal = () => {
+    setshowWriteModal((prevshowWriteModal) => !prevshowWriteModal);
+  };
+  
   return (
     <RestoReviewsContainer isUserReview={showOverLay}>
       <Header>{showOverLay ? "User's Reviews" : "Restaurant's Reviews"}</Header>
@@ -45,7 +52,13 @@ const ReviewsCard: React.FC<ReviewsCardProps> = ({
         ))}
       </ReviewsContainer>
 
-      {!showOverLay && <WriteReview />}
+      <WriteReview onClick={toggleWriteModal}/>
+
+      <ViewWriteModal
+              isModalVisible={showWriteModal}
+              onBackdropClick={toggleWriteModal}
+              {...reviewList[1]} //temporary only
+        />
     </RestoReviewsContainer>
   );
 };
