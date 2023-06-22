@@ -14,7 +14,14 @@ export const SearchContainer = styled.div`
 `;
 
 export const SearchSectionText = styled.h1`
-    font-size: 3rem;
+    font-size: 5rem;
+    color: #FFFFFF;
+    opacity: 0.9;
+    -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-color: #3B3B3B;
+    text-shadow: 5px 5px 10px black;
+    top: 0;
+    margin: -40px auto 20px;
 `;
 
 
