@@ -15,7 +15,7 @@ import {
 import {Tooltip} from './Tooltip';
 import Checkbox from './Checkbox';
 import { PasswordInput } from './PasswordInput';
-import { ImageInput } from './InageInput';
+import { ImageInput } from './ImageInput';
 
 export {Tooltip};
 export {Checkbox};

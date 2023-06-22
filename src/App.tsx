@@ -7,6 +7,7 @@ import { Route, Routes } from "react-router-dom";
 import EditProfilePage from "./pages/EditProfilePage/EditProfilePage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import SignupPage from "./pages/SignupPage/SignupPage";
+import SearchPage from "./pages/SearchPage/SearchPage";
 import { UserProvider } from "./contexts/UserContext";
 import { userInfo } from "./data/data";
 
@@ -19,6 +20,7 @@ function App() {
         <Route path="/home" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
+        <Route path="/restaurants" element={<SearchPage />} />
         <Route
           path="/restaurants/:id"
           element={<RestaurantPage/>}
