@@ -33,18 +33,14 @@ export const LeftContainer = styled.div`
 
 export const RightContainer = styled.div`
     display: flex;
+	flex-direction: column;
     flex: 5;
     width: 100%;
     margin: 2rem 1rem;
-
-    > * {
-        border-radius: 0.7rem;
-        box-shadow: 6px 7px 14px -2px rgba(0, 0, 0, 0.3);
-        background-color: white;
-    }
 `;
 
-const GridContainer = styled.div`
+export const GridContainer = styled.div`
+	padding: 30px;
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
 	grid-gap: 30px;
