@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { FlexCol } from "../../styles/Flex.styled";
 
 export const SearchPageContainer = styled.div`
   background-color: #FBFBFB;
@@ -8,9 +9,24 @@ export const SearchPageContainer = styled.div`
 export const Divider = styled.hr`
   border-color: rgb(255, 121, 79);
   background-color: rgb(255, 121, 79);
-  width: 50%;
+  width: 85%;
   height: 0.75px;
   margin: 30px auto;
+`;
+
+export const EndDivider = styled.hr`
+  border-color: #737373;
+  background-color: #737373;
+  width: 85%;
+  height: 0.75px;
+  margin: 30px auto;
+`;
+export const EndText = styled.div`
+  color: #737373;
+  font-size: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 13px;
 `;
 
 export const MainContainer = styled.div`
@@ -31,7 +47,7 @@ export const LeftContainer = styled.div`
     }
 `;
 
-export const RightContainer = styled.div`
+export const RightContainer = styled(FlexCol)`
     display: flex;
 	flex-direction: column;
     flex: 5;
