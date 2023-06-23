@@ -41,7 +41,7 @@ interface RestoNameContainerProps {
 
 export const RestoNameContainer = styled.div<RestoNameContainerProps>`
   position: absolute;
-  bottom: 0.15rem;
+  bottom: 1.6rem;
   left: 0;
   width: 100%;
   background-color: rgba(0, 0, 0, 0.5);
