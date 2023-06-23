@@ -160,7 +160,7 @@ const ReviewCard: React.FC<ReviewCardProps> = (review) => {
             <ReviewTitle>{review.title}</ReviewTitle>
             <UserContainer>
               <ProfilePic src={profilePic} />
-              <UserName>Username here</UserName>
+              <UserName>{review.username}</UserName>
             </UserContainer>
           </LeftContainer>
           <RightContainer>
