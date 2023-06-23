@@ -8,6 +8,7 @@ import {
 import ReviewCard from "../ReviewCard/ReviewCard";
 import ViewWriteModal from "../ModalPopups/ViewWriteModal";
 import { SearchBar } from "./Input";
+import { FlexRight, FlexRow } from "../../styles/Flex.styled";
 
 interface ReviewsCardProps {
   reviewList: ReviewProps[];
@@ -50,14 +51,17 @@ const ReviewsCard: React.FC<ReviewsCardProps> = ({
   
   return (
     <RestoReviewsContainer isUserReview={showOverLay}>
-      <Header>{showOverLay ? "User's Reviews" : "Restaurant's Reviews"}</Header>
+      <Header>
+		  {showOverLay ? "User's Reviews" : "Restaurant's Reviews"}
+		  <SearchBar 
+		    placeholder="Search Reviews"
+		    inputProps={{
+			  onChange: handleInputChange,
+			  text: reviewFilter,
+		  }}/>
+	  </Header>
+      
       <ReviewsContainer isUserReview={showOverLay}>
-		<SearchBar 
-		  placeholder="Search Reviews"
-		  inputProps={{
-			onChange: handleInputChange,
-			text: reviewFilter,
-		}}/>
         {reviewList.map((review) => (
 		  (review.title.includes(reviewFilter) || review.description.includes(reviewFilter)) && 
           <ReviewCard {...review} showOverlay={showOverLay} />
