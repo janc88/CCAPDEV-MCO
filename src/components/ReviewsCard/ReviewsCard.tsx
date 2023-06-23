@@ -8,7 +8,6 @@ import {
 import ReviewCard from "../ReviewCard/ReviewCard";
 import ViewWriteModal from "../ModalPopups/ViewWriteModal";
 import { SearchBar } from "./Input";
-import { FlexRight, FlexRow } from "../../styles/Flex.styled";
 
 interface ReviewsCardProps {
   reviewList: ReviewProps[];
