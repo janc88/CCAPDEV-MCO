@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Search } from "@styled-icons/fa-solid";
 //TODO: clean up code;
 
-export const SearchContainer = styled.div`
+export const SearchContainer = styled.label`
 	display: flex;
 	justify-content: flex-end;
 	flex: 1;
