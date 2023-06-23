@@ -8,6 +8,9 @@ import {
   NavMenu,
   NavbarLink,
   NavButton,
+  Title,
+  Title1,
+  Title2
 } from "./styles/Nav.styled";
 import { LogoContainer } from "./styles/NavSearch.styled";
 import { Button } from "../../styles/Button.styled";
@@ -34,6 +37,10 @@ function Navbar() {
         <LogoLink to="/home">
           <Logo src={logo} />
         </LogoLink>
+        <Title>
+          <Title1>Resto</Title1>
+          <Title2>Rant</Title2>
+        </Title>
         <NavSearch />
       </LogoContainer>
 

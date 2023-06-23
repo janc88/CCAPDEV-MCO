@@ -51,3 +51,20 @@ interface NavButtonProps {
 export const NavButton = styled.span<NavButtonProps>`
     margin-left: ${({marginleft}) => `${marginleft}px`}
 `;
+
+export const Title = styled.div`
+    font-size: 2rem;
+    font-weight: 700;
+    color: #FF794F;
+    margin: auto 10px auto -10px;
+`;
+
+export const Title1 = styled.div`
+    color: rgb(50,50,50);
+    display: inline;
+`;
+
+export const Title2 = styled.div`
+    color: white;
+    display: inline;
+`;
