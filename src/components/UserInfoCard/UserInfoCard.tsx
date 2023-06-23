@@ -11,6 +11,7 @@ import {
 import { ImageProps } from "../ReviewsCard/ReviewsCard";
 import ShortText from "./ShortText";
 
+
 interface UserInfoCardProps {
   username: string;
   description: string;

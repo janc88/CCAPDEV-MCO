@@ -15,6 +15,7 @@ import {
   TrashAltIcon,
   EditIcon,
   EditDeleteContainer,
+  ReviewImgsContainer,
 } from "./ModalPopup";
 import { ImageProps, ReviewProps } from "../ReviewsCard/ReviewsCard";
 import {
@@ -48,7 +49,7 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & ReviewProps> = ({
   relativeTime,
   ...reviewProps
 }) => {
-  const [loadedImage, setLoadedImage] = useState<string>();
+  const [loadedImages, setLoadedImages] = useState<string[]>([]);
   const [profilePic, setProfilePic] = useState<string>();
   const [thumbsUpCount, setThumbsUpCount] = useState(reviewProps.helpful);
   const [thumbsDownCount, setThumbsDownCount] = useState(0);
@@ -60,19 +61,24 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & ReviewProps> = ({
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
   
 
-  const image = reviewProps.imgs[0];
+  const images = reviewProps.imgs;
   const ppic = reviewProps.profilepic;
   const navigate = useNavigate();
 
-  const loadImages = async (image: ImageProps, ppic: ImageProps) => {
+  const loadImages = async (imageList: ImageProps[], ppic: ImageProps) => {
     try {
-      const loadedImage = await import(`../../imgs/${image.src}`);
-      const profilePic = await import(`../../imgs/${image.src}`);
-      setLoadedImage(loadedImage.default);
+      const profilePic = await import(`../../imgs/${ppic.src}`);
       setProfilePic(profilePic.default);
     } catch (error) {
       console.error("Error loading image:", error);
     }
+    const loadedImages = await Promise.all(
+      imageList.map(async (image) => {
+        const loadedImage = await import(`../../imgs/${image.src}`);
+        return loadedImage.default;
+      })
+    );
+    setLoadedImages(loadedImages);
   };
 
   const handleThumbsUpClick = () => {
@@ -127,9 +133,8 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & ReviewProps> = ({
   const { user } = useContext(UserContext);
 
   useEffect(() => {
-    loadImages(image, ppic);
-    console.log(new Date());
-  }, [image, ppic]);
+    loadImages(images, ppic);
+  }, [images, ppic]);
 
   if (!isModalVisible) {
     return null;
@@ -159,8 +164,15 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & ReviewProps> = ({
           <ReviewCardContainer>
             {reviewProps.description}
             <br></br>
-            <ImageReview src={loadedImage} />
-            <ImageReview src={loadedImage} />
+            <ReviewImgsContainer>
+              {loadedImages.map((imageSrc, index) => (
+                <ImageReview
+                  key={images[index].id}
+                  src={imageSrc}
+                  alt={images[index].alt}
+                />
+              ))}
+            </ReviewImgsContainer>
           </ReviewCardContainer>
 
           <Footer>
