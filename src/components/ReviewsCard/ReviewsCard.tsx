@@ -52,7 +52,7 @@ const ReviewsCard: React.FC<ReviewsCardProps> = ({
         ))}
       </ReviewsContainer>
 
-      <WriteReview onClick={toggleWriteModal}/>
+      {!showOverLay && <WriteReview onClick={toggleWriteModal}/>}
 
       <ViewWriteModal
               isModalVisible={showWriteModal}
