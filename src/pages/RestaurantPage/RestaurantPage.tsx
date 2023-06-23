@@ -9,16 +9,19 @@ import AboutRestoCard from "./AboutRestoCard";
 import RestoGallery from "./RestoGallery";
 import ReviewsCard from "../../components/ReviewsCard/ReviewsCard";
 import SummaryCard from "./SummaryCard";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { restoList } from "../../data/data";
+import { CenterContainer, PageContainer, Card, Title, Divider, Send } from "../styles/LoginPage.styled";
 
 const RestaurantPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate()
 
-  const resto = restoList.find((resto) => resto.details.id === parseInt(id!));
+  const resto = restoList.find((resto) => resto.details.id === parseInt(id || '-1'));
 
   return (
+	<> { resto ? (
     <RestaurantPageContainer className="resto-gallery">
       <LeftContainer>
         <AboutRestoCard
@@ -44,7 +47,20 @@ const RestaurantPage: React.FC = () => {
         />
       </RightContainer>
     </RestaurantPageContainer>
-  );
+	) : (
+	  <PageContainer>
+		<CenterContainer>
+		  <Card>
+			<Title>Restaurant {id} not found</Title>
+			<Divider />
+			<Send onClick={()=>navigate('/Restaurants')}>
+			  Return to Restaurants
+			</Send>
+		  </Card>
+		</CenterContainer>
+	  </PageContainer>
+	)}
+	</>);
 };
 
 export default RestaurantPage;
