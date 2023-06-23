@@ -14,7 +14,7 @@ export const DesktopModalContainer = styled(ModalContainer)`
   border-radius: 15px;
   box-shadow: 0 0 32px rgba(0, 0, 0, 0.5);
   padding: 40px;
-  height: 800px;
+  max-height: 800px;
   width: 700px;
   font-size: 26px;
 `;
@@ -57,7 +57,7 @@ export const ViewCardContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height:100%;
+  height: fit-content;
   max-height: 700px;
   
 `;
@@ -88,6 +88,13 @@ export const ReviewCardContainer = styled.div`
   &::-webkit-scrollbar-thumb:hover {
     background-color: #757575;
   }
+`;
+
+export const ReviewImgsContainer = styled.div`
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
 `;
 
 export const HeaderReview = styled.div`
@@ -151,7 +158,7 @@ export const HeaderResponse = styled.div`
   margin-left: -1rem;
   margin-bottom: 10px;
   color: white; 
-  justify-contet:center;
+  justify-content:center;
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
 `;
@@ -194,10 +201,9 @@ export const Header = styled.div`
 `;
 
 export const ImageReview = styled.img`
-  margin-top: 30px;
-  margin-right: 15px; 
-  width: 500px;
-  height: 275px;
+  width: 100%;
+  height: auto;
+  border-radius: 0.3rem;
 `;
 
 export const EditIcon = styled(Edit)<{ isClicked: boolean }>`
