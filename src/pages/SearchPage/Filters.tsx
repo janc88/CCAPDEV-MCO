@@ -1,4 +1,3 @@
-
 import React from "react";
 import Menu from "../../components/Input/Dropdown/DropdownMenu";
 import {
@@ -21,11 +20,11 @@ function Filters() {
         <Header>Filters</Header>
           <OptionsContainer>
             <Option>Restaurant Type</Option>
-            <Menu />
+            <Menu dropdownType="restaurant"/>
             <Option>Stars</Option>
-            <Menu />
+            <Menu dropdownType="stars"/>
             <Option>Price Range (₱)</Option>
-            <Menu />
+            <Menu dropdownType="price"/>
             <br/><br/>
             <Button
               bgcolor="#FF794F"
