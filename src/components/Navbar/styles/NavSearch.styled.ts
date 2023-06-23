@@ -1,6 +1,6 @@
 import styled from "styled-components";
-// import searchIcon from "../../../imgs/search_icon.png";
 import { Search } from "@styled-icons/fa-solid";
+import { FlexRow } from "../../../styles/Flex.styled";
 
 export const LogoContainer = styled.div`
   display: flex;
@@ -9,40 +9,34 @@ export const LogoContainer = styled.div`
   gap: 20px;
 `;
 
-export const SearchContainer = styled.div`
+export const SearchContainer = styled(FlexRow)`
   background-color: white;
   color: black;
   border-radius: 27px;
-  height: 3rem;
+  width: 256px;
+  height: 50px;
   overflow: hidden;
-  position: relative;
-`;
-
-//padding: 15px 12px 15px 71px;
-//padding	10 + 28 + 8 + 25 = 71
-//			ic_left_pad, ic_width, ic_pad, left_pad
-export const SearchIcon = styled(Search)`
-  width: 28px;
-  height: 28px;
-
-  padding: 4px;
-  position: absolute;
-  top: 50%;
-  left: 10px;
-  transform: translateY(-50%);
 `;
 
 interface SearchInputProps {
-  hasIcon: boolean;
+	hasFocus: boolean;
 }
+export const SearchIcon = styled(Search)<SearchInputProps>`
+  width: 28px;
+  height: 28px;
+  padding: 4px;
+  margin-left: 10px;
+  visibility: ${({hasFocus}) => hasFocus ? 'hidden' : 'visible'};
+`;
+
 export const SearchInput = styled.input.attrs({
   type: "text",
   placeholder: "Search Restaurants",
 })<SearchInputProps>`
-  width: ${({ hasIcon }) => (hasIcon ? "200px" : "246px")};
+  width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0);
-  padding-left: ${({ hasIcon }) => (hasIcon ? "71px" : "25px")};
+  margin-left: ${({ hasFocus }) => (hasFocus ? "-21px" : "10px")};
   padding-right: 25px;
 
   color: #444;

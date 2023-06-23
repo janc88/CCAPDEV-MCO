@@ -12,11 +12,11 @@ const NavSearch = () => {
 
 	return (
 		<SearchContainer>
-			{isInputFocused || <SearchIcon/>}
+			<SearchIcon hasFocus={isInputFocused}/>
 			<SearchInput 
 				onFocus={handleInputFocus} 
 				onBlur={handleInputBlur} 
-				hasIcon = {!isInputFocused}/>
+				hasFocus = {isInputFocused}/>
 		</SearchContainer>
 	);
 };
