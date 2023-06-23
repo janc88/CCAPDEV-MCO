@@ -10,6 +10,7 @@ export const UserInfoCardContainer = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 2rem;
+  overflow: auto;
 `;
 
 export const ProfilePic = styled.img`

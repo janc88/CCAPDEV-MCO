@@ -5,11 +5,11 @@ import {
   ProfilePicContainer,
   SettingIcon,
   SettingsLink,
-  UserDescription,
   UserInfoCardContainer,
   UserName,
 } from "./UserInfoCard.styled";
 import { ImageProps } from "../ReviewsCard/ReviewsCard";
+import ShortText from "./ShortText";
 
 interface UserInfoCardProps {
   username: string;
@@ -51,7 +51,8 @@ const UserInfoCard: React.FC<UserInfoCardProps> = ({
         )}
       </ProfilePicContainer>
       <UserName>{username}</UserName>
-      <UserDescription>{description}</UserDescription>
+      {/*<UserDescription>{description}</UserDescription>*/}
+	  <ShortText maxLines={3} text={description}/>
       {!isEditProfile && (
         <LogOutButton bgcolor="white" tcolor="black">
           Log Out
