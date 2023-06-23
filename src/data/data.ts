@@ -103,7 +103,11 @@ export const restoList = [
         stars: 5,
         helpful: 3,
         response: "thank you",
-        imgs: [{ id: 1, src: "food-bg-dark.jpeg", alt: "Image 1" }],
+        imgs: [
+          { id: 1, src: "food-bg-dark.jpeg", alt: "Image 1" },
+          { id: 1, src: "food-bg-light.jpeg", alt: "Image 1" },
+          { id: 1, src: "food-bg.png", alt: "Image 1" },
+        ],
       },
       {
         id: 1,

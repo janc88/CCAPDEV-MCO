@@ -197,7 +197,7 @@ export const ImageReview = styled.img`
   margin-top: 30px;
   margin-right: 15px; 
   width: 500px;
-  height: 275px;
+  height: auto;
 `;
 
 export const EditIcon = styled(Edit)<{ isClicked: boolean }>`
