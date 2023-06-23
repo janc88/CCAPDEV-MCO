@@ -90,6 +90,13 @@ export const ReviewCardContainer = styled.div`
   }
 `;
 
+export const ReviewImgsContainer = styled.div`
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+`;
+
 export const HeaderReview = styled.div`
   background-color: #ff794f;
   display: flex;
@@ -151,7 +158,7 @@ export const HeaderResponse = styled.div`
   margin-left: -1rem;
   margin-bottom: 10px;
   color: white; 
-  justify-contet:center;
+  justify-content:center;
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
 `;
@@ -194,10 +201,9 @@ export const Header = styled.div`
 `;
 
 export const ImageReview = styled.img`
-  margin-top: 30px;
-  margin-right: 15px; 
-  width: 500px;
+  width: 100%;
   height: auto;
+  border-radius: 0.3rem;
 `;
 
 export const EditIcon = styled(Edit)<{ isClicked: boolean }>`

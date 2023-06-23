@@ -11,6 +11,7 @@ import {
   EditIcon,
   EditDeleteContainer,
   ViewCardContainer,
+  ReviewImgsContainer,
 } from "./ModalPopup";
 import { ImageProps, ReviewProps } from "../ReviewsCard/ReviewsCard";
 import {
@@ -73,8 +74,6 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & ReviewProps> = ({
     setLoadedImages(loadedImages);
   };
 
-
-
   const handleThumbsUpClick = () => {
     if (isThumbsUpClicked) {
       // Deselect thumbs-up
@@ -129,11 +128,9 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & ReviewProps> = ({
 
   const { user } = useContext(UserContext);
 
-
   useEffect(() => {
     loadImages(images, ppic);
   }, [images, ppic]);
-
 
   if (!isModalVisible) {
     return null;
@@ -163,78 +160,78 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & ReviewProps> = ({
           <ReviewCardContainer>
             {reviewProps.description}
             <br></br>
-            {loadedImages.map((imageSrc, index) => (
+            <ReviewImgsContainer>
+              {loadedImages.map((imageSrc, index) => (
                 <ImageReview
                   key={images[index].id}
                   src={imageSrc}
                   alt={images[index].alt}
                 />
-            ))}
+              ))}
+            </ReviewImgsContainer>
           </ReviewCardContainer>
 
           <Footer>
             <HelpfulContainer>
-            <ThumbsUpIcon
-              onClick={() => {
-                if (user) {
-                  handleThumbsUpClick();
-                } // If logged in
-                else {
-                  toggleSmallModal();
-                }
-              }}
-              isClicked={isThumbsUpClicked}
-            />
-            /
-            <ThumbsDownIcon
-              onClick={() => {
-                if (user) {
-                  handleThumbsDownClick();
-                } // If logged in
-                else {
-                  toggleSmallModal();
-                }
-              }}
-              isClicked={isThumbsDownClicked}
-            />
+              <ThumbsUpIcon
+                onClick={() => {
+                  if (user) {
+                    handleThumbsUpClick();
+                  } // If logged in
+                  else {
+                    toggleSmallModal();
+                  }
+                }}
+                isClicked={isThumbsUpClicked}
+              />
+              /
+              <ThumbsDownIcon
+                onClick={() => {
+                  if (user) {
+                    handleThumbsDownClick();
+                  } // If logged in
+                  else {
+                    toggleSmallModal();
+                  }
+                }}
+                isClicked={isThumbsDownClicked}
+              />
               <Helpful>Helpful ({thumbsUpCount - thumbsDownCount})</Helpful>
             </HelpfulContainer>
             <EditDeleteContainer>
-              <EditIcon 
-              isClicked={isEditClicked} 
-              onClick={() => {
-                if (user) {
-                  handleEditClick();
-                } // If logged in
-                else {
-                  toggleSmallModal();
-                }
-              }}
-            />
-                <TrashAltIcon
-                  isClicked={isTrashClicked}
-                  onClick={() => {
-                    if (user) {
-                      toggleDeleteModal();
-                    } // If logged in
-                    else {
-                      toggleSmallModal();
-                    }
-                  }}
+              <EditIcon
+                isClicked={isEditClicked}
+                onClick={() => {
+                  if (user) {
+                    handleEditClick();
+                  } // If logged in
+                  else {
+                    toggleSmallModal();
+                  }
+                }}
+              />
+              <TrashAltIcon
+                isClicked={isTrashClicked}
+                onClick={() => {
+                  if (user) {
+                    toggleDeleteModal();
+                  } // If logged in
+                  else {
+                    toggleSmallModal();
+                  }
+                }}
               />
             </EditDeleteContainer>
           </Footer>
           <SmallModal
-              isModalVisible={isSmallModalVisible}
-              onBackdropClick={toggleSmallModal}
-            />
+            isModalVisible={isSmallModalVisible}
+            onBackdropClick={toggleSmallModal}
+          />
           <DeleteModal
-              isModalVisible={isDeleteModalVisible}
-              onBackdropClick={toggleDeleteModal}
-            />
-            
+            isModalVisible={isDeleteModalVisible}
+            onBackdropClick={toggleDeleteModal}
+          />
         </ViewCardContainer>
-
       </DesktopModalContainer>
     </Modal>
   );
