@@ -34,6 +34,7 @@ import StarRating from "../StarRating/StarRating";
 import SmallModal from "../SmallModal/SmallModal";
 import { UserContext } from "../../contexts/UserContext";
 import DeleteModal from "../SmallModal/DeleteModal";
+import { useNavigate } from "react-router-dom";
 
 interface BaseModalWrapperProps {
   isModalVisible: boolean;
@@ -57,9 +58,11 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & ReviewProps> = ({
   const [isTrashClicked, setIsTrashClicked] = useState(false);
   const [isSmallModalVisible, setIsSmallModalVisible] = useState(false);
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
+  
 
   const image = reviewProps.imgs[0];
   const ppic = reviewProps.profilepic;
+  const navigate = useNavigate();
 
   const loadImages = async (image: ImageProps, ppic: ImageProps) => {
     try {
@@ -110,10 +113,7 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & ReviewProps> = ({
 
   const handleEditClick = () => {
     setIsEditClicked(true);
-  };
-
-  const handleTrashClick = () => {
-    setIsTrashClicked(true);
+    navigate("/edit-review", { state: reviewProps });;
   };
 
   const toggleSmallModal = () => {

@@ -25,7 +25,7 @@ import {
 import StarRating from "../StarRating/StarRating";
 import { ReviewProps, ImageProps } from "../ReviewsCard/ReviewsCard";
 import { Button } from "../../styles/Button.styled";
-import BaseModalWrapper from "../ModalPopups/ViewBaseModal";
+import BaseModalWrapper from "../ModalPopups/ViewOwnerResponseModal";
 import ViewReviewModal from "../ModalPopups/ViewReviewModal";
 import SmallModal from "../SmallModal/SmallModal";
 import { UserContext } from "../../contexts/UserContext";

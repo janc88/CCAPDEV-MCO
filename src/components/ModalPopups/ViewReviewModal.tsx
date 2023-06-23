@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import Modal from "./ViewModal";
+import { useNavigate } from "react-router-dom";
 import {
   DesktopModalContainer,
   HeaderReview,
@@ -57,6 +58,7 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & ReviewProps> = ({
 
   const images = reviewProps.imgs;
   const ppic = reviewProps.profilepic;
+  const navigate = useNavigate();
 
   const loadImages = async (imageList: ImageProps[], ppic: ImageProps) => {
     try {
@@ -112,11 +114,9 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & ReviewProps> = ({
 
   const handleEditClick = () => {
     setIsEditClicked(true);
+    navigate("/edit-review", { state: reviewProps });;
   };
-
-  const handleTrashClick = () => {
-    setIsTrashClicked(true);
-  };
+  
 
   const toggleSmallModal = () => {
     setIsSmallModalVisible((wasModalVisible) => !wasModalVisible);
@@ -199,17 +199,17 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & ReviewProps> = ({
               <Helpful>Helpful ({thumbsUpCount - thumbsDownCount})</Helpful>
             </HelpfulContainer>
             <EditDeleteContainer>
-              <EditIcon
-                isClicked={isEditClicked}
-                onClick={() => {
-                  if (user) {
-                    handleEditClick();
-                  } // If logged in
-                  else {
-                    toggleSmallModal();
-                  }
-                }}
-              />
+            <EditIcon
+              onClick={() => {
+                if (user) {
+                  handleEditClick();
+                } // If logged in
+                else {
+                  toggleSmallModal();
+                }
+              }}
+              isClicked={isEditClicked}
+            />
               <TrashAltIcon
                 isClicked={isTrashClicked}
                 onClick={() => {
