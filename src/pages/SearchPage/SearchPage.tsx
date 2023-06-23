@@ -2,13 +2,14 @@ import React from "react";
 import Footer from "../../components/Footer/Footer";
 import { restoList } from "../../data/data";
 
-import { SearchPageContainer, Divider, MainContainer } from "./SearchPage.styled";
+import { SearchPageContainer, Divider, MainContainer, GridContainer } from "./SearchPage.styled";
 import SearchResultsBar from "./SearchResultsBar";
 import Filters from "./Filters";
 import {
   LeftContainer,
   RightContainer,
 } from "./SearchPage.styled";
+import RestoCard from "../../components/RestoCard/RestoCard";
 
 
 function SearchPage() {
@@ -25,7 +26,11 @@ function SearchPage() {
           </LeftContainer>
 
           <RightContainer>
-            asdasd
+            <GridContainer>
+			{featuredRestos.map(resto =>
+			  <RestoCard {...resto} />
+			)}
+			</GridContainer>
           </RightContainer>
         </MainContainer>
         
