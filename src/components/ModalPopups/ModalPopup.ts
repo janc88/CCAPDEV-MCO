@@ -14,7 +14,7 @@ export const DesktopModalContainer = styled(ModalContainer)`
   border-radius: 15px;
   box-shadow: 0 0 32px rgba(0, 0, 0, 0.5);
   padding: 40px;
-  height: 800px;
+  max-height: 800px;
   width: 700px;
   font-size: 26px;
 `;
@@ -57,7 +57,7 @@ export const ViewCardContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height:100%;
+  height: fit-content;
   max-height: 700px;
   
 `;
