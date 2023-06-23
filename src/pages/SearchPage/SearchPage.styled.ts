@@ -43,3 +43,10 @@ export const RightContainer = styled.div`
         background-color: white;
     }
 `;
+
+const GridContainer = styled.div`
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+	grid-gap: 30px;
+	justify-items: center;
+`;
