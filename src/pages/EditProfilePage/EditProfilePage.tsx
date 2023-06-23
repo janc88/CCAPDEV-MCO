@@ -20,6 +20,7 @@ import {
 } from "./EditProfilePage.styled";
 import UserInfoCard from "../../components/UserInfoCard/UserInfoCard";
 import { Header } from "../../components/ReviewsCard/ReviewsCard.styled";
+import { useNavigate } from "react-router-dom";
 
 function EditProfilePage() {
   const userInfo = {
@@ -28,6 +29,9 @@ function EditProfilePage() {
       "my name is username my name is username my name is username my name is username my name is username",
     profilePic: { id: 1, src: "food-bg-dark.jpeg", alt: "Image 1" },
   };
+
+  
+  const navigate = useNavigate();
 
   return (
     <EditProfileContainer>
@@ -38,7 +42,7 @@ function EditProfilePage() {
         <EditProfileCard>
           <Header>Edit Profile</Header>
           <DescriptionContainer>
-            <DescriptionLabel>Description (110 characters)</DescriptionLabel>
+            <DescriptionLabel>Description (Max of 100 characters)</DescriptionLabel>
             <EditIcon />
           </DescriptionContainer>
           <InputField />
@@ -51,8 +55,17 @@ function EditProfilePage() {
               <UploadImageButton>Upload Image</UploadImageButton>
             </UploadImageContainer>
             <ButtonContainer>
-              <CancelButton>Cancel</CancelButton>
-              <SaveButton>Save</SaveButton>
+              <CancelButton
+                onClick={() => navigate("/profile")}
+              >
+                  Cancel
+              </CancelButton>
+
+              <SaveButton
+                onClick={() => navigate("/profile")}
+              >
+                Save
+              </SaveButton>
             </ButtonContainer>
           </LowerContainer>
         </EditProfileCard>

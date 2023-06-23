@@ -1,20 +1,40 @@
 
 import React from "react";
-
+import Menu from "../../components/Input/Dropdown/DropdownMenu";
 import {
     Header,
     RestoReviewsContainer,
-    ReviewsContainer,
   } from "../../components/ReviewsCard/ReviewsCard.styled";
+import {
+  Option,
+  OptionsContainer,
+} from "./Filters.styled";
+import { Button } from "../../styles/Button.styled";
+import { useNavigate } from "react-router-dom";
 
 function Filters() {
+  const navigate = useNavigate();
+  
   return (
     <>
       <RestoReviewsContainer>
         <Header>Filters</Header>
-        <ReviewsContainer>
-          
-        </ReviewsContainer>
+          <OptionsContainer>
+            <Option>Restaurant Type</Option>
+            <Menu />
+            <Option>Stars</Option>
+            <Menu />
+            <Option>Price Range (₱)</Option>
+            <Menu />
+            <br/><br/>
+            <Button
+              bgcolor="#FF794F"
+              tcolor="white"
+              onClick={() => navigate("/restaurants")}
+            >
+              Search
+            </Button>
+          </OptionsContainer>
       </RestoReviewsContainer>
     </>
   );

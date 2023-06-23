@@ -9,24 +9,24 @@ export const SearchPageContainer = styled.div`
 export const Divider = styled.hr`
   border-color: rgb(255, 121, 79);
   background-color: rgb(255, 121, 79);
-  width: 85%;
+  width: 50%;
   height: 0.75px;
-  margin: 30px auto;
+  margin: 30px auto 0px;
 `;
 
 export const EndDivider = styled.hr`
   border-color: #737373;
   background-color: #737373;
-  width: 85%;
+  width: 50%;
   height: 0.75px;
-  margin: 30px auto;
+  margin: 20px auto 30px;
 `;
+
 export const EndText = styled.div`
   color: #737373;
   font-size: 20px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 13px;
+  margin: 50px auto 0 auto;
+  text-align: center;
 `;
 
 export const MainContainer = styled.div`
@@ -39,6 +39,8 @@ export const LeftContainer = styled.div`
     flex: 1;
     width: 100%;
     margin: 2rem 1rem;
+    height: 400px;
+    margin-left: 50px;
 
     > * {
         border-radius: 0.7rem;
@@ -49,14 +51,14 @@ export const LeftContainer = styled.div`
 
 export const RightContainer = styled(FlexCol)`
     display: flex;
-	flex-direction: column;
+	  flex-direction: column;
     flex: 5;
     width: 100%;
     margin: 2rem 1rem;
 `;
 
 export const GridContainer = styled.div`
-	padding: 30px;
+	padding: 0 30px;
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
 	grid-gap: 30px;

@@ -89,10 +89,10 @@ export const SignupDetailsCard: React.FC<CardProps> = ({ onSubmit, onPrev, value
 			  px={200}
 			  defaultSrc={default_pfp} />
 			<Input
-			  label="Account Description"
+			  label="Account Description (Max of 100 characters)"
 			  id="accountdesc"
 			  type="textarea"
-			  tooltip="Max of 110 characters" />
+			  tooltip="Other users will be able to view your description." />
 			<div>
 			  <Checkbox
 			  	id='stayLoggedIn'

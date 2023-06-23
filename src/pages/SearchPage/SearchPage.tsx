@@ -19,24 +19,25 @@ function SearchPage() {
     <>
       <SearchPageContainer>
         <SearchResultsBar />
+        <Divider />
+
         <MainContainer>
           <LeftContainer>
             <Filters />
           </LeftContainer>
 
           <RightContainer>
-        	<Divider />
             <GridContainer>
-			{featuredRestos.map(resto =>
-			  <RestoCard {...resto} />
-			)}
-			</GridContainer>
-		    <EndText>
-			  End of Search Results
-		    </EndText>
-		    <EndDivider/>
+              {featuredRestos.map(resto =>
+                <RestoCard {...resto} />
+              )}
+            </GridContainer>
           </RightContainer>
         </MainContainer>
+        <EndText>
+			      End of Search Results
+		    </EndText>
+		    <EndDivider/>
       </SearchPageContainer>
       <Footer />
     </>
