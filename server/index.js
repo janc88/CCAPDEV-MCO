@@ -3,9 +3,9 @@ import * as dotenv from "dotenv";
 import cors from "cors";
 import mongoose from "mongoose";
 
-import userRouter from "./routes/user.routes";
-import reviewRouter from "./routes/review.routes";
-import restaurantRouter from "./routes/restaurant.routes";
+import userRouter from "./routes/user.routes.js";
+import reviewRouter from "./routes/review.routes.js";
+import restaurantRouter from "./routes/restaurant.routes.js";
 
 dotenv.config();
 
