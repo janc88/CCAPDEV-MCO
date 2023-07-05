@@ -11,7 +11,7 @@ import { UserContext } from "../../contexts/UserContext";
 import { useNavigate } from "react-router-dom";
 
 function SignupPage() {
-  const { setUser } = useContext(UserContext);
+  const { login } = useContext(UserContext);
   const [swiperRef, setSwiperRef] = useState<SwiperClass>();
   const [formData, setFormData] = useState({})
   const navigate = useNavigate()
@@ -30,9 +30,9 @@ function SignupPage() {
 	const user = {
 		userName: data.username,
 		profilePicture: data.profilepicture,
-		accountDesc: data.accountdesc,
+		accountDesc: data.accountdesc
 	}
-	setUser(user)
+	login(user, data.password)
 	navigate('/home');
   }
 
