@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, useContext, useEffect, useState } from "react";
 import Modal from "./ViewModal";
 import {
   DesktopModalContainer,
@@ -24,6 +24,8 @@ import { ImageProps, ReviewProps } from "../ReviewsCard/ReviewsCard";
 import StarRating from "../StarRating/StarRating";
 import ImageWithCloseButton from "./ImageClose";
 import Rating from "./Ratings";
+import { useParams } from "react-router-dom";
+import { UserContext } from "../../contexts/UserContext";
 
 interface BaseModalWrapperProps {
   isModalVisible: boolean;
@@ -40,7 +42,11 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & ReviewProps> = ({
   isModalVisible,
   ...reviewProps
 }) => {
+  const { id } = useParams<{ id: string }>();
+  const { user, setUser } = useContext(UserContext);
+  
   const [images, setImages] = useState<string[]>([]);
+  const [imageFiles, setImageFiles] = useState<File[]>([]);
   const [rating, setRating] = React.useState(0);
   const [loadedImage, setLoadedImage] = useState<string>();
   const [starRating, setStarRating] = useState(0);
@@ -58,10 +64,44 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & ReviewProps> = ({
     }
   };
 
+  const postReview = async () => {
+    const reviewData = {
+      title: title,
+      body: description,
+      datePosted: new Date(),
+      user: user?.userName  , // Replace with the actual user ID
+      restaurant: id, // Replace with the actual restaurant ID
+      stars: rating,
+      helpful: 0,
+      ownerResponse: '',
+      imgs: imageFiles,
+    };
+  
+    try {
+      const response = await fetch('http://localhost:8080/api/review', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(reviewData),
+      });
+  
+      if (response.ok) {
+        const createdReview = await response.json();
+        console.log('Review created successfully:', createdReview);
+      } else {
+        console.error('Failed to create review');
+      }
+    } catch (error) {
+      console.error('Error creating review:', error);
+    }
+  };
+  
+
   useEffect(() => {
     loadImages(image);
-    console.log(new Date());
-  }, [image]);
+    console.log(user);
+  }, [images]);
 
   if (!isModalVisible) {
     return null;
@@ -83,6 +123,8 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & ReviewProps> = ({
     setDescription('');
 
     onBackdropClick();
+
+    postReview();
   };
   
   const handleImageUpload = (event: ChangeEvent<HTMLInputElement>) => {
@@ -92,11 +134,13 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & ReviewProps> = ({
         URL.createObjectURL(file)
       );
       setImages((prevImages) => [...prevImages, ...imageUrls]);
+      setImageFiles((prevImages) => [...prevImages, ...files]);
     }
   };
 
   const handleImageDelete = (index: number) => {
     setImages((prevImages) => prevImages.filter((_, i) => i !== index));
+    setImageFiles((prevImages) => prevImages.filter((_, i) => i !== index));
   };
   
   return (

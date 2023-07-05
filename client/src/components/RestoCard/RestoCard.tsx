@@ -33,6 +33,35 @@ const RestoCard: React.FC<RestoProps> = (resto) => {
     fetchBackgroundImage();
   }, []);
 
+  const createSampleRestaurant = async () => {
+    const sampleRestaurantData = {
+      name: "Mcdonalds DLSU",
+      description: "A sample restaurant for testing",
+      address: "123 Main Street",
+      coverImg: "https://res.cloudinary.com/dcgvictil/image/upload/v1688534186/Screenshot_2023-07-05_at_13.16.11_xuxpwa.png",
+      imgs: ["https://res.cloudinary.com/dcgvictil/image/upload/v1688534186/Screenshot_2023-07-05_at_13.16.11_xuxpwa.png", "https://res.cloudinary.com/dcgvictil/image/upload/v1688534186/Screenshot_2023-07-05_at_13.16.11_xuxpwa.png"],
+    };
+
+    try {
+      const response = await fetch("http://localhost:8080/api/restaurant/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(sampleRestaurantData),
+      });
+
+      if (response.ok) {
+        console.log("Sample restaurant created successfully");
+      } else {
+        console.error("Failed to create sample restaurant");
+      }
+    } catch (error) {
+      console.error("Error creating sample restaurant:", error);
+    }
+  };
+
+
   return (
     <RestoCardContainer to={`/restaurants/${resto.id}`}>
       <RestoImg image={backgroundImage}>

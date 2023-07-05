@@ -6,6 +6,10 @@ const UserSchema = new mongoose.Schema(
     description: { type: String, required: true },
     password: { type: String, required: true },
     avatar: { type: String, required: true },
+    allReviews: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Review',
+    },
   },
   {
     _id: false,

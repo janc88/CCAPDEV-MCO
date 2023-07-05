@@ -57,7 +57,7 @@ export const ViewCardContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: fit-content;
+  /* height: fit-content; */
   max-height: 700px;
   
 `;

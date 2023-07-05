@@ -4,6 +4,7 @@ interface User {
 	userName: string;
 	profilePicture: File | null;
 	accountDesc: string;
+	password: string;
 }
 
 interface UserContextType {

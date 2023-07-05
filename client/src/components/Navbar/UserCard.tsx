@@ -18,10 +18,10 @@ function UserCard() {
   const [pfpSrc, setPfpSrc] = useState<string | null>();
 
   useEffect(() => {
-	const newPfpSrc = user?.profilePicture && URL.createObjectURL(user.profilePicture);
-	setPfpSrc(newPfpSrc)
-    if (newPfpSrc)
-		return () => URL.revokeObjectURL(newPfpSrc);
+    const newPfpSrc =
+      user?.profilePicture && URL.createObjectURL(user.profilePicture);
+    setPfpSrc(newPfpSrc);
+    if (newPfpSrc) return () => URL.revokeObjectURL(newPfpSrc);
   }, [user]);
 
   const handleClickOutside = (event: MouseEvent) => {
@@ -41,9 +41,9 @@ function UserCard() {
     setIsOpen(false);
   };
   const handleLogOut = () => {
-	setUser(null);
-	handleInsideClick();
-  }
+    setUser(null);
+    handleInsideClick();
+  };
 
   useEffect(() => {
     const handleMouseDown = (event: MouseEvent) => handleClickOutside(event);

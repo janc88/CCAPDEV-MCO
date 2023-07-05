@@ -34,7 +34,7 @@ function Navbar() {
   return (
     <Nav>
       <LogoContainer>
-        <LogoLink to="/home">
+        <LogoLink to="/">
           <Logo src={logo} />
         </LogoLink>
         <Title>
