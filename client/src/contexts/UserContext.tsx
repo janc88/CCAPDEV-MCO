@@ -8,19 +8,35 @@ interface User {
 
 interface UserContextType {
 	user: User | null;
-	setUser: (user: User | null) => void;
+	login: (user: User, password: string) => void;
+	signup: (user: User, password: string) => void;
+	logout: () => void;
 }
 
 export const UserContext = createContext<UserContextType>({
 	user: null,
-	setUser: () => { },
+	login: () => { },
+	logout: () => { },
+	signup: () => { },
 });
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
 	const [user, setUser] = useState<User | null>(null);
-
+	const login = (user: User, password: string) => {
+		//do login stuff
+		console.log('user logged in')
+		setUser(user);
+	}
+	const signup = (user: User, password: string) => {
+		//do signup stuff
+		console.log('user signed up')
+		setUser(user);
+	}
+	const logout = () => {
+		setUser(null);
+	}
 	return (
-		<UserContext.Provider value={{ user, setUser }}>
+		<UserContext.Provider value={{ user, login, logout, signup}}>
 			{children}
 		</UserContext.Provider>
 	);
