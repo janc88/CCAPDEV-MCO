@@ -12,7 +12,7 @@ import pic from "../../imgs/banana.svg"; //sample only
 import { UserContext } from "../../contexts/UserContext";
 
 function UserCard() {
-  const { user, setUser } = useContext(UserContext);
+  const { user, logout } = useContext(UserContext);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const actionRef = useRef<HTMLDivElement>(null);
   const [pfpSrc, setPfpSrc] = useState<string | null>();
@@ -41,7 +41,7 @@ function UserCard() {
     setIsOpen(false);
   };
   const handleLogOut = () => {
-	setUser(null);
+	logout();
 	handleInsideClick();
   }
 
