@@ -19,7 +19,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/users", userRouter);
 app.use("/api/reviews", reviewRouter);
-app.use("api/restaurants", restaurantRouter);
+app.use("/api/restaurants", restaurantRouter);
 
 const connectDB = (url) => {
   mongoose.set("strictQuery", true);
