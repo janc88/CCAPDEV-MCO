@@ -25,7 +25,6 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 	const login = (username: String, password: string) => {
 		//do login stuff
 		console.log('user logged in')
-		setUser(user);
 	}
 	const signup = (user: User, password: string) => {
 		//do signup stuff
