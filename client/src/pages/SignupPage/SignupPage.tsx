@@ -10,7 +10,7 @@ import { UserContext } from "../../contexts/UserContext";
 import { useNavigate } from "react-router-dom";
 
 function SignupPage() {
-  const { login } = useContext(UserContext);
+  const { signup } = useContext(UserContext);
   const [swiperRef, setSwiperRef] = useState<SwiperClass>();
   const [formData, setFormData] = useState({});
   const navigate = useNavigate();
@@ -53,7 +53,7 @@ function SignupPage() {
 		}
 		
 		await response.json();
-		login(user, formData.password);
+		signup(user, formData.password);
 		navigate("/home");
 	  } catch (error) {
 		console.error("Error creating user:", error);
