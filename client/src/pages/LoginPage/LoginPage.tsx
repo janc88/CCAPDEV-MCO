@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { 
 	PageContainer, CenterContainer,
 	Card, 
@@ -12,12 +12,15 @@ import { FlexRight } from "../../styles/Flex.styled";
 import { FormProvider, useForm } from "react-hook-form";
 import { Input } from "../../components/Input/Input";
 import Checkbox from "../../components/Input/Checkbox";
+import { UserContext } from "../../contexts/UserContext";
 
 
 function LoginPage() {
 	const navigate = useNavigate();
 	const methods = useForm();
+	const {login} = useContext(UserContext)
 	const submitForm = methods.handleSubmit(data => {
+		login(data.username, data.password)
 		console.log(data)
 	})
 	return (
