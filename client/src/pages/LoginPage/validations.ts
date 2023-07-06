@@ -1,4 +1,4 @@
-import { RegisterOptions, UseFormReturn } from "react-hook-form";
+import { RegisterOptions } from "react-hook-form";
 
 const usernameExists = async (username: String) => {
   try {
@@ -34,35 +34,11 @@ export const usernameValidation: RegisterOptions = {
   },
 };
 
-export const passwordValidation = (methods: UseFormReturn): RegisterOptions => {
+export const passwordValidation = (validator: () => Promise<boolean> ): RegisterOptions => {
   return {
     required: "Password is required",
-    validate: async (password) => {
-      const valid = await validateLogin(
-        methods.getValues("username"),
-        password
-      );
-      return !valid ? "Password is incorrect" : true;
-    },
+    validate: async () => {
+		return await validator() || "Username or Password is incorrect!";
+	}
   };
-};
-
-const validateLogin = async (username, password) => {
-  console.log({ username, password });
-  try {
-    const response = await fetch(`http://localhost:8080/api/users/${username}`);
-
-    if (!response.ok) {
-      throw new Error("Error validating login");
-    }
-    const data = await response.json();
-
-    if (data.username === username && data.password === password) {
-      return true;
-    } else {
-      return false;
-    }
-  } catch (error) {
-    console.error("Error validating login:", error);
-  }
 };
