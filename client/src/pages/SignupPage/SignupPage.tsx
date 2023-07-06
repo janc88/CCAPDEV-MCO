@@ -29,31 +29,10 @@ function SignupPage() {
     try {
 		const user = {
 		  userName: formData.username,
-		  profilePicture: formData.profilepicture,
+		  profilePicture: null,
 		  accountDesc: formData.accountdesc,
 		};
-	
-		const userData = {
-		  username: formData.username,
-		  description: formData.accountdesc,
-		  avatar: "hello world!",
-		  password: formData.password,
-		};
-		
-		const response = await fetch("http://localhost:8080/api/users/", {
-		  method: "POST",
-		  headers: {
-			"Content-Type": "application/json",
-		  },
-		  body: JSON.stringify(userData),
-		});
-	
-		if (!response.ok) {
-		  throw new Error("Error creating user");
-		}
-		
-		await response.json();
-		signup(user, formData.password);
+		signup(user, formData.password, formData.profilepicture);
 		navigate("/home");
 	  } catch (error) {
 		console.error("Error creating user:", error);
