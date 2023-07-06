@@ -13,25 +13,35 @@ import { FlexRight } from "../../styles/Flex.styled";
 import { FormProvider, useForm } from "react-hook-form";
 import { Input } from "../../components/Input/Input";
 import Checkbox from "../../components/Input/Checkbox";
-import { passwordValidation, usernameValidation } from "./validations";
+import { 
+	passwordValidation, 
+	usernameValidation,
+	validateUsername
+ } from "./validations";
 import { UserContext } from "../../contexts/UserContext";
 
 function LoginPage() {
   const { login, validateUser } = useContext(UserContext);
   const navigate = useNavigate();
   const methods = useForm();
-
-  const findUser = async (
-	username = methods.getValues("username"),
-	password = methods.getValues("password")
-  ) => validateUser(username, password);
-  const validate = async () => await findUser() !== null;
   
   const submitForm = methods.handleSubmit(async (data) => {
     try {
-	  const user = await findUser(data.username, data.password);
+	  const uname = await validateUsername(data.username);
+	  if (typeof uname === "string") {
+		methods.setError('username', { 
+			type: 'server', 
+			message: uname
+		});
+		return;
+	  }
+	  const user = await validateUser(data.username, data.password);
 	  if (user === null) {
-		throw new Error("This should not happen");
+		methods.setError('password', { 
+			type: 'server', 
+			message: 'Invalid password'
+		});
+		return;
 	  }
 	  login(user);
 	  navigate("/home");
@@ -62,7 +72,7 @@ function LoginPage() {
                 label="Password"
                 id="password"
                 type="password"
-                validation={passwordValidation(validate)}
+                validation={passwordValidation}
               />
               <div>
                 <Checkbox
