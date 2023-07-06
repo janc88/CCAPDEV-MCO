@@ -1,6 +1,6 @@
 import { RegisterOptions } from "react-hook-form";
 
-const usernameExists = async (username: String) => {
+export const validateUsername = async (username: string) => {
   try {
     const response = await fetch("http://localhost:8080/api/users/taken", {
       method: "POST",
@@ -16,29 +16,24 @@ const usernameExists = async (username: String) => {
 
     const data = await response.json();
 
-    if (data.isTaken) {
-      return true;
-    } else {
-      return false;
-    }
+	return data.isTaken || 'Username doesn\'t exists';
   } catch (error) {
     console.error("Error checking username availability:", error);
   }
 };
 
 export const usernameValidation: RegisterOptions = {
-  required: "Username is required",
-  validate: async (value) => {
-    const isUsernameExists = await usernameExists(value);
-    return !isUsernameExists ? "Username does not exist" : true;
-  },
+	required: "Username is required",
+	minLength: {
+	  value: 4,
+	  message: "Username must be at least 4 characters long",
+	}
 };
 
-export const passwordValidation = (validator: () => Promise<boolean> ): RegisterOptions => {
-  return {
-    required: "Password is required",
-    validate: async () => {
-		return await validator() || "Username or Password is incorrect!";
-	}
-  };
+export const passwordValidation: RegisterOptions = {
+	required: "Password is required",
+	minLength: {
+	  value: 8,
+	  message: "Password must be at least 8 characters long",
+	},
 };
