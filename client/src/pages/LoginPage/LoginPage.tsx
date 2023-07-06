@@ -17,26 +17,23 @@ import { passwordValidation, usernameValidation } from "./validations";
 import { UserContext } from "../../contexts/UserContext";
 
 function LoginPage() {
-  const { login } = useContext(UserContext);
+  const { login, validateUser } = useContext(UserContext);
   const navigate = useNavigate();
   const methods = useForm();
+
+  const findUser = async (
+	username = methods.getValues("username"),
+	password = methods.getValues("password")
+  ) => validateUser(username, password);
+  const validate = async () => await findUser() !== null;
+  
   const submitForm = methods.handleSubmit(async (data) => {
     try {
-      const response = await fetch(
-        `http://localhost:8080/api/users/${data.username}`
-      );
-
-      if (!response.ok) {
-        throw new Error("Error logging in");
-      }
-      const res = await response.json();
-
-	  const user = {
-		userName: res.username,
-		profilePicture: res.profilepicture,
-		accountDesc: res.accountdesc,
-	  };
-	  login(user, res.password);
+	  const user = await findUser(data.username, data.password);
+	  if (user === null) {
+		throw new Error("This should not happen");
+	  }
+	  login(user);
 	  navigate("/home");
     } catch (error) {
       console.error("Error logging in:", error);
@@ -65,7 +62,7 @@ function LoginPage() {
                 label="Password"
                 id="password"
                 type="password"
-                validation={passwordValidation(methods)}
+                validation={passwordValidation(validate)}
               />
               <div>
                 <Checkbox
