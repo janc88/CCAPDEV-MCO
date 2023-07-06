@@ -1,3 +1,4 @@
+import { log } from 'console';
 import React, { ReactNode, createContext, useState } from 'react';
 
 export interface User {
@@ -40,7 +41,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 			const userData = {
 			  username: user.userName,
 			  description: user.accountDesc,
-			  avatar: '',
+			  avatar: 'hello world!', //TODO: upload profile picture
 			  password: password,
 			};
 			
@@ -55,12 +56,13 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 			if (!response.ok)return "Error creating user";
 
 			const loginUser = await validateUser(user.userName, password)
-			if (loginUser === null)return "Error creating user";
+			if (loginUser === null) return "Error creating user";
 
 			login(loginUser);
-			console.log('user signed up')
+			console.log("User created successfully!");
 			return true;
 		  } catch (error) {
+			console.error("Error creating user:", error);
 			return "Error creating user:" + error;
 		  }
 	}
@@ -78,8 +80,8 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 				data.password === password)
 			return {
 				userName: data.username,
-				profilePicture: data.profilepicture,
-				accountDesc: data.accountdesc,
+				profilePicture: data.avatar,
+				accountDesc: data.description,
 			};
 		  } catch (error) {
 			console.error("Error validating login:", error);
