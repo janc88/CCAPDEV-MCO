@@ -15,14 +15,6 @@ function UserCard() {
   const { user, logout } = useContext(UserContext);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const actionRef = useRef<HTMLDivElement>(null);
-  const [pfpSrc, setPfpSrc] = useState<string | null>();
-
-  useEffect(() => {
-	const newPfpSrc = user?.profilePicture && URL.createObjectURL(user.profilePicture);
-	setPfpSrc(newPfpSrc)
-    if (newPfpSrc)
-		return () => URL.revokeObjectURL(newPfpSrc);
-  }, [user]);
 
   const handleClickOutside = (event: MouseEvent) => {
     if (
@@ -58,7 +50,7 @@ function UserCard() {
       <MainContainer layout style={{ borderRadius: "27px" }}>
         <UserCardContainer layout={"position"} onClick={handleOpen}>
           <UserName>{user?.userName}</UserName>
-          <ProfilePic src={pfpSrc || pic} />
+          <ProfilePic src={user?.profilePicture || pic} />
         </UserCardContainer>
 
         {isOpen && (
