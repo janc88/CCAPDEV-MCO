@@ -1,41 +1,93 @@
 import React, { ReactNode, createContext, useState } from 'react';
 
-interface User {
+export interface User {
 	userName: string;
-	profilePicture: File | null;
+	profilePicture: string | null;
 	accountDesc: string;
 }
 
 interface UserContextType {
 	user: User | null;
-	login: (username: string, password: string) => void;
-	signup: (user: User, password: string) => void;
+	login: (user: User) => void;
+	/**
+	 * @returns Error message if invalid, true otherwise
+	 */
+	signup: (user: User, password: string, profilePicture: File) => Promise<string | boolean>;
 	logout: () => void;
+	/**
+	 * @returns User if valid, null otherwise
+	 */
+	validateUser: (username: string, password: string) => Promise<User | null>;
 }
 
 export const UserContext = createContext<UserContextType>({
 	user: null,
 	login: () => { },
 	logout: () => { },
-	signup: () => { },
+	signup: () => Promise.resolve("ERROR!"),
+	validateUser: () => Promise.resolve(null),
 });
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
 	const [user, setUser] = useState<User | null>(null);
-	const login = (username: String, password: string) => {
-		//do login stuff
+	const login = (user: User) => {
+		//TODO: login stuff
 		console.log('user logged in')
-	}
-	const signup = (user: User, password: string) => {
-		//do signup stuff
-		console.log('user signed up')
 		setUser(user);
 	}
+	const signup = async (user: User, password: string, profilePicture: File) => {
+		try {
+			const userData = {
+			  username: user.userName,
+			  description: user.accountDesc,
+			  avatar: '',
+			  password: password,
+			};
+			
+			const response = await fetch("http://localhost:8080/api/users/", {
+			  method: "POST",
+			  headers: {
+				"Content-Type": "application/json",
+			  },
+			  body: JSON.stringify(userData),
+			});
+			await response.json();
+			if (!response.ok)return "Error creating user";
+
+			const loginUser = await validateUser(user.userName, password)
+			if (loginUser === null)return "Error creating user";
+
+			login(loginUser);
+			console.log('user signed up')
+			return true;
+		  } catch (error) {
+			return "Error creating user:" + error;
+		  }
+	}
 	const logout = () => {
+		//TODO: logout stuff
 		setUser(null);
 	}
+	const validateUser = async (username: string, password: string) => {
+		try {
+			const response = await fetch(`http://localhost:8080/api/users/${username}`);
+			if (!response.ok)
+			  throw new Error("Error validating user");
+			const data = await response.json();
+			if (data.username === username && 
+				data.password === password)
+			return {
+				userName: data.username,
+				profilePicture: data.profilepicture,
+				accountDesc: data.accountdesc,
+			};
+		  } catch (error) {
+			console.error("Error validating login:", error);
+		  }
+		return null;
+	};
 	return (
-		<UserContext.Provider value={{ user, login, logout, signup}}>
+		<UserContext.Provider value={{ user, login, logout, signup, validateUser}}>
 			{children}
 		</UserContext.Provider>
 	);
