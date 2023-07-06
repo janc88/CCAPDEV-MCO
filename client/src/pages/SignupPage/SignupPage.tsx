@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import { CenterContainer, PageContainer } from "../styles/LoginPage.styled";
 import { SignupCard, SignupDetailsCard } from "./SignupCard";
 
@@ -11,7 +11,7 @@ import { UserContext } from "../../contexts/UserContext";
 import { useNavigate } from "react-router-dom";
 
 function SignupPage() {
-  const { login } = useContext(UserContext);
+  const { signup } = useContext(UserContext);
   const [swiperRef, setSwiperRef] = useState<SwiperClass>();
   const [formData, setFormData] = useState({})
   const navigate = useNavigate()
@@ -32,7 +32,7 @@ function SignupPage() {
 		profilePicture: data.profilepicture,
 		accountDesc: data.accountdesc
 	}
-	login(user, data.password)
+	signup(user, data.password)
 	navigate('/home');
   }
 
