@@ -21,8 +21,6 @@ const isUsernameTaken = async (req, res) => {
 const createUser = async (req, res) => {
   try {
     const { username, description, password } = req.body;
-	console.log(req.body);
-	console.log(req.file);
 	const avatar = req.file;
 
 	const userExists = await User.findOne({ username });
@@ -48,12 +46,53 @@ const createUser = async (req, res) => {
 	  });
     await newUser.save({session});
 	await session.commitTransaction();
+	session.endSession();
 
     res.status(200).json(newUser);
   } catch (error) {
 	console.error(error);
     res.status(500).json({ error: error.message });
   }
+};
+const updateUser = async (req, res) => {
+	try {
+		const { username } = req.params;
+		const user = await User.findOne({ username });
+		if (!user) {
+			return res.status(409).json({ error: "User does not exist!" });
+		}
+
+		const session = await mongoose.startSession();
+		session.startTransaction();
+		
+		const {description, password} = req.body;
+		const avatar = req.file;
+		const newData = {};
+
+		if (description !== user.description)
+			newData.description = description;
+		if (password !== user.password)
+			newData.password = password;
+		if (avatar) {
+			await Image.deleteOne({ _id: user.avatar }, { session });
+			const newImage = new Image({
+				name: avatar.originalname,
+				data: avatar.buffer,
+				mimeType: avatar.mimetype,
+			});
+			await newImage.save({session});
+			newData.avatar = newImage._id;
+		}
+		await user.updateOne(newData, { session });
+
+		await session.commitTransaction();
+		session.endSession();
+
+		res.status(200).json(await User.findOne({ username }));
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({ error: error.message });
+	}
 };
 
 const getUserInfoByUsername = async (req, res) => {
@@ -78,4 +117,4 @@ const getUserInfoByUsername = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
-export { getAllUsers, createUser, getUserInfoByUsername, isUsernameTaken };
+export { getAllUsers, createUser, getUserInfoByUsername, isUsernameTaken, updateUser };
