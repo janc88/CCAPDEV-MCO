@@ -1,4 +1,5 @@
-import React, { ReactNode, createContext, useState } from 'react';
+import React, { ReactNode, createContext, useState, useEffect } from 'react';
+import Cookies from 'js-cookie';
 
 export interface User {
 	userName: string;
@@ -30,9 +31,15 @@ export const UserContext = createContext<UserContextType>({
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
 	const [user, setUser] = useState<User | null>(null);
+	useEffect(() => {
+		const savedUser = Cookies.get('user');
+		if (savedUser) {
+		  const parsedUser = JSON.parse(savedUser);
+		  setUser(parsedUser);
+		}
+	  }, []);
 	const login = (user: User) => {
-		//TODO: login stuff
-		console.log('user logged in')
+		Cookies.set('user', JSON.stringify(user));
 		setUser(user);
 	}
 	const signup = async (user: User, password: string, profilePicture: File) => {
@@ -62,7 +69,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 		  }
 	}
 	const logout = () => {
-		//TODO: logout stuff
+		Cookies.remove('user');
 		setUser(null);
 	}
 	const validateUser = async (username: string, password: string) => {
