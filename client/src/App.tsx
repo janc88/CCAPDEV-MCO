@@ -28,9 +28,6 @@ function App() {
           path="/profile"
           element={
             <ProfilePage
-              username={userInfo.username}
-              description={userInfo.description}
-              profilePic={userInfo.profilePic}
               reviews={userInfo.reviews}
             />
           }
