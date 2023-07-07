@@ -7,10 +7,8 @@ import {
   CenterContainer,
   DescriptionContainer,
   DescriptionLabel,
-  EditIcon,
   EditProfileCard,
   EditProfileContainer,
-  InputField,
   LowerContainer,
   QuestionIcon,
   SaveButton,
@@ -21,31 +19,32 @@ import {
 import UserInfoCard from "../../components/UserInfoCard/UserInfoCard";
 import { Header } from "../../components/ReviewsCard/ReviewsCard.styled";
 import { useNavigate } from "react-router-dom";
+import { FormProvider, useForm } from "react-hook-form";
+import { Input } from "../../components/Input/Input"
 
 function EditProfilePage() {
-  const userInfo = {
-    username: "username here",
-    description:
-      "my name is username my name is username my name is username my name is username my name is username",
-    profilePic: { id: 1, src: "food-bg-dark.jpeg", alt: "Image 1" },
-  };
-
-  
   const navigate = useNavigate();
+  const methods = useForm();
 
   return (
+	<FormProvider {...methods}>
+	  <form
+		onSubmit={(e) => e.preventDefault()}
+		noValidate
+		autoComplete="off">
     <EditProfileContainer>
       <CenterContainer>
         <UserCardContainer>
-          <UserInfoCard {...userInfo} isEditProfile />
+          <UserInfoCard isEditProfile />
         </UserCardContainer>
         <EditProfileCard>
           <Header>Edit Profile</Header>
-          <DescriptionContainer>
-            <DescriptionLabel>Description (Max of 100 characters)</DescriptionLabel>
-            <EditIcon />
-          </DescriptionContainer>
-          <InputField />
+		  <DescriptionContainer>
+		    <Input 
+		  	  type="textarea" 
+			  id="description" 
+			  label={<DescriptionLabel>Description (Max of 100 characters)</DescriptionLabel>} />
+		  </DescriptionContainer>
           <LowerContainer>
             <UploadImageContainer>
               <AvatarContainer>
@@ -71,6 +70,7 @@ function EditProfilePage() {
         </EditProfileCard>
       </CenterContainer>
     </EditProfileContainer>
+	</form></FormProvider>
   );
 }
 

@@ -40,12 +40,10 @@ export const EditProfileCard = styled.div`
 `;
 
 export const DescriptionContainer = styled.div`
-  display: flex;
-  align-items: center;
+  margin: 2rem 1.4rem;
 `;
 
 export const DescriptionLabel = styled.h3`
-  margin: 2rem 1.4rem;
   margin-bottom: 1rem;
 `;
 
