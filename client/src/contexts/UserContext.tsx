@@ -1,4 +1,3 @@
-import { log } from 'console';
 import React, { ReactNode, createContext, useState } from 'react';
 
 export interface User {
@@ -38,19 +37,15 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 	}
 	const signup = async (user: User, password: string, profilePicture: File) => {
 		try {
-			const userData = {
-			  username: user.userName,
-			  description: user.accountDesc,
-			  avatar: 'hello world!', //TODO: upload profile picture
-			  password: password,
-			};
-			
+			const formData = new FormData();
+			formData.append('username', user.userName);
+			formData.append('description', user.accountDesc);
+			formData.append('avatar', profilePicture);
+			formData.append('password', password);
+
 			const response = await fetch("http://localhost:8080/api/users/", {
 			  method: "POST",
-			  headers: {
-				"Content-Type": "application/json",
-			  },
-			  body: JSON.stringify(userData),
+			  body: formData
 			});
 			await response.json();
 			if (!response.ok)return "Error creating user";
