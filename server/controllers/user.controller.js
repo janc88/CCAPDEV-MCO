@@ -1,4 +1,6 @@
+import mongoose from "mongoose";
 import User from "../models/User.js";
+import Image from "../models/Image.js"
 
 const getAllUsers = async (req, res) => {};
 
@@ -18,17 +20,38 @@ const isUsernameTaken = async (req, res) => {
 
 const createUser = async (req, res) => {
   try {
-    const { username, description, password, avatar } = req.body;
+    const { username, description, password } = req.body;
+	console.log(req.body);
+	console.log(req.file);
+	const avatar = req.file;
+
+	const userExists = await User.findOne({ username });
+	if (userExists) {
+		return res.status(409).json({ error: "Username already taken" });
+	}
+
+	const session = await mongoose.startSession();
+	session.startTransaction();
+
+	const newImage = new Image({
+		name: avatar.originalname,
+		data: avatar.buffer,
+		mimeType: avatar.mimetype,
+	});
+	await newImage.save({session});
+	
     const newUser = new User({
-      username,
-      description,
-      password,
-      avatar,
-    });
-    await newUser.save();
+		username,
+		description,
+		password,
+		avatar: newImage._id,
+	  });
+    await newUser.save({session});
+	await session.commitTransaction();
 
     res.status(200).json(newUser);
   } catch (error) {
+	console.error(error);
     res.status(500).json({ error: error.message });
   }
 };

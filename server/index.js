@@ -6,6 +6,7 @@ import mongoose from "mongoose";
 import userRouter from "./routes/user.routes.js";
 import reviewRouter from "./routes/review.routes.js";
 import restaurantRouter from "./routes/restaurant.routes.js";
+import imageRouter from "./routes/image.routes.js";
 
 dotenv.config();
 
@@ -20,6 +21,7 @@ app.get("/", (req, res) => {
 app.use("/api/users", userRouter);
 app.use("/api/reviews", reviewRouter);
 app.use("/api/restaurants", restaurantRouter);
+app.use("/api/images", imageRouter);
 
 const connectDB = (url) => {
   mongoose.set("strictQuery", true);
