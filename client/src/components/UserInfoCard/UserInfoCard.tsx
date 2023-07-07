@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext } from "react";
 import {
   LogOutButton,
   ProfilePic,
@@ -8,52 +8,32 @@ import {
   UserInfoCardContainer,
   UserName,
 } from "./UserInfoCard.styled";
-import { ImageProps } from "../ReviewsCard/ReviewsCard";
 import ShortText from "./ShortText";
+import { UserContext } from "../../contexts/UserContext";
 
 
 interface UserInfoCardProps {
-  username: string;
-  description: string;
-  profilePic: ImageProps;
   isEditProfile?: boolean;
 }
 
 const UserInfoCard: React.FC<UserInfoCardProps> = ({
-  username,
-  description,
-  profilePic,
   isEditProfile,
 }) => {
-  const [loadedProfilePic, setloadedProfilePic] = useState<string[]>([]);
-
-  const loadImages = async () => {
-    const loadedImages = await Promise.all(
-      [profilePic].map(async (image) => {
-        const loadedImage = await import(`../../imgs/${image.src}`);
-        return loadedImage.default;
-      })
-    );
-    setloadedProfilePic(loadedImages);
-  };
-
-  useEffect(() => {
-    loadImages();
-  }, [profilePic]);
+  const { user } = useContext(UserContext); //TODO: handle case when user is null
 
   return (
     <UserInfoCardContainer>
       <ProfilePicContainer>
-        <ProfilePic src={loadedProfilePic[0]} alt={profilePic.alt} />
+        <ProfilePic src={user?.profilePicture || ''}/>
         {!isEditProfile && (
           <SettingsLink to='/edit-profile'>
             <SettingIcon />
           </SettingsLink>
         )}
       </ProfilePicContainer>
-      <UserName>{username}</UserName>
+      <UserName>{user?.userName}</UserName>
       {/*<UserDescription>{description}</UserDescription>*/}
-	  <ShortText maxLines={3} text={description}/>
+	  <ShortText maxLines={3} text={user?.accountDesc || ''}/>
       {!isEditProfile && (
         <LogOutButton bgcolor="white" tcolor="black">
           Log Out
