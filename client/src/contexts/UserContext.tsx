@@ -75,7 +75,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 				data.password === password)
 			return {
 				userName: data.username,
-				profilePicture: data.avatar,
+				profilePicture: 'http://localhost:8080/api/images/' + data.avatar,
 				accountDesc: data.description,
 			};
 		  } catch (error) {
