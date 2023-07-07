@@ -16,6 +16,7 @@ import {Tooltip} from './Tooltip';
 import Checkbox from './Checkbox';
 import { PasswordInput } from './PasswordInput';
 import { ImageInput } from './ImageInput';
+import React from 'react';
 
 export {Tooltip};
 export {Checkbox};
@@ -24,7 +25,7 @@ export {ImageInput}
 
 interface InputProps {
 	id: string;
-	label: string;
+	label: React.ReactNode;
 	name?: string;
 	type?: string;
 	tooltip?: string;

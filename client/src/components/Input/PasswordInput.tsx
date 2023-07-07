@@ -2,6 +2,7 @@ import { useState } from "react";
 import { FieldValues, RegisterOptions, UseFormRegister } from "react-hook-form";
 import { PwordContainer, PwordToggleContainer, TextInput } from "./styles/Input.styled";
 import {Visibility, VisibilityOff} from '@styled-icons/material/'
+import React from "react";
 
 interface PasswordInputProps {
 	id: string;
@@ -12,7 +13,7 @@ interface PasswordInputProps {
 }
 export const PasswordInput: React.FC<PasswordInputProps> = ({
 	id, register, validation,
-	name = id, px = 19,
+	name = id, px = 19
   }) => {
 	const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 	const togglePasswordVisibility = () => {
@@ -23,7 +24,9 @@ export const PasswordInput: React.FC<PasswordInputProps> = ({
 		<TextInput
 		  type={isPasswordVisible ? 'text' : 'password'}
 		  id={id}
-		  style={{paddingRight: (px + 20)+'px'}}
+		  style={{
+			paddingRight: (px + 20)+'px'
+		  }}
 		  {...register(name, validation)}>
 		</TextInput>
 

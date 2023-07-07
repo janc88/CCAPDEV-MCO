@@ -8,6 +8,7 @@ import {
   UserInfoCardContainer,
   UserName,
 } from "./UserInfoCard.styled";
+import { ImageInput } from "../../components/Input/Input"
 import ShortText from "./ShortText";
 import { UserContext } from "../../contexts/UserContext";
 
@@ -24,15 +25,19 @@ const UserInfoCard: React.FC<UserInfoCardProps> = ({
   return (
     <UserInfoCardContainer>
       <ProfilePicContainer>
-        <ProfilePic src={user?.profilePicture || ''}/>
-        {!isEditProfile && (
+        {isEditProfile ? (
+		  <ImageInput
+		  	id="avatar"
+			px={288}
+			defaultSrc={user?.profilePicture || ''}/>
+		) : (<>
+		  <ProfilePic src={user?.profilePicture || ''}/>
           <SettingsLink to='/edit-profile'>
             <SettingIcon />
           </SettingsLink>
-        )}
+        </>)}
       </ProfilePicContainer>
       <UserName>{user?.userName}</UserName>
-      {/*<UserDescription>{description}</UserDescription>*/}
 	  <ShortText maxLines={3} text={user?.accountDesc || ''}/>
       {!isEditProfile && (
         <LogOutButton bgcolor="white" tcolor="black">
