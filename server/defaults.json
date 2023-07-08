@@ -1,9 +1,0 @@
-{
-	"user": {
-		"description": "This user is rather lazy and has yet to place a description.",
-		"avatar": {
-			"path": "./defaults/default_avatar.png",
-			"mimeType": "image/png"
-		}
-	}
-}
