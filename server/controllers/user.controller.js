@@ -62,12 +62,17 @@ const updateUser = async (req, res) => {
 			return res.status(409).json({ error: "User does not exist!" });
 		}
 
+
 		const session = await mongoose.startSession();
 		session.startTransaction();
 		
 		const {description, password} = req.body;
 		const avatar = req.file;
 		const newData = {};
+
+
+		console.log(req.body);
+		console.log(req.file);
 
 		if (description !== user.description)
 			newData.description = description;
