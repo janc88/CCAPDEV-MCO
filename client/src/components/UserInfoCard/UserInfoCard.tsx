@@ -12,6 +12,7 @@ import { ImageInput } from "../../components/Input/Input"
 import ShortText from "./ShortText";
 import { UserContext } from "../../contexts/UserContext";
 import { useNavigate } from "react-router-dom";
+import SimplePopup from "../SmallModal/SimplePopup";
 
 
 interface UserInfoCardProps {
@@ -21,12 +22,21 @@ interface UserInfoCardProps {
 const UserInfoCard: React.FC<UserInfoCardProps> = ({
   isEditProfile,
 }) => {
-  const { user, logout } = useContext(UserContext); //TODO: handle case when user is null
+  const { user, logout } = useContext(UserContext);
   const navigate = useNavigate();
   const handleLogout = () => {
 	logout();
 	navigate('/home')
   }
+  if (user === null) return (
+	<UserInfoCardContainer>
+		<SimplePopup 
+			title="You are not logged in"
+			onConfirm={()=>navigate('/login')}
+			onCancel={()=>navigate('/login')}
+			content="Please log in"/>
+	</UserInfoCardContainer>
+  );
 
   return (
     <UserInfoCardContainer>
@@ -35,9 +45,9 @@ const UserInfoCard: React.FC<UserInfoCardProps> = ({
 		  <ImageInput
 		  	id="avatar"
 			px={288}
-			defaultSrc={user?.profilePicture || ''}/>
+			defaultSrc={user.profilePicture || ''}/>
 		) : (<>
-		  <ProfilePic src={user?.profilePicture || ''}/>
+		  <ProfilePic src={user.profilePicture || ''}/>
           <SettingsLink to='/edit-profile'>
             <SettingIcon />
           </SettingsLink>
