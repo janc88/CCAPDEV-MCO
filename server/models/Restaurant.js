@@ -16,6 +16,10 @@ const RestaurantSchema = new mongoose.Schema({
       },
     },
   },
+  allReviews: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Review',
+  }]
 });
 
 const restaurantModel = mongoose.model("Restaurant", RestaurantSchema);
