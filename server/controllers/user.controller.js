@@ -80,7 +80,7 @@ const updateUser = async (req, res) => {
 		const session = await mongoose.startSession();
 		session.startTransaction();
 		
-		const {description, password} = req.body;
+		const {description, old_password, new_password} = req.body;
 		const avatar = req.file;
 		const newData = {};
 
@@ -90,8 +90,12 @@ const updateUser = async (req, res) => {
 
 		if (description !== user.description)
 			newData.description = description;
-		if (password !== user.password)
-			newData.password = password;
+		if (new_password) {
+			if (user.password !== old_password) {
+				return res.status(409).json({ error: "Wrong password!" });
+			}
+			newData.password = new_password;
+		}
 		if (avatar) {
 			await Image.deleteOne({ _id: user.avatar }, { session });
 			const newImage = new Image({
