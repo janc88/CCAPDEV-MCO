@@ -114,7 +114,20 @@ export const QuestionIcon = styled(Question)`
   color: black;
 `;
 
-export const UploadImageButton = styled(Button)`
+export const UploadImageButton = styled.div`
+font-family: Arial, Helvetica, sans-serif;
+border-radius: 1.6rem;
+transition: 0.2s ease-in-out 0s;
+border: none;
+outline: none;
+&:hover {
+  cursor: pointer;
+  border-radius: 1.3rem;
+}
+&:active {
+  color: black;
+}
+
   background-color: white;
   color: black;
   width: 6.2rem;
@@ -122,4 +135,5 @@ export const UploadImageButton = styled(Button)`
   border: solid 1px black;
   font-size: small;
   padding: 0.2rem;
+  text-align: center;
 `;

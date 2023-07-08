@@ -9,16 +9,26 @@ export interface User {
 
 interface UserContextType {
 	user: User | null;
+	/**
+	 * sets user in cookies and state
+	 */
 	login: (user: User) => void;
 	/**
 	 * @returns Error message if invalid, true otherwise
 	 */
 	signup: (user: User, password: string, profilePicture: File) => Promise<string | boolean>;
+	/**
+	 * clears user from cookies and state
+	 */
 	logout: () => void;
 	/**
 	 * @returns User if valid, null otherwise
 	 */
 	validateUser: (username: string, password: string) => Promise<User | null>;
+	/**
+	 * @returns Error message if invalid, true otherwise
+	 */
+	updateUser: (description: string, avatar: File|null) => Promise<string | boolean>;
 }
 
 export const UserContext = createContext<UserContextType>({
@@ -27,10 +37,13 @@ export const UserContext = createContext<UserContextType>({
 	logout: () => { },
 	signup: () => Promise.resolve("ERROR!"),
 	validateUser: () => Promise.resolve(null),
+	updateUser: () => Promise.resolve(false)
 });
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
 	const [user, setUser] = useState<User | null>(null);
+	console.log("UserContext                                                                  ANANFELKNLKENLKEMLKG");
+	console.log(user);
 	useEffect(() => {
 		const savedUser = Cookies.get('user');
 		if (savedUser) {
@@ -38,9 +51,35 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 		  setUser(parsedUser);
 		}
 	  }, []);
+	
 	const login = (user: User) => {
 		Cookies.set('user', JSON.stringify(user));
 		setUser(user);
+	}
+	const updateUser = async (description: string, avatar: File|null) => {
+		if (user === null)
+			return ("User does not exist!");
+		try {
+			const formData = new FormData();
+			formData.append('description', description);
+			if (avatar !== null)
+				formData.append('avatar', avatar);
+
+			const response = await fetch(`http://localhost:8080/api/users/update/${user.userName}`, {
+				method: "POST",
+				body: formData
+			});
+			const data = await response.json();
+			if (!response.ok) return "Error updating user";
+			login({
+				userName: data.username,
+				profilePicture: 'http://localhost:8080/api/images/' + data.avatar,
+				accountDesc: data.description,
+			});
+			return true;
+		} catch (error) {
+			return "Error updating user";
+		}
 	}
 	const signup = async (user: User, password: string, profilePicture: File) => {
 		try {
@@ -91,7 +130,9 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 		return null;
 	};
 	return (
-		<UserContext.Provider value={{ user, login, logout, signup, validateUser}}>
+		<UserContext.Provider value={{ 
+			user, login, logout, 
+			signup, validateUser, updateUser}}>
 			{children}
 		</UserContext.Provider>
 	);

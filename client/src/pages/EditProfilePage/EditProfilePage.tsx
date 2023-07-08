@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import {
   AvatarContainer,
   AvatarText,
@@ -21,10 +21,24 @@ import { Header } from "../../components/ReviewsCard/ReviewsCard.styled";
 import { useNavigate } from "react-router-dom";
 import { FormProvider, useForm } from "react-hook-form";
 import { Input } from "../../components/Input/Input"
+import Popup from "../../components/SmallModal/SimplePopup";
+import { UserContext } from "../../contexts/UserContext";
 
 function EditProfilePage() {
   const navigate = useNavigate();
-  const methods = useForm();
+  const { user, updateUser } = useContext(UserContext);
+  const methods = useForm({
+	values: {description: user?.accountDesc}
+  });
+  const [ cancelPopup, setCancelPopup ] = useState(false);
+  const handleCancel = () => setCancelPopup(true);
+  const handleCancelPopup = () => setCancelPopup(false);
+  const handleConfirmPopup = () => navigate("/profile");
+  const handleSubmit = methods.handleSubmit(async (data) => {
+	console.log(data);
+	await updateUser(data.description || '', data.avatar);
+	navigate("/profile");
+  });
 
   return (
 	<FormProvider {...methods}>
@@ -33,6 +47,11 @@ function EditProfilePage() {
 		noValidate
 		autoComplete="off">
     <EditProfileContainer>
+	  {cancelPopup && <Popup 
+		onCancel={handleCancelPopup}
+		onConfirm={handleConfirmPopup}
+		title="Cancel Edit"
+		content="Are you sure you want to cancel editing your profile?"/>}
       <CenterContainer>
         <UserCardContainer>
           <UserInfoCard isEditProfile />
@@ -45,24 +64,25 @@ function EditProfilePage() {
 			  id="description" 
 			  label={<DescriptionLabel>Description (Max of 100 characters)</DescriptionLabel>} />
 		  </DescriptionContainer>
+		  
           <LowerContainer>
             <UploadImageContainer>
               <AvatarContainer>
                 <AvatarText>Avatar</AvatarText>
                 <QuestionIcon />
               </AvatarContainer>
-              <UploadImageButton>Upload Image</UploadImageButton>
+			  <label htmlFor="avatar">
+                <UploadImageButton>Upload Image</UploadImageButton>
+			  </label>
             </UploadImageContainer>
             <ButtonContainer>
               <CancelButton
-                onClick={() => navigate("/profile")}
-              >
+                onClick={handleCancel}>
                   Cancel
               </CancelButton>
 
               <SaveButton
-                onClick={() => navigate("/profile")}
-              >
+                onClick={handleSubmit}>
                 Save
               </SaveButton>
             </ButtonContainer>
