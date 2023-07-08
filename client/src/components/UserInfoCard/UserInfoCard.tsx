@@ -11,6 +11,7 @@ import {
 import { ImageInput } from "../../components/Input/Input"
 import ShortText from "./ShortText";
 import { UserContext } from "../../contexts/UserContext";
+import { useNavigate } from "react-router-dom";
 
 
 interface UserInfoCardProps {
@@ -20,7 +21,12 @@ interface UserInfoCardProps {
 const UserInfoCard: React.FC<UserInfoCardProps> = ({
   isEditProfile,
 }) => {
-  const { user } = useContext(UserContext); //TODO: handle case when user is null
+  const { user, logout } = useContext(UserContext); //TODO: handle case when user is null
+  const navigate = useNavigate();
+  const handleLogout = () => {
+	logout();
+	navigate('/home')
+  }
 
   return (
     <UserInfoCardContainer>
@@ -40,7 +46,7 @@ const UserInfoCard: React.FC<UserInfoCardProps> = ({
       <UserName>{user?.userName}</UserName>
 	  <ShortText maxLines={3} text={user?.accountDesc || ''}/>
       {!isEditProfile && (
-        <LogOutButton bgcolor="white" tcolor="black">
+        <LogOutButton bgcolor="white" tcolor="black" onClick={handleLogout}>
           Log Out
         </LogOutButton>
       )}
