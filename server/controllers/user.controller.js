@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
 import User from "../models/User.js";
 import Image from "../models/Image.js"
+import defaults from "../defaults/defaults.json" assert { type: "json" };
+import fs from "fs";
 
 const getAllUsers = async (req, res) => {};
 
@@ -17,12 +19,25 @@ const isUsernameTaken = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+const getDefaultAvatar = async () => {
+	const avatar = defaults.user.avatar;
+	return new Promise((resolve, reject) => {
+		fs.readFile(avatar.path, (err, data) => {
+			if (err) reject(err);
+			else resolve({
+				originalname: avatar.name,
+				buffer: data,
+				mimetype: avatar.mimeType
+			});
+		})
+	});
+};
 
 const createUser = async (req, res) => {
   try {
-    const { username, description, password } = req.body;
-	const avatar = req.file;
-
+    const { username, _description, password } = req.body;
+	const avatar = req.file || await getDefaultAvatar();
+	const description = _description || defaults.user.description;
 	const userExists = await User.findOne({ username });
 	if (userExists) {
 		return res.status(409).json({ error: "Username already taken" });
@@ -61,7 +76,6 @@ const updateUser = async (req, res) => {
 		if (!user) {
 			return res.status(409).json({ error: "User does not exist!" });
 		}
-
 
 		const session = await mongoose.startSession();
 		session.startTransaction();
