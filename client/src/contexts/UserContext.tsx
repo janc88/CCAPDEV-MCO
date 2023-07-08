@@ -13,10 +13,7 @@ interface UserContextType {
 	 * sets user in cookies and state
 	 */
 	login: (user: User) => void;
-	/**
-	 * @returns Error message if invalid, true otherwise
-	 */
-	signup: (user: User, password: string, profilePicture: File) => Promise<string | boolean>;
+	signup: (user: User, password: string, profilePicture: File) => Promise<void>;
 	/**
 	 * clears user from cookies and state
 	 */
@@ -25,25 +22,22 @@ interface UserContextType {
 	 * @returns User if valid, null otherwise
 	 */
 	validateUser: (username: string, password: string) => Promise<User | null>;
-	/**
-	 * @returns Error message if invalid, true otherwise
-	 */
-	updateUser: (description: string, avatar: File|null) => Promise<string | boolean>;
+	updateUser: (description: string, avatar: File|null) => Promise<void>;
+	updatePassword: (old_password: string, new_password: string) => Promise<void>;
 }
 
 export const UserContext = createContext<UserContextType>({
 	user: null,
 	login: () => { },
 	logout: () => { },
-	signup: () => Promise.resolve("ERROR!"),
+	signup: () => Promise.resolve(),
 	validateUser: () => Promise.resolve(null),
-	updateUser: () => Promise.resolve(false)
+	updateUser: () => Promise.resolve(),
+	updatePassword: () => Promise.resolve(),
 });
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
 	const [user, setUser] = useState<User | null>(null);
-	console.log("UserContext                                                                  ANANFELKNLKENLKEMLKG");
-	console.log(user);
 	useEffect(() => {
 		const savedUser = Cookies.get('user');
 		if (savedUser) {
@@ -56,56 +50,62 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 		Cookies.set('user', JSON.stringify(user));
 		setUser(user);
 	}
+	const updatePassword = async (old_password: string, new_password: string) => {
+		if (user === null)
+			throw new Error("User does not exist!");
+		const formData = new FormData();
+		formData.append('old_password', old_password);
+		formData.append('new_password', new_password);
+
+		const response = await fetch(`http://localhost:8080/api/users/update/${user.userName}`, {
+			method: "POST",
+			body: formData
+		});
+		await response.json();
+		if (!response.ok)
+			throw new Error("Error updating password");
+	}
 	const updateUser = async (description: string, avatar: File|null) => {
 		if (user === null)
-			return ("User does not exist!");
-		try {
-			const formData = new FormData();
-			formData.append('description', description);
-			if (avatar !== null)
-				formData.append('avatar', avatar);
+			throw new Error("User does not exist!");
+		const formData = new FormData();
+		formData.append('description', description);
+		if (avatar !== null)
+			formData.append('avatar', avatar);
 
-			const response = await fetch(`http://localhost:8080/api/users/update/${user.userName}`, {
-				method: "POST",
-				body: formData
-			});
-			const data = await response.json();
-			if (!response.ok) return "Error updating user";
-			login({
-				userName: data.username,
-				profilePicture: 'http://localhost:8080/api/images/' + data.avatar,
-				accountDesc: data.description,
-			});
-			return true;
-		} catch (error) {
-			return "Error updating user";
-		}
+		const response = await fetch(`http://localhost:8080/api/users/update/${user.userName}`, {
+			method: "POST",
+			body: formData
+		});
+		const data = await response.json();
+		if (!response.ok)
+			throw new Error("Error updating user");
+		login({
+			userName: data.username,
+			profilePicture: 'http://localhost:8080/api/images/' + data.avatar,
+			accountDesc: data.description,
+		});
 	}
 	const signup = async (user: User, password: string, profilePicture: File) => {
-		try {
-			const formData = new FormData();
-			formData.append('username', user.userName);
-			formData.append('description', user.accountDesc);
-			formData.append('avatar', profilePicture);
-			formData.append('password', password);
+		const formData = new FormData();
+		formData.append('username', user.userName);
+		formData.append('description', user.accountDesc);
+		formData.append('avatar', profilePicture);
+		formData.append('password', password);
 
-			const response = await fetch("http://localhost:8080/api/users/", {
-			  method: "POST",
-			  body: formData
-			});
-			await response.json();
-			if (!response.ok)return "Error creating user";
+		const response = await fetch("http://localhost:8080/api/users/", {
+			method: "POST",
+			body: formData
+		});
+		await response.json();
+		if (!response.ok)
+			throw new Error("Error creating user");
 
-			const loginUser = await validateUser(user.userName, password)
-			if (loginUser === null) return "Error creating user";
+		const loginUser = await validateUser(user.userName, password)
+		if (loginUser === null)
+			throw new Error("Error creating user");
 
-			login(loginUser);
-			console.log("User created successfully!");
-			return true;
-		  } catch (error) {
-			console.error("Error creating user:", error);
-			return "Error creating user:" + error;
-		  }
+		login(loginUser);
 	}
 	const logout = () => {
 		Cookies.remove('user');
@@ -132,7 +132,9 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 	return (
 		<UserContext.Provider value={{ 
 			user, login, logout, 
-			signup, validateUser, updateUser}}>
+			signup, validateUser, 
+			updateUser, updatePassword
+			}}>
 			{children}
 		</UserContext.Provider>
 	);

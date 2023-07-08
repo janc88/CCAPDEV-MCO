@@ -3,6 +3,7 @@ import { Edit } from "@styled-icons/boxicons-solid";
 import { Button } from "../../styles/Button.styled";
 import { Question } from "@styled-icons/evil";
 import { BackgroundPic } from "../../styles/BackgroundPic.styled";
+import { FlexRight } from "../../styles/Flex.styled";
 
 export const EditProfileContainer = styled(BackgroundPic)`
   justify-content: center;
@@ -14,7 +15,15 @@ export const CenterContainer = styled.div`
   align-items: center;
   width: 65%;
 `;
-
+export const SideText = styled.div`
+	text-decoration: underline;
+	cursor: pointer;
+	font-size: 16px;
+	display: inline-block;
+`;
+export const SideTextContainer = styled(FlexRight)`
+	margin-top: 1rem;
+`;
 export const UserCardContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -68,7 +77,6 @@ export const LowerContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 1.5rem;
 `;
 
 export const UploadImageContainer = styled.div`

@@ -71,6 +71,9 @@ function UserCard() {
             <UserLink to="/edit-profile" onClick={handleInsideClick}>
               <UserOption>Edit My Profile</UserOption>
             </UserLink>
+			<UserLink to="/change-password" onClick={handleInsideClick}>
+			  <UserOption>Change Password</UserOption>
+			</UserLink>
             <UserLink to="/" onClick={handleLogOut}>
               <UserOption>Logout</UserOption>
             </UserLink>

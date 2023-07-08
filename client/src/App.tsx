@@ -12,6 +12,7 @@ import { UserProvider } from "./contexts/UserContext";
 import { userInfo } from "./data/data";
 import EditReviewPage from "./pages/EditReviewPage/EditReviewPage";
 import AboutRestoCard from "./pages/RestaurantPage/AboutRestoCard";
+import EditPasswordPage from "./pages/EditPasswordPage/EditPasswordPage";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
         />
         <Route path="/edit-profile" element={<EditProfilePage />} />
         <Route path="/edit-review" element={<EditReviewPage />} />
+		<Route path="/change-password" element={<EditPasswordPage />} />
       </Routes>
     </UserProvider>
   );

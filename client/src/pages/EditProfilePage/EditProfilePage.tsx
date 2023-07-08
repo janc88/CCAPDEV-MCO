@@ -12,6 +12,7 @@ import {
   LowerContainer,
   QuestionIcon,
   SaveButton,
+  SideTextContainer,
   UploadImageButton,
   UploadImageContainer,
   UserCardContainer,
@@ -23,6 +24,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { Input } from "../../components/Input/Input"
 import Popup from "../../components/SmallModal/SimplePopup";
 import { UserContext } from "../../contexts/UserContext";
+import { SideText } from "../styles/LoginPage.styled";
 
 function EditProfilePage() {
   const navigate = useNavigate();
@@ -64,8 +66,15 @@ function EditProfilePage() {
 		  	  type="textarea" 
 			  id="description" 
 			  label={<DescriptionLabel>Description (Max of 100 characters)</DescriptionLabel>} />
+
+			<SideTextContainer>
+              <SideText onClick={() => navigate("/change-password")}>
+                Change My Password
+              </SideText>
+            </SideTextContainer>
 		  </DescriptionContainer>
 		  
+
           <LowerContainer>
             <UploadImageContainer>
               <AvatarContainer>
