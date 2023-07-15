@@ -50,6 +50,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 		Cookies.set('user', JSON.stringify(user));
 		setUser(user);
 	}
+	
 	const updatePassword = async (old_password: string, new_password: string) => {
 		if (user === null)
 			throw new Error("User does not exist!");
@@ -65,6 +66,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 		if (!response.ok)
 			throw new Error("Error updating password");
 	}
+
 	const updateUser = async (description: string, avatar: File|null) => {
 		if (user === null)
 			throw new Error("User does not exist!");
@@ -86,6 +88,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 			accountDesc: data.description,
 		});
 	}
+
 	const signup = async (user: User, password: string, profilePicture: File) => {
 		const formData = new FormData();
 		formData.append('username', user.userName);
@@ -107,10 +110,12 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 
 		login(loginUser);
 	}
+
 	const logout = () => {
 		Cookies.remove('user');
 		setUser(null);
 	}
+
 	const validateUser = async (username: string, password: string) => {
 		try {
 			const response = await fetch(`http://localhost:8080/api/users/${username}`);
@@ -129,6 +134,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 		  }
 		return null;
 	};
+
 	return (
 		<UserContext.Provider value={{ 
 			user, login, logout, 

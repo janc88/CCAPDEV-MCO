@@ -19,6 +19,7 @@ const isUsernameTaken = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
 const getDefaultAvatar = async () => {
 	const avatar = defaults.user.avatar;
 	return new Promise((resolve, reject) => {
@@ -58,7 +59,7 @@ const createUser = async (req, res) => {
 		description,
 		password,
 		avatar: newImage._id,
-	  });
+	});
     await newUser.save({session});
 	await session.commitTransaction();
 	session.endSession();
@@ -69,6 +70,7 @@ const createUser = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
 const updateUser = async (req, res) => {
 	try {
 		const { username } = req.params;
@@ -83,8 +85,7 @@ const updateUser = async (req, res) => {
 		const {description, old_password, new_password} = req.body;
 		const avatar = req.file;
 		const newData = {};
-
-
+		
 		console.log(req.body);
 		console.log(req.file);
 

@@ -3,21 +3,21 @@ import mongoose from "mongoose";
 const ReviewSchema = new mongoose.Schema({
   title: { type: String, required: true },
   body: { type: String, required: true },
-  datePosted: { type: Date, required: true },
+  datePosted: { type: Date, required: false },
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
-    required: true
+    required: false
   },
   restaurant: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Restaurant',
-    required: true
+    required: false
   },
-  stars: { type: Number, required: true },
-  helpful: { type: Number, required: true },
-  ownerResponse: { type: Number, required: true },
-  imgs: [{ type: String, required: true }],
+  stars: { type: Number, required: false },
+  helpful: { type: Number, required: false },
+  ownerResponse: { type: Number, required: false },
+  imgs: [{ type: String, required: false }],
 });
 
 const reviewModel = mongoose.model("Review", ReviewSchema);
