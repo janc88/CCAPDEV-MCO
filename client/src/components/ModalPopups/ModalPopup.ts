@@ -59,7 +59,6 @@ export const ViewCardContainer = styled.div`
   width: 100%;
   height: fit-content;
   max-height: 700px;
-  
 `;
 
 export const ReviewCardContainer = styled.div`
@@ -244,8 +243,8 @@ export const TitleBox = styled.input.attrs({
   border-radius: 0.5rem;
   font-size: 25px;
   margin-top: auto;
-  margin-bottom: 1rem;
   margin-left: -0.5rem;
+  font-weight: bold;
 `;
 
 export const DescriptionBox = styled.textarea.attrs({
@@ -258,7 +257,7 @@ export const DescriptionBox = styled.textarea.attrs({
   border-radius: 0.5rem;
   font-size: 20px;
   margin-left: -0.5rem;
-  margin-top: 1.5rem;
+  margin-top: 1rem;
   resize: none;
 
   &::-webkit-scrollbar {
@@ -386,7 +385,7 @@ export const ImgCardContainer = styled.div`
   margin-bottom: 1rem;
   overflow-y: auto;
   overflow-x: auto;
-  height: 300px;
+  height: 320px;
 
   &::-webkit-scrollbar {
     width: 10px;

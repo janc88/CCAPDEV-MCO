@@ -24,18 +24,17 @@ function SignupPage() {
     setFormData({ ...formData, ...data });
   };
 
-
   const handleSubmit = async (formData: any) => {
     try {
-		const user = {
-		  userName: formData.username,
-		  profilePicture: null,
-		  accountDesc: formData.accountdesc,
-		};
-		signup(user, formData.password, formData.profilepicture);
-		navigate("/home");
+      const user = {
+        userName: formData.username,
+        profilePicture: null,
+        accountDesc: formData.accountdesc,
+      };
+      signup(user, formData.password, formData.profilepicture);
+      navigate("/home");
 	  } catch (error) {
-		console.error("Error creating user:", error);
+		  console.error("Error creating user:", error);
 	  }
   };
 

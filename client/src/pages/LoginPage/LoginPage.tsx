@@ -27,24 +27,26 @@ function LoginPage() {
   
   const submitForm = methods.handleSubmit(async (data) => {
     try {
-	  const uname = await validateUsername(data.username);
-	  if (typeof uname === "string") {
-		methods.setError('username', { 
-			type: 'server', 
-			message: uname
-		});
-		return;
-	  }
-	  const user = await validateUser(data.username, data.password);
-	  if (user === null) {
-		methods.setError('password', { 
-			type: 'server', 
-			message: 'Invalid password'
-		});
-		return;
-	  }
-	  login(user);
-	  navigate("/home");
+      const uname = await validateUsername(data.username);
+      if (typeof uname === "string") {
+        methods.setError('username', { 
+          type: 'server', 
+          message: uname
+        });
+        return;
+      }
+
+      const user = await validateUser(data.username, data.password);
+      if (user === null) {
+        methods.setError('password', { 
+          type: 'server', 
+          message: 'Invalid password'
+        });
+        return;
+      }
+      
+      login(user);
+      navigate("/home");
     } catch (error) {
       console.error("Error logging in:", error);
     }

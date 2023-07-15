@@ -111,11 +111,11 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & ReviewProps> = ({
           
           <WriteRating>
           <Rating
-          count={5}
-          value={rating}
-          edit={true}
-          onChange={(value) => setRating(value)}
-        />
+            count={5}
+            value={rating}
+            edit={true}
+            onChange={(value) => setRating(value)}
+          />
           <RatingText>Your rating</RatingText>
           </WriteRating>
 
@@ -137,6 +137,7 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & ReviewProps> = ({
                   style={{ display: "none" }}
                 />
               </div>
+              
               <ImageGrid>
               {images.map((src, index) => (
                 <ImgContainer key={index}>
