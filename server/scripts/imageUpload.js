@@ -13,6 +13,7 @@ function getAllFiles(path) {
 }
 
 export default async function imageUpload() {
+	throw new Error("This script is not meant to be run");
 	const deleteResult = await Image.deleteMany({ name: { $regex: '^Screenshot' } });
 	console.log(`deleted ${deleteResult.deletedCount} images`);
 

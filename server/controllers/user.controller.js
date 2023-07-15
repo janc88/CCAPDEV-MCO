@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import User from "../models/User.js";
 import Image from "../models/Image.js"
+import { uploadImage } from "./image.controller.js";
 import defaults from "../defaults/defaults.json" assert { type: "json" };
 import fs from "fs";
 
@@ -47,12 +48,7 @@ const createUser = async (req, res) => {
 	const session = await mongoose.startSession();
 	session.startTransaction();
 
-	const newImage = new Image({
-		name: avatar.originalname,
-		data: avatar.buffer,
-		mimeType: avatar.mimetype,
-	});
-	await newImage.save({session});
+	const newImage = await uploadImage(avatar, session);
 	
     const newUser = new User({
 		username,
