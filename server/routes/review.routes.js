@@ -14,7 +14,7 @@ router.route("/").get(getAllReviews);
 router.route("/:id").post(getReviewDetails);
 router.route("/").post(createReview);
 router.route("/:id").patch(updateReview);
-router.route("/:id").get(deleteReview);
+router.route("/:id").delete(deleteReview);
 
 
 export default router;
