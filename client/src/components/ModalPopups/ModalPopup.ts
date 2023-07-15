@@ -232,10 +232,7 @@ export const EditDeleteContainer = styled.div`
     margin-right: 1.5rem;
 `;
 
-export const TitleBoxWrapper = styled.input.attrs({
-  type: "text",
-  placeholder: "Title",
-})`
+export const TitleBoxWrapper = styled.input`
   width: 90%;
   align-self: flex-start;
   padding: 1rem;
@@ -247,9 +244,7 @@ export const TitleBoxWrapper = styled.input.attrs({
   font-weight: bold;
 `;
 
-export const DescriptionBoxWrapper = styled.textarea.attrs({
-  placeholder: "Say something about this restaurant...",
-})`
+export const DescriptionBoxWrapper = styled.textarea`
   width: 95%;
   height: 150px;
   padding: 1rem;

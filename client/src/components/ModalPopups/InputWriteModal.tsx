@@ -18,8 +18,10 @@ interface DescriptionBoxProps {
 export const TitleBox: React.FC<TitleBoxProps> = ({ value, onChange }) => {
   return (
     <TitleBoxWrapper
-      value={value}
-      onChange={onChange}
+      type = "text"
+      value = {value}
+      onChange = {onChange}
+      placeholder = "Title"
     />
   );
 };
@@ -27,9 +29,9 @@ export const TitleBox: React.FC<TitleBoxProps> = ({ value, onChange }) => {
 export const DescriptionBox: React.FC<DescriptionBoxProps> = ({ value, onChange }) => {
   return (
     <DescriptionBoxWrapper
-      value={value}
-      onChange={onChange}
-      placeholder="Description"
+      value = {value}
+      onChange = {onChange}
+      placeholder = "Say something about this restaurant..."
     />
   );
 };
