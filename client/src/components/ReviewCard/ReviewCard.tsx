@@ -127,14 +127,9 @@ const ReviewCard: React.FC<ReviewCardProps> = (review) => {
   const relativeTime = getTimeDifference(review.datePosted);
 
   const [showReviewModal, setShowReviewModal] = useState(false);
-  const [showBaseModal, setShowBaseModal] = useState(false);
 
   const toggleReviewModal = () => {
     setShowReviewModal((prevShowReviewModal) => !prevShowReviewModal);
-  };
-
-  const toggleBaseModal = () => {
-    setShowBaseModal((prevShowBaseModal) => !prevShowBaseModal);
   };
 
   const toggleModal = () => {
