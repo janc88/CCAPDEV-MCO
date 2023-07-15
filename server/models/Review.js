@@ -14,7 +14,7 @@ const ReviewSchema = new mongoose.Schema({
     ref: 'Restaurant',
     required: false
   },
-  stars: { type: Number, required: false },
+  stars: { type: Number, required: true },
   helpful: { type: Number, required: false },
   ownerResponse: { type: Number, required: false },
   imgs: [{ type: String, required: false }],

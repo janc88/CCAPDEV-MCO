@@ -76,14 +76,17 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & ReviewProps> = ({
   };
 
   const SaveModal = async () => {
+    if (title.trim() === '' || description.trim() === '' || rating === 0) {
+      console.error('Error: Title, rating, and description are required.');
+      return;
+    }
+
     try {
-      // Check if the required fields (title and description) are empty
-  
       const reviewData = {
-        title,
-        body: description,
-        // stars: rating,
-        // Add any additional fields you need for the review
+        title: title.trim(),
+        body: description.trim(),
+        stars: rating,
+        // will add the rest
       };
   
       const response = await fetch("http://localhost:8080/api/reviews/", {
@@ -93,18 +96,14 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & ReviewProps> = ({
         },
         body: JSON.stringify(reviewData),
       });
-  
+
+      const newReview = await response.json();
       if (response.ok) {
-        // Handle success if the review was created successfully
-        const newReview = await response.json();
         console.log('Review created:', newReview);
       } else {
-        // Handle error if there was an issue creating the review
-        const errorData = await response.json();
-        console.error('Error creating review:', errorData);
+        console.error('Error creating review:', newReview);
       }
   
-      // Clear the form fields
       setImages([]);
       setRating(0);
       setTitle('');

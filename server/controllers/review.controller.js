@@ -6,7 +6,7 @@ const getAllReviews = async (req, res) => {};
 const getReviewDetails = async (req, res) => {};
 const createReview = async (req, res) => {
   try {
-    const { title, body } = req.body;
+    const { title, body, stars } = req.body;
 
     const session = await mongoose.startSession();
 	  session.startTransaction();
@@ -14,7 +14,7 @@ const createReview = async (req, res) => {
     const newReview = new Review({
       title,
       body,
-      // stars,
+      stars,
     });
 
     await newReview.save({session});
