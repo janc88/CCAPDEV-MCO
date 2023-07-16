@@ -10,6 +10,7 @@ import {
   ReviewProps,
 } from "../../components/ReviewsCard/ReviewsCard";
 import UserInfoCard from "../../components/UserInfoCard/UserInfoCard";
+import ProfileReviewsCard from "../../components/ReviewsCard/ProfileReviewsCard";
 
 interface ProfilePageProps {
   reviews: ReviewProps[];
@@ -23,7 +24,7 @@ const ProfilePage: React.FC<ProfilePageProps> = (userInfo) => {
         <UserInfoCard/>
       </LeftContainer>
       <RightContainer>
-        <ReviewsCard reviewList={userInfo.reviews} showOverLay />
+        <ProfileReviewsCard reviewList={userInfo.reviews} showOverLay />
       </RightContainer>
       <EmptyContainer></EmptyContainer>
     </ProfilePageContainer>

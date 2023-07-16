@@ -1,0 +1,93 @@
+import React, { useState, useContext } from "react";
+import {
+  Header,
+  RestoReviewsContainer,
+  ReviewsContainer,
+  WriteReview,
+} from "./ReviewsCard.styled";
+import ReviewCard from "../ReviewCard/ReviewCard";
+import ViewWriteModal from "../ModalPopups/ViewWriteModal";
+import { SearchBar } from "./Input";
+import SmallModal from "../SmallModal/SmallModal";
+import { UserContext } from "../../contexts/UserContext";
+
+interface ReviewsCardProps {
+  reviewList: ReviewProps[];
+  showOverLay?: boolean; //show overlay of restoname in the review image
+}
+
+export interface ImageProps {
+  id: number;
+  src: string;
+  alt: string;
+}
+
+export interface ReviewProps {
+  id: number;
+  resto: string;
+  title: string;
+  username: string;
+  profilepic: ImageProps;
+  datePosted: Date;
+  description: string;
+  stars: number;
+  helpful: number;
+  response: string;
+  imgs: ImageProps[];
+}
+
+const ProfileReviewsCard: React.FC<ReviewsCardProps> = ({
+  reviewList,
+  showOverLay = false,
+}) => {
+  const [showWriteModal, setshowWriteModal] = useState(false);
+  const [reviewFilter, setReviewFilter] = useState('');
+  const [isSmallModalVisible, setIsSmallModalVisible] = useState(false);
+
+  const toggleWriteModal = () => {
+    setshowWriteModal((prevshowWriteModal) => !prevshowWriteModal);
+  };
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setReviewFilter(event.target.value);
+  };
+
+  const toggleSmallModal = () => {
+    setIsSmallModalVisible((wasModalVisible) => !wasModalVisible);
+  };
+
+  const { user } = useContext(UserContext);
+  
+  return (
+    <RestoReviewsContainer isUserReview={showOverLay}>
+      <Header>
+		  {showOverLay ? "User's Reviews" : "Restaurant's Reviews"}
+		  <SearchBar 
+		    placeholder="Search Reviews"
+		    inputProps={{
+			  onChange: handleInputChange,
+			  text: reviewFilter,
+		  }}/>
+	    </Header>
+      
+      <ReviewsContainer isUserReview={showOverLay}>
+        {reviewList.map((review) => (
+      (review.title.includes(reviewFilter) || review.description.includes(reviewFilter)) && 
+          <ReviewCard {...review} showOverlay={showOverLay} />
+        ))}
+      </ReviewsContainer>
+
+      <SmallModal
+        isModalVisible={isSmallModalVisible}
+        onBackdropClick={toggleSmallModal}
+      />
+
+      <ViewWriteModal
+              isModalVisible={showWriteModal}
+              onBackdropClick={toggleWriteModal}
+              {...reviewList[1]} //temporary only
+      />
+    </RestoReviewsContainer>
+  );
+};
+
+export default ProfileReviewsCard;
