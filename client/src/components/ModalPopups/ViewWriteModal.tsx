@@ -35,9 +35,10 @@ interface StarRatingProps {
   size: string;
 }
 
-const BaseModalWrapper: React.FC<BaseModalWrapperProps & ReviewProps> = ({
+const BaseModalWrapper: React.FC<BaseModalWrapperProps & ReviewProps & { restaurantId: string }> = ({
   onBackdropClick,
   isModalVisible,
+  restaurantId,
   ...reviewProps
 }) => {
   const [images, setImages] = useState<string[]>([]);
@@ -89,6 +90,7 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & ReviewProps> = ({
         body: description.trim(),
         stars: rating,
         user: user,
+        restaurant: restaurantId,
         // will add the rest
       };
   

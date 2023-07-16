@@ -10,6 +10,8 @@ import ViewWriteModal from "../ModalPopups/ViewWriteModal";
 import { SearchBar } from "./Input";
 import SmallModal from "../SmallModal/SmallModal";
 import { UserContext } from "../../contexts/UserContext";
+import { useParams } from "react-router-dom";
+import { useSingleRestaurant } from "../../contexts/RestoHook";
 
 interface ReviewsCardProps {
   reviewList: ReviewProps[];
@@ -56,22 +58,24 @@ const ReviewsCard: React.FC<ReviewsCardProps> = ({
   };
 
   const { user } = useContext(UserContext);
-  
+  const { id } = useParams<{ id: string }>();
+
   return (
     <RestoReviewsContainer isUserReview={showOverLay}>
       <Header>
-		  {showOverLay ? "User's Reviews" : "Restaurant's Reviews"}
-		  <SearchBar 
-		    placeholder="Search Reviews"
-		    inputProps={{
-			  onChange: handleInputChange,
-			  text: reviewFilter,
-		  }}/>
-	    </Header>
+        {showOverLay ? "User's Reviews" : "Restaurant's Reviews"}
+        <SearchBar 
+          placeholder="Search Reviews"
+          inputProps={{
+            onChange: handleInputChange,
+            value: reviewFilter, // Change text to value
+          }}
+        />
+      </Header>
       
       <ReviewsContainer isUserReview={showOverLay}>
         {reviewList.map((review) => (
-      (review.title.includes(reviewFilter) || review.description.includes(reviewFilter)) && 
+          (review.title.includes(reviewFilter) || review.description.includes(reviewFilter)) && 
           <ReviewCard {...review} showOverlay={showOverLay} />
         ))}
       </ReviewsContainer>
@@ -95,9 +99,10 @@ const ReviewsCard: React.FC<ReviewsCardProps> = ({
       </WriteReview>
 
       <ViewWriteModal
-              isModalVisible={showWriteModal}
-              onBackdropClick={toggleWriteModal}
-              {...reviewList[1]} //temporary only
+        isModalVisible={showWriteModal}
+        onBackdropClick={toggleWriteModal}
+        restaurantId={id || ""}
+        {...reviewList[1]} //temporary only
       />
     </RestoReviewsContainer>
   );

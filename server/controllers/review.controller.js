@@ -1,15 +1,17 @@
 import mongoose from "mongoose";
 import Review from "../models/Review.js";
 import User from "../models/User.js";
+import Restaurant from "../models/Restaurant.js";
 
 const getAllReviews = async (req, res) => {};
 const getReviewDetails = async (req, res) => {};
 
 const createReview = async (req, res) => {
   try {
-    const { title, body, stars, user } = req.body;
+    const { title, body, stars, user, restaurant } = req.body;
+    const date = new Date();
     const foundUser = await User.findOne({ username: user.userName });
-
+    
     const session = await mongoose.startSession();
 	  session.startTransaction();
 
@@ -17,7 +19,9 @@ const createReview = async (req, res) => {
       title,
       body,
       stars,
+      datePosted: date,
       user: foundUser._id,
+      restaurant: restaurant,
     });
 
     await newReview.save({session});
