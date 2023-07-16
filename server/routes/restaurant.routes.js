@@ -15,7 +15,7 @@ const upload = multer();
 
 router.route("/").get(getAllRestaurants);
 router.route('/featured').get(getFeaturedRestaurants)
-router.route("/:id").post(getRestaurantDetails);
+router.route("/:id").get(getRestaurantDetails);
 router.route("/").post(upload.single('coverImg'), upload.array('imgs'), createRestaurant);
 router.route("/:id").patch(updateRestaurant);
 router.route("/:id").get(deleteRestaurant);
