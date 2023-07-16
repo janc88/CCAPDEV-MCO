@@ -81,7 +81,7 @@ const updateUser = async (req, res) => {
 		const {description, old_password, new_password} = req.body;
 		const avatar = req.file;
 		const newData = {};
-		
+
 		console.log(req.body);
 		console.log(req.file);
 

@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useState, useContext } from "react";
 import Modal from "./ViewModal";
 import {
   DesktopModalContainer,
@@ -22,7 +22,8 @@ import { ImageProps, ReviewProps } from "../ReviewsCard/ReviewsCard";
 import StarRating from "../StarRating/StarRating";
 import ImageWithCloseButton from "./ImageClose";
 import Rating from "./Ratings";
-import {TitleBox, DescriptionBox} from "./InputWriteModal";
+import { TitleBox, DescriptionBox } from "./InputWriteModal";
+import { UserContext } from "../../contexts/UserContext";
 
 interface BaseModalWrapperProps {
   isModalVisible: boolean;
@@ -47,6 +48,7 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & ReviewProps> = ({
   const [description, setDescription] = useState('');
 
   const image = reviewProps.imgs[0];
+  const { user } = useContext(UserContext);
 
   const loadImages = async (image: ImageProps) => {
     try {
@@ -86,6 +88,7 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & ReviewProps> = ({
         title: title.trim(),
         body: description.trim(),
         stars: rating,
+        user: user,
         // will add the rest
       };
   
@@ -102,6 +105,7 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & ReviewProps> = ({
         console.log('Review created:', newReview);
       } else {
         console.error('Error creating review:', newReview);
+        console.log(user);
       }
   
       setImages([]);
