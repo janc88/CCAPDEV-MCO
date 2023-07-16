@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   GalleryImage,
   ImageContainer,
@@ -25,21 +25,6 @@ interface RestoGalleryProps {
 }
 
 const RestoGallery: React.FC<RestoGalleryProps> = ({ imageList }) => {
-  const [loadedImages, setLoadedImages] = useState<string[]>([]);
-
-  const loadImages = async () => {
-    const loadedImages = await Promise.all(
-      imageList.map(async (image) => {
-        const loadedImage = await import(`../../imgs/${image.src}`);
-        return loadedImage.default;
-      })
-    );
-    setLoadedImages(loadedImages);
-  };
-
-  useEffect(() => {
-    loadImages();
-  }, [imageList]);
 
   return (
     <RestoGalleryWrapper>
@@ -57,12 +42,12 @@ const RestoGallery: React.FC<RestoGalleryProps> = ({ imageList }) => {
             grabCursor={true}
             className="mySwiper"
           >
-            {loadedImages.map((imageSrc, index) => (
+            {imageList.map((e) => (
               <SwiperSlide>
                 <GalleryImage
-                  key={imageList[index].id}
-                  src={imageSrc}
-                  alt={imageList[index].alt}
+                  key={e.id}
+                  src={e.src}
+                  alt={e.alt}
                 />
               </SwiperSlide>
             ))}

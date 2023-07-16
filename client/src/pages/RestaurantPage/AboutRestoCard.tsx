@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React from "react";
 import {
   AboutRestoContainer,
   RatingContainer,
@@ -10,39 +10,21 @@ import {
   RestoDescription,
 } from "./styles/AboutRestoCard.styled";
 import StarRating from "../../components/StarRating/StarRating";
-import restoimg from "../../imgs/food-bg-light.jpeg";
-import { RestoProps } from "../../components/RestoCard/RestoCard";
+import { Restaurant } from "../../contexts/RestoHook";
 
-const AboutRestoCard: React.FC<RestoProps> = (resto) => {
-
-  const [loadedImages, setLoadedImages] = useState<string[]>([]);
-
-  const imageList = resto.coverImg;
-  const loadImages = async () => {
-    const loadedImages = await Promise.all(
-      [imageList].map(async (image) => {
-        const loadedImage = await import(`../../imgs/${image.src}`);
-        return loadedImage.default;
-      })
-    );
-    setLoadedImages(loadedImages);
-  };
-
-  useEffect(() => {
-    loadImages();
-  }, [imageList]);
-
+const AboutRestoCard: React.FC<Restaurant> = (resto) => {
   return (
     <AboutRestoContainer>
       <RestoName>{resto.name}</RestoName>
       <RatingContainer>
-        <StarRating rating={resto.rating} size="sm" />
-        <NumRating>({resto.numrating})</NumRating>
+		{/*TODO add ratings*/}
+        <StarRating rating={0.5} size="sm" />
+        <NumRating>({resto.allReviews?.length})</NumRating>
       </RatingContainer>
-      <RestoImage src={loadedImages[0]} />
+      <RestoImage src={resto.coverImg} />
       <RestoAddress>{resto.address}</RestoAddress>
       <Divider />
-      <RestoDescription>{resto.desc}</RestoDescription>
+      <RestoDescription>{resto.description}</RestoDescription>
     </AboutRestoContainer>
   );
 };

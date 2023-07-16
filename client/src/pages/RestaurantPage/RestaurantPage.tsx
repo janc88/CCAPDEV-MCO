@@ -11,56 +11,74 @@ import ReviewsCard from "../../components/ReviewsCard/ReviewsCard";
 import SummaryCard from "./SummaryCard";
 import { useNavigate, useParams } from "react-router-dom";
 
-import { restoList } from "../../data/data";
 import { CenterContainer, PageContainer, Card, Title, Divider, Send } from "../styles/LoginPage.styled";
+import { useSingleRestaurant } from "../../contexts/RestoHook";
+
+import { restoList } from "../../data/data";
+
+
+const NotFound: React.FC<{ id: string }> = ({ id }) => {
+	const navigate = useNavigate();
+	return (
+		<PageContainer>
+			<CenterContainer>
+				<Card>
+					<Title>Restaurant {id} not found</Title>
+					<Divider />
+					<Send onClick={() => navigate('/Restaurants')}>
+						Return to Restaurants
+					</Send>
+				</Card>
+			</CenterContainer>
+		</PageContainer>
+	);
+};
 
 const RestaurantPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate()
 
-  const resto = restoList.find((resto) => resto.details.id === parseInt(id || '-1'));
+  if (!id) return (<NotFound id="" />);
+
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const { restaurant: resto, isFetched } = useSingleRestaurant(id);
+
+  if (!isFetched) return (
+  	<RestaurantPageContainer className="resto-gallery">
+		<MiddleContainer>Loading...</MiddleContainer>
+	</RestaurantPageContainer>
+  );
+
+  if (!resto) return (<NotFound id={id} />);
 
   return (
-	<> { resto ? (
     <RestaurantPageContainer className="resto-gallery">
       <LeftContainer>
         <AboutRestoCard
-          id={resto!.details.id}
-          name={resto!.details.name}
-          rating={resto!.details.rating}
-          numrating={resto!.details.numrating}
-          desc={resto!.details.desc}
-          ratings={resto!.details.ratings}
-          address={resto!.details.address}
-          coverImg={resto!.details.coverImg}
+		  {...resto}
         />
-        <RestoGallery imageList={resto!.restoImgs} />
+        <RestoGallery imageList={
+			resto.imgs.map(
+				(img, index) => ({
+					id: index,
+					src: img,
+					alt: resto.name
+				})
+			)} />
       </LeftContainer>
       <MiddleContainer>
-        <ReviewsCard reviewList={resto!.reviews} />
+		{/*TODO add reviews*/}
+        <ReviewsCard reviewList={restoList[0].reviews} />
       </MiddleContainer>
       <RightContainer>
+		{/*TODO add reviews*/}
         <SummaryCard
-          numrating={resto!.details.numrating}
-          rating={resto!.details.rating}
-          ratings={resto!.details.ratings}
+          numrating={resto.allReviews?.length || 0}
+          rating={0.5}
+          ratings={[]}
         />
       </RightContainer>
     </RestaurantPageContainer>
-	) : (
-	  <PageContainer>
-		<CenterContainer>
-		  <Card>
-			<Title>Restaurant {id} not found</Title>
-			<Divider />
-			<Send onClick={()=>navigate('/Restaurants')}>
-			  Return to Restaurants
-			</Send>
-		  </Card>
-		</CenterContainer>
-	  </PageContainer>
-	)}
-	</>);
+  );
 };
 
 export default RestaurantPage;

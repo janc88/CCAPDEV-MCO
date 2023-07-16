@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import {
   NumRating,
   Rating,
@@ -19,7 +19,7 @@ interface SummaryCardProps {
 
 const SummaryCard: React.FC<SummaryCardProps> = ({ratings, numrating, rating}) => {
   const renderBars = () => {
-    const bars = [];
+    const bars: ReactNode[] = [];
 
     for (let i = 5; i >= 1; i--) {
       const totalCount = ratings.length;
