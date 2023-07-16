@@ -1,4 +1,5 @@
 import Modal from "../Modal/Modal";
+
 import {
   DesktopSmallModalContainer,
   Title,
@@ -7,9 +8,10 @@ import {
 } from "./SmallModal.styled";
 
 import { Divider, SideText, Send } from "../../pages/styles/LoginPage.styled";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { FlexRight } from "../../styles/Flex.styled";
 import { ButtonContainer, CancelButton, SaveButton, SaveCancelButtonContainer } from "../ModalPopups/ModalPopup";
+import React from "react";
 
 interface BaseModalWrapperProps {
   isModalVisible: boolean;
@@ -20,20 +22,21 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps> = ({
   onBackdropClick,
   isModalVisible,
 }) => {
+  const location = useLocation();
   const navigate = useNavigate();
 
   if (!isModalVisible) {
     return null;
   }
-  const CancelModal = () => {
 
-    onBackdropClick();
-  };
+  const cancelModal = () => {
+    navigate(0);  
+};
 
-  const SaveModal = () => {
+  const saveModal = () => {
+    navigate(0);
+};
 
-    onBackdropClick();
-  };
 
   return (
     <Modal onBackdropClick={onBackdropClick}>
@@ -44,8 +47,8 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps> = ({
           Delete the review? This action CANNOT be undone.
         </DeleteText>
         <SaveCancelButtonContainer>
-          <CancelButton onClick={CancelModal}>Cancel</CancelButton>
-          <SaveButton onClick={SaveModal}>Delete</SaveButton>
+          <CancelButton onClick={cancelModal}>Cancel</CancelButton>
+          <SaveButton onClick={saveModal}>Delete</SaveButton>
         </SaveCancelButtonContainer>
       </DesktopSmallModalContainer>
     </Modal>

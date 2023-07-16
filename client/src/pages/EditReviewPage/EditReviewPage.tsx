@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Rating from "../../components/ModalPopups/Ratings";
 import { ImageProps } from "../../components/ReviewsCard/ReviewsCard";
 import {
@@ -24,8 +23,8 @@ import { CancelButton, SaveButton } from "../EditProfilePage/EditProfilePage.sty
 
 export const EditReviewPage = () => {
   const location = useLocation();
-  const { state } = location;
   const navigate = useNavigate();
+  const { state } = location;
 
   const [images, setImages] = useState<string[]>([]);
   const [loadedImages, setLoadedImages] = useState<string[]>([]);
@@ -52,13 +51,13 @@ export const EditReviewPage = () => {
     setLoadedImages((prevLoadedImages) => prevLoadedImages.filter((_, i) => i !== index));
   };
 
-  const CancelModal = () => {
-    navigate("/");
-  };
+  const cancelModal = () => {
+    navigate(-1);  
+};
 
-  const SaveModal = () => {
-    navigate("/");
-  };
+  const saveModal = () => {
+    navigate(-1);
+};
 
   return (
     <PageContainer>
@@ -103,8 +102,8 @@ export const EditReviewPage = () => {
         </ImageReviewContainer>
 
         <ButtonContainer>
-          <CancelButton onClick={CancelModal}>Cancel</CancelButton>
-          <SaveButton onClick={SaveModal}>Save</SaveButton>
+          <CancelButton onClick={cancelModal}>Cancel</CancelButton>
+          <SaveButton onClick={saveModal}>Save</SaveButton>
         </ButtonContainer>
 
       </EditReviewContainer>
