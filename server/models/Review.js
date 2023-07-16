@@ -15,10 +15,16 @@ const ReviewSchema = new mongoose.Schema({
     required: true
   },
   stars: { type: Number, required: true },
-  helpful: { 
-	type: Number, required: true,
-	default: 0
- },
+  upvotes: [{
+	type: mongoose.Schema.Types.ObjectId,
+	ref: 'User',
+	required: false
+  }],
+  downvotes: [{
+	type: mongoose.Schema.Types.ObjectId,
+	ref: 'User',
+	required: false
+  }],
   ownerResponse: { type: Number, required: false },
   imgs: [{ type: String, required: false }],
 });
