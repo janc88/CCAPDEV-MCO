@@ -83,7 +83,7 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & ReviewProps & { restaur
       console.error('Error: Title, rating, and description are required.');
       return;
     }
-
+  
     try {
       const reviewData = {
         title: title.trim(),
@@ -91,7 +91,7 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & ReviewProps & { restaur
         stars: rating,
         user: user,
         restaurant: restaurantId,
-        // will add the rest
+        images: images,
       };
   
       const response = await fetch("http://localhost:8080/api/reviews/", {
@@ -101,13 +101,13 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & ReviewProps & { restaur
         },
         body: JSON.stringify(reviewData),
       });
-
+  
       const newReview = await response.json();
       if (response.ok) {
         console.log('Review created:', newReview);
       } else {
         console.error('Error creating review:', newReview);
-        console.log(user);
+        console.log(reviewData);
       }
   
       setImages([]);
