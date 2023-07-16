@@ -40,7 +40,6 @@ const RestoCard: React.FC<RestoProps> = (resto) => {
   };
 
   
-  
   useEffect(() => {
     setBackgroundImage(`http://localhost:8080/api/images/${resto.coverImg}`)
 
