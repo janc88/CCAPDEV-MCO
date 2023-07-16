@@ -1,4 +1,4 @@
-import React, { ReactNode, createContext, useState, useEffect } from 'react';
+import React, { ReactNode, createContext, useState, useEffect, useCallback } from 'react';
 import Cookies from 'js-cookie';
 
 export interface User {
@@ -22,7 +22,7 @@ interface UserContextType {
 	 * @returns User if valid, null otherwise
 	 */
 	validateUser: (username: string, password: string) => Promise<User | null>;
-	updateUser: (description: string, avatar: File|null) => Promise<void>;
+	updateUser: (description: string, avatar: File | null) => Promise<void>;
 	updatePassword: (old_password: string, new_password: string) => Promise<void>;
 }
 
@@ -41,17 +41,17 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 	useEffect(() => {
 		const savedUser = Cookies.get('user');
 		if (savedUser) {
-		  const parsedUser = JSON.parse(savedUser);
-		  setUser(parsedUser);
+			const parsedUser = JSON.parse(savedUser);
+			setUser(parsedUser);
 		}
-	  }, []);
-	
-	const login = (user: User) => {
+	}, []);
+
+	const login = useCallback((user: User) => {
 		Cookies.set('user', JSON.stringify(user));
 		setUser(user);
-	}
-	
-	const updatePassword = async (old_password: string, new_password: string) => {
+	}, []);
+
+	const updatePassword = useCallback(async (old_password: string, new_password: string) => {
 		if (user === null)
 			throw new Error("User does not exist!");
 		const formData = new FormData();
@@ -65,9 +65,9 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 		await response.json();
 		if (!response.ok)
 			throw new Error("Error updating password");
-	}
+	}, [user]);
 
-	const updateUser = async (description: string, avatar: File|null) => {
+	const updateUser = useCallback(async (description: string, avatar: File | null) => {
 		if (user === null)
 			throw new Error("User does not exist!");
 		const formData = new FormData();
@@ -87,9 +87,29 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 			profilePicture: 'http://localhost:8080/api/images/' + data.avatar,
 			accountDesc: data.description,
 		});
-	}
+	}, [user, login]);
 
-	const signup = async (user: User, password: string, profilePicture: File) => {
+
+	const validateUser = useCallback(async (username: string, password: string) => {
+		try {
+			const response = await fetch(`http://localhost:8080/api/users/${username}`);
+			if (!response.ok)
+				throw new Error("Error validating user");
+			const data = await response.json();
+			if (data.username === username &&
+				data.password === password)
+				return {
+					userName: data.username,
+					profilePicture: 'http://localhost:8080/api/images/' + data.avatar,
+					accountDesc: data.description,
+				};
+		} catch (error) {
+			console.error("Error validating login:", error);
+		}
+		return null;
+	}, []);
+
+	const signup = useCallback(async (user: User, password: string, profilePicture: File) => {
 		const formData = new FormData();
 		formData.append('username', user.userName);
 		formData.append('description', user.accountDesc);
@@ -109,38 +129,19 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 			throw new Error("Error creating user");
 
 		login(loginUser);
-	}
+	}, [login, validateUser]);
 
-	const logout = () => {
+	const logout = useCallback(() => {
 		Cookies.remove('user');
 		setUser(null);
-	}
-
-	const validateUser = async (username: string, password: string) => {
-		try {
-			const response = await fetch(`http://localhost:8080/api/users/${username}`);
-			if (!response.ok)
-			  throw new Error("Error validating user");
-			const data = await response.json();
-			if (data.username === username && 
-				data.password === password)
-			return {
-				userName: data.username,
-				profilePicture: 'http://localhost:8080/api/images/' + data.avatar,
-				accountDesc: data.description,
-			};
-		  } catch (error) {
-			console.error("Error validating login:", error);
-		  }
-		return null;
-	};
+	}, []);
 
 	return (
-		<UserContext.Provider value={{ 
-			user, login, logout, 
-			signup, validateUser, 
+		<UserContext.Provider value={{
+			user, login, logout,
+			signup, validateUser,
 			updateUser, updatePassword
-			}}>
+		}}>
 			{children}
 		</UserContext.Provider>
 	);
