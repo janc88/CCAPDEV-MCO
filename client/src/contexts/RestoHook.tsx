@@ -7,8 +7,8 @@ export interface Restaurant {
 	address: string;
 	coverImg: string;
 	imgs: string[];
-	stars: number[];
-	reviews: string[] | null;
+	starCount: number[];
+	allReviews: string[] | null;
 }
 
 interface RestaurantsType {
@@ -25,10 +25,10 @@ export const useRestaurants = (): RestaurantsType => {
 		const restoJson = await response.json();
 		const featured = restoJson.map((resto) => ({
 			...resto,
-			reviews: resto.reviews || null,
+			reviews: null,
 			id: resto._id,
-			imgs: resto.imgs.map((img: string) => `http://localhost:8080/${img}`),
-			coverImg: `http://localhost:8080/${resto.coverImg}`,
+			imgs: resto.imgs.map((img: string) => `http://localhost:8080/api/images/${img}`),
+			coverImg: `http://localhost:8080/api/images/${resto.coverImg}`,
 		}));
 		return featured;
 	}, []);
@@ -42,9 +42,9 @@ export const useRestaurants = (): RestaurantsType => {
 		const resto = {
 			...restoJson,
 			id: restoJson._id,
-			reviews: restoJson.reviews || null,
-			imgs: restoJson.imgs.map((img: string) => `http://localhost:8080/${img}`),
-			coverImg: `http://localhost:8080/${restoJson.coverImg}`,
+			reviews: null,
+			imgs: restoJson.imgs.map((img: string) => `http://localhost:8080/api/images/${img}`),
+			coverImg: `http://localhost:8080/api/images/${restoJson.coverImg}`,
 		};
 		return resto;
 	}, []);

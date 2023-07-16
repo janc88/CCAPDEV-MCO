@@ -9,20 +9,10 @@ import {
   RestoRating,
 } from "./RestoCard.styled";
 import StarRating from "../StarRating/StarRating";
-import { ImageProps } from "../ReviewsCard/ReviewsCard";
+import { Restaurant } from "../../contexts/RestoHook";
 
-export interface RestoProps {
-  _id: number;
-  name: string;
-  description: string;
-  starCount: number[];
-  address: string;
-  imgs: string[];
-  allReviews: string[];
-  coverImg: string;
-}
 
-const RestoCard: React.FC<RestoProps> = (resto) => {
+const RestoCard: React.FC<Restaurant> = (resto) => {
   const [backgroundImage, setBackgroundImage] = useState<string>("");
   const [averageStars, setAverageStars] = useState<number>();
   const [numRatings, setNumRatings] = useState<number>();
@@ -41,17 +31,17 @@ const RestoCard: React.FC<RestoProps> = (resto) => {
 
   
   useEffect(() => {
-    setBackgroundImage(`http://localhost:8080/api/images/${resto.coverImg}`)
+    setBackgroundImage(resto.coverImg)
 
     const averageStars = computeAverageRating(resto.starCount);
     setAverageStars(averageStars);
 
     const numRatings = getTotalRatings(resto.starCount);
     setNumRatings(numRatings);
-  }, []);
+  }, [resto.coverImg, resto.starCount]);
 
   return (
-    <RestoCardContainer to={`/restaurants/${resto._id}`}>
+    <RestoCardContainer to={`/restaurants/${resto.id}`}>
       <RestoImg image={backgroundImage}>
         <RestoName>{resto.name}</RestoName>
         <RestoRating>
