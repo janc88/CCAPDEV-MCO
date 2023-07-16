@@ -12,37 +12,55 @@ import StarRating from "../StarRating/StarRating";
 import { ImageProps } from "../ReviewsCard/ReviewsCard";
 
 export interface RestoProps {
-  id: number;
+  _id: number;
   name: string;
-  rating: number;
-  numrating: number;
-  desc: string;
-  ratings: number[];
+  description: string;
+  starCount: number[];
   address: string;
-  coverImg: ImageProps;
+  imgs: string[];
+  allReviews: string[];
+  coverImg: string;
 }
 
 const RestoCard: React.FC<RestoProps> = (resto) => {
   const [backgroundImage, setBackgroundImage] = useState<string>("");
+  const [averageStars, setAverageStars] = useState<number>();
+  const [numRatings, setNumRatings] = useState<number>();
 
+  const computeAverageRating = (starcount: any) => {
+    const totalRatings = starcount.reduce((acc, count, index) => acc + count * (index + 1), 0);
+    const totalStars = starcount.reduce((acc, count, index) => acc + count, 0);
+    const averageRating = totalRatings / totalStars;
+    return Math.round(averageRating * 10) / 10;
+  };
+
+  const getTotalRatings = (starcount: any) => {
+    const totalRatings = starcount.reduce((acc, count) => acc + count, 0);
+    return totalRatings;
+  };
+
+  
+  
   useEffect(() => {
-    const fetchBackgroundImage = async () => {
-      const image = await import(`../../imgs/${resto.coverImg.src}`);
-      setBackgroundImage(image.default);
-    };
-    fetchBackgroundImage();
+    setBackgroundImage(`http://localhost:8080/api/images/${resto.coverImg}`)
+
+    const averageStars = computeAverageRating(resto.starCount);
+    setAverageStars(averageStars);
+
+    const numRatings = getTotalRatings(resto.starCount);
+    setNumRatings(numRatings);
   }, []);
 
   return (
-    <RestoCardContainer to={`/restaurants/${resto.id}`}>
+    <RestoCardContainer to={`/restaurants/${resto._id}`}>
       <RestoImg image={backgroundImage}>
         <RestoName>{resto.name}</RestoName>
         <RestoRating>
-          <StarRating rating={resto.rating} size="md" />
-          <RatingsCount>({resto.numrating})</RatingsCount>
+          <StarRating rating={averageStars!} size="md" />
+          <RatingsCount>({numRatings})</RatingsCount>
         </RestoRating>
       </RestoImg>
-      <RestoDescription>{resto.desc}</RestoDescription>
+      <RestoDescription>{resto.description}</RestoDescription>
       <RestoCardFooter />
     </RestoCardContainer>
   );

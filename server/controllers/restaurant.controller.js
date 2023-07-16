@@ -29,6 +29,7 @@ const getRestaurantDetails = async (req, res) => {
 	res.status(500).json({ error: error.message });
   }
 };
+
 const createRestaurant = async (req, res) => {
   try {
 	const { 

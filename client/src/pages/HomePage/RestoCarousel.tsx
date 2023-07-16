@@ -33,6 +33,8 @@ const RestoCarousel: React.FC<RestoCarouselProps> = ({ restoList }) => {
     swiperRef?.slideNext();
   };
 
+  
+
   return (
     <RestoCarouselContainer className='resto-carousel'>
       <RestoCarouselHeader>Featured Restaurants</RestoCarouselHeader>
