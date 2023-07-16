@@ -71,7 +71,7 @@ const Rating: React.FC<RatingProps> = ({
   color = "#000",
   hoverColor = "#ff794f",
   activeColor = "#ff794f",
-  size = 30,
+  size = 35,
   edit = false,
   isHalf = true,
   onChange,

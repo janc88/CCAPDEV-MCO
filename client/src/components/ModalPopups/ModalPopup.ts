@@ -242,6 +242,7 @@ export const TitleBoxWrapper = styled.input`
   margin-top: auto;
   margin-left: -0.5rem;
   font-weight: bold;
+  outline: none;
 `;
 
 export const DescriptionBoxWrapper = styled.textarea`
@@ -254,6 +255,7 @@ export const DescriptionBoxWrapper = styled.textarea`
   margin-left: -0.5rem;
   margin-top: 1rem;
   resize: none;
+  outline: none;
 
   &::-webkit-scrollbar {
     width: 10px;
