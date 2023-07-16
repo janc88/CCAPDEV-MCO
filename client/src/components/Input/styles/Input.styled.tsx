@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { FlexRight, FlexRow } from "../../../styles/Flex.styled";
+import { FlexRight } from "../../../styles/Flex.styled";
 import {Error} from '@styled-icons/material'
 import {motion} from 'framer-motion'
 
@@ -26,7 +26,10 @@ export const TextAreaInput = styled.textarea`
   font-family: inherit;
 `;
 
-export const LabelContainer = styled(FlexRow)`
+export const LabelContainer = styled.label`
+	display: flex;
+	align-items: center;
+	gap: 5px;
 	width: 100%;
 `
 export const Label = styled.div`
@@ -69,9 +72,9 @@ export const FramerError = styled(motion.div).attrs(FramerErrorProps)`
 
 `;
 
-export const ErrorText = styled.div<{px: number}>`
+export const ErrorText = styled.div<{px: string}>`
 	color: red;
-	font-size: ${({px})=>px}px;
+	font-size: ${({px})=>px};
 	display: inline-block;
 `;
 export const PwordContainer = styled.div`

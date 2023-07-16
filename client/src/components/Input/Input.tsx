@@ -29,7 +29,7 @@ interface InputProps {
 	name?: string;
 	type?: string;
 	tooltip?: string;
-	px?: number;
+	size?: string;
 	validation?: RegisterOptions<FieldValues, string>;
 }
 export function Input({
@@ -39,7 +39,7 @@ export function Input({
 	type = 'text',
 	tooltip = '',
 	validation,
-	px = 19
+	size: px = '19px'
 }: InputProps) {
 	const {
 		register,
@@ -56,8 +56,8 @@ export function Input({
 		    <AnimatePresence mode='sync'>
 			{errmsg && (
 			  <FramerError key='inputerr'>
-				<ErrorIcon size={px * 0.75}/>
-				<ErrorText px={px * 0.75}>
+				<ErrorIcon size={`calc(${px} * 0.75`}/>
+				<ErrorText px={`calc${px} * 0.75`}>
 				  {errmsg.toString()}
 				</ErrorText>
 			  </FramerError>

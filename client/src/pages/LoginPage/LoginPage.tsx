@@ -81,7 +81,7 @@ function LoginPage() {
                   id="stayLoggedIn"
                   tooltip="Stay logged in"
                   label="Remember me"
-                  labelSize={19}
+                  labelSize={'19px'}
                 />
                 <FlexRight>
                   <SideText onClick={() => navigate("/signup")}>

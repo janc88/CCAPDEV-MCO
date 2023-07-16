@@ -1,9 +1,10 @@
+import React from 'react';
 import { TooltipIcon } from './styles/checkbox.styled';
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 
 interface TooltipProps {
 	text: string;
-	size: number;
+	size: string;
 	id?: string;
 }
 export function Tooltip({
@@ -13,7 +14,7 @@ export function Tooltip({
 }: TooltipProps) {
 	return (
 		<><TooltipIcon
-			size={size * 0.8}
+			size={`calc(${size} * 0.8)`}
 			data-tooltip-id={id}
 			data-tooltip-content={text}
 			data-tooltip-place="top"

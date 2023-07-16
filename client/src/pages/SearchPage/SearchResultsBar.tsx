@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { SearchContainer, SearchIcon, SearchInput } from "./SearchBarResults.styled";
+import React from "react";
 
 const SearchResultsBar = () => {
 	const [isInputFocused, setIsInputFocused] = useState(false);
@@ -8,7 +9,8 @@ const SearchResultsBar = () => {
 
 	return (
 		<SearchContainer>
-            {isInputFocused || <SearchIcon/>}
+            <SearchIcon
+				hasIcon={!isInputFocused}/>
 			<SearchInput 
 				onFocus={handleInputFocus} 
 				onBlur={handleInputBlur} 

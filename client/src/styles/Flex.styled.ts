@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const FlexRow = styled.label`
+export const FlexRow = styled.div`
 	display: flex;
 	align-items: center;
 	gap: 5px;

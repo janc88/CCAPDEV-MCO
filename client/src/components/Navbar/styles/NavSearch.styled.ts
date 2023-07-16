@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Search } from "@styled-icons/fa-solid";
-import { FlexRow } from "../../../styles/Flex.styled";
+
+
 
 export const LogoContainer = styled.div`
   display: flex;
@@ -9,7 +10,10 @@ export const LogoContainer = styled.div`
   gap: 20px;
 `;
 
-export const SearchContainer = styled(FlexRow)`
+export const SearchContainer = styled.label`
+  display: flex;
+  align-items: center;
+  gap: 5px;
   background-color: white;
   color: black;
   border-radius: 27px;

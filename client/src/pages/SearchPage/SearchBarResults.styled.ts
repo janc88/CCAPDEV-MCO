@@ -1,8 +1,15 @@
 import styled from "styled-components";
 import { Search } from "@styled-icons/fa-solid";
-import { FlexRow } from "../../styles/Flex.styled";
 
-export const SearchContainer = styled(FlexRow)`
+interface SearchInputProps {
+	hasIcon: boolean;
+  }
+
+export const SearchContainer = styled.label`
+  display: flex;
+  align-items: center;
+  gap: 5px;
+
   background-color: white;
   color: black;
   border-radius: 10px;
@@ -15,30 +22,20 @@ export const SearchContainer = styled(FlexRow)`
   font-size: 2.3rem;
   font-weight: 700;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.25);
-
-  position: relative;
 `;
 
-export const SearchIcon = styled(Search)`
+export const SearchIcon = styled(Search)<SearchInputProps>`
   width: 50px;
   height: 50px;
   padding: 20px;
-
-  position: absolute;
-  top: 50%;
-  left: 25px;
-  transform: translateY(-50%);
-  z-index: 1;
+  visibility: ${({hasIcon}) => hasIcon ? 'visible' : 'hidden'};
 `;
 
-interface SearchInputProps {
-	hasIcon: boolean;
-  }
   export const SearchInput = styled.input.attrs({
 	type: "text"
   })<SearchInputProps>`
 	width: 100%;
-	padding-left: ${({hasIcon}) => (hasIcon) ?'115px' : '25px'};
+	margin-left: ${({hasIcon}) => (hasIcon) ?'25px' : '-65px'};
 	padding-right: 25px;
   
 	color: black;
