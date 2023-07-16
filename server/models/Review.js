@@ -25,7 +25,7 @@ const ReviewSchema = new mongoose.Schema({
 	ref: 'User',
 	required: false
   }],
-  ownerResponse: { type: Number, required: false },
+  ownerResponse: { type: String, required: false },
   imgs: [{ type: String, required: false }],
 });
 
