@@ -30,14 +30,15 @@ export const RestoName = styled.h1`
 `;
 
 export const RestoImage = styled.img`
-  width: 100%;
-  height: auto;
+  width: 90%;
+  height: 50%;
   border-radius: 1rem;
   margin: 0.6rem 0;
 `;
 
 export const RestoAddress = styled.h5`
-  margin: 0;
+  margin-top: 2px;
+  margin-bottom: 2px;
   font-weight: 150;
 `;
 
@@ -49,13 +50,29 @@ export const Divider = styled.hr`
 `;
 
 export const RestoDescription = styled.p`
-  max-height: 20%;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  height: 20%;
   -webkit-line-clamp: 2;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   margin: 0.1rem 0;
   margin-bottom: 1rem;
   font-weight: 400;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+  }
+  /* Style the scrollbar thumb */
+  &::-webkit-scrollbar-thumb {
+    background-color: #a7a7a7;
+    border-radius: 5px;
+  }
+  /* Style the scrollbar on hover */
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: #757575;
+  }
 `;
