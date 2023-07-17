@@ -8,7 +8,7 @@ import fs from "fs";
 
 const isUsernameTaken = async (req, res) => {
   try {
-    const { username } = req.body;
+    const { username } = req.params;
 
     const existingUser = await User.findOne({ username });
 

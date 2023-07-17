@@ -10,7 +10,7 @@ import {
 const router = express.Router();
 const upload = multer();
 
-router.route('/taken').get(isUsernameTaken);
+router.route('/taken/:username').get(isUsernameTaken);
 router.route('/').post(upload.single('avatar'), createUser);
 router.route('/update/:username').patch(upload.single('avatar'), updateUser);
 router.route('/:username').get(getUserInfoByUsername);
