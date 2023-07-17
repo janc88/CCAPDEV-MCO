@@ -3,10 +3,11 @@ import Restaurant from '../models/Restaurant.js';
 import Review from '../models/Review.js';
 
 export default async () => {
-	//throw new Error('This script is not meant to be run');
+	throw new Error('This script is not meant to be run');
 	/*
 	WARNING: VERY DANGEROUS SCRIPT THAT DELETES ALL RESTAURANTS AND REVIEWS
-	DELETE THIS AFTER DONE IMPLEMENTING REVIEWS	
+	THIS WILL RESET RESTAURANTS AND REVIEWS TO THE ONE FOUND IN THE RESTO.JS
+	ALL OTHER RESTAURANTS AND REVIEWS WILL BE DELETED
 	ONLY FOR QUICK UPDATING OF RESTAURANTS
 	*/
 	console.log('Deleting all restaurants and reviews');

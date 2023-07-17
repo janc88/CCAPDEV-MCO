@@ -63,26 +63,11 @@ export default [
 						"src": "64a7ee23b68781e49b902ad0",
 						"alt": "Image 1"
 					},
-					{
-						"id": 2,
-						"src": "64a7ee23b68781e49b902ad2",
-						"alt": "Image 2"
-					},
-					{
-						"id": 3,
-						"src": "64a7ee23b68781e49b902ad4",
-						"alt": "Image 3"
-					},
-					{
-						"id": 4,
-						"src": "64a7ee24b68781e49b902ad6",
-						"alt": "Image 4"
-					}
 				]
 			},
 			{
 				"id": 1,
-				"title": "best food in DLSU",
+				"title": "Great Food and Service",
 				"resto": "Mcdonald's DLSU",
 				"username": "PLACEHOLDER",
 				"profilepic": {
@@ -92,20 +77,10 @@ export default [
 				},
 				"datePosted": "2023-06-12T02:30:00.000Z",
 				"description": "McDonald's never disappoints when it comes to quick and tasty meals. The Big Mac is my all-time favorite with its special sauce and perfectly seasoned patties. The service is fast, and the staff is friendly. Can't go wrong with a McDonald's meal!",
-				"stars": 5,
+				"stars": 4,
 				"helpful": 3,
 				"response": "thank you",
 				"imgs": [
-					{
-						"id": 0,
-						"src": "64a7ee22b68781e49b902ace",
-						"alt": "Image 0"
-					},
-					{
-						"id": 1,
-						"src": "64a7ee23b68781e49b902ad0",
-						"alt": "Image 1"
-					},
 					{
 						"id": 2,
 						"src": "64a7ee23b68781e49b902ad2",
@@ -125,7 +100,7 @@ export default [
 			},
 			{
 				"id": 1,
-				"title": "best food in DLSU",
+				"title": "Delicious Dining Experience",
 				"resto": "Mcdonald's DLSU",
 				"username": "PLACEHOLDER",
 				"profilepic": {
@@ -135,35 +110,10 @@ export default [
 				},
 				"datePosted": "2023-06-12T02:30:00.000Z",
 				"description": "McDonald's breakfast is unbeatable! The Egg McMuffin and hot coffee are the perfect way to start the day. The hash browns are always crispy and delicious. McDonald's consistently delivers a satisfying breakfast experience.",
-				"stars": 5,
+				"stars": 3,
 				"helpful": 3,
 				"response": "thank you",
 				"imgs": [
-					{
-						"id": 0,
-						"src": "64a7ee22b68781e49b902ace",
-						"alt": "Image 0"
-					},
-					{
-						"id": 1,
-						"src": "64a7ee23b68781e49b902ad0",
-						"alt": "Image 1"
-					},
-					{
-						"id": 2,
-						"src": "64a7ee23b68781e49b902ad2",
-						"alt": "Image 2"
-					},
-					{
-						"id": 3,
-						"src": "64a7ee23b68781e49b902ad4",
-						"alt": "Image 3"
-					},
-					{
-						"id": 4,
-						"src": "64a7ee24b68781e49b902ad6",
-						"alt": "Image 4"
-					}
 				]
 			}
 		]
@@ -203,7 +153,7 @@ export default [
 		"reviews": [
 			{
 				"id": 1,
-				"title": "best food in DLSU",
+				"title": "Wonderful Restaurant",
 				"resto": "Mcdonald's DLSU",
 				"username": "PLACEHOLDER",
 				"profilepic": {
@@ -213,7 +163,7 @@ export default [
 				},
 				"datePosted": "2023-06-13T11:15:00.000Z",
 				"description": "Tapa King's tapa is simply amazing! The meat is tender, flavorful, and perfectly marinated. I love pairing it with their garlic rice and fried egg. It's a hearty and comforting meal that never fails to satisfy my cravings!",
-				"stars": 5,
+				"stars": 4,
 				"helpful": 3,
 				"response": "thank you",
 				"imgs": [
@@ -226,27 +176,12 @@ export default [
 						"id": 1,
 						"src": "64a7ee25b68781e49b902ae0",
 						"alt": "Image 1"
-					},
-					{
-						"id": 2,
-						"src": "64a7ee25b68781e49b902ae2",
-						"alt": "Image 2"
-					},
-					{
-						"id": 3,
-						"src": "64a7ee26b68781e49b902ae4",
-						"alt": "Image 3"
-					},
-					{
-						"id": 4,
-						"src": "64a7ee26b68781e49b902ae6",
-						"alt": "Image 4"
 					}
 				]
 			},
 			{
 				"id": 1,
-				"title": "best food in DLSU",
+				"title": "Fantastic Meal",
 				"resto": "Mcdonald's DLSU",
 				"username": "PLACEHOLDER",
 				"profilepic": {
@@ -260,36 +195,11 @@ export default [
 				"helpful": 3,
 				"response": "thank you",
 				"imgs": [
-					{
-						"id": 0,
-						"src": "64a7ee25b68781e49b902ade",
-						"alt": "Image 0"
-					},
-					{
-						"id": 1,
-						"src": "64a7ee25b68781e49b902ae0",
-						"alt": "Image 1"
-					},
-					{
-						"id": 2,
-						"src": "64a7ee25b68781e49b902ae2",
-						"alt": "Image 2"
-					},
-					{
-						"id": 3,
-						"src": "64a7ee26b68781e49b902ae4",
-						"alt": "Image 3"
-					},
-					{
-						"id": 4,
-						"src": "64a7ee26b68781e49b902ae6",
-						"alt": "Image 4"
-					}
 				]
 			},
 			{
 				"id": 1,
-				"title": "best food in DLSU",
+				"title": "Excellent Food Quality",
 				"resto": "Mcdonald's DLSU",
 				"username": "PLACEHOLDER",
 				"profilepic": {
@@ -299,20 +209,10 @@ export default [
 				},
 				"datePosted": "2023-06-12T02:30:00.000Z",
 				"description": "Tapa King is a hidden gem for tapa enthusiasts. The beef is tender, juicy, and bursting with flavor. Their tapa meal sets are great value for money. Whether you dine in or take out, Tapa King always delivers a delicious and fulfilling meal.",
-				"stars": 5,
+				"stars": 4,
 				"helpful": 3,
 				"response": "thank you",
 				"imgs": [
-					{
-						"id": 0,
-						"src": "64a7ee25b68781e49b902ade",
-						"alt": "Image 0"
-					},
-					{
-						"id": 1,
-						"src": "64a7ee25b68781e49b902ae0",
-						"alt": "Image 1"
-					},
 					{
 						"id": 2,
 						"src": "64a7ee25b68781e49b902ae2",
@@ -367,7 +267,7 @@ export default [
 		"reviews": [
 			{
 				"id": 1,
-				"title": "best food in DLSU",
+				"title": "Enjoyable Atmosphere",
 				"resto": "Mcdonald's DLSU",
 				"username": "PLACEHOLDER",
 				"profilepic": {
@@ -377,7 +277,7 @@ export default [
 				},
 				"datePosted": "2023-06-13T11:15:00.000Z",
 				"description": "Zark's Burger knows how to make a burger that satisfies. The patties are juicy, the toppings are flavorful, and the buns are soft and fresh. The combination of ingredients creates a mouthwatering burger experience. Definitely worth a visit!",
-				"stars": 5,
+				"stars": 3,
 				"helpful": 3,
 				"response": "thank you",
 				"imgs": [
@@ -385,32 +285,12 @@ export default [
 						"id": 0,
 						"src": "64a7ee2bb68781e49b902afe",
 						"alt": "Image 0"
-					},
-					{
-						"id": 1,
-						"src": "64a7ee2bb68781e49b902b00",
-						"alt": "Image 1"
-					},
-					{
-						"id": 2,
-						"src": "64a7ee2bb68781e49b902b02",
-						"alt": "Image 2"
-					},
-					{
-						"id": 3,
-						"src": "64a7ee2cb68781e49b902b04",
-						"alt": "Image 3"
-					},
-					{
-						"id": 4,
-						"src": "64a7ee2cb68781e49b902b06",
-						"alt": "Image 4"
 					}
 				]
 			},
 			{
 				"id": 1,
-				"title": "best food in DLSU",
+				"title": "Impressive Culinary Delights",
 				"resto": "Mcdonald's DLSU",
 				"username": "PLACEHOLDER",
 				"profilepic": {
@@ -420,15 +300,10 @@ export default [
 				},
 				"datePosted": "2023-06-12T02:30:00.000Z",
 				"description": "Zark's Burger is a burger lover's paradise! The burgers are huge and packed with deliciousness. The flavors are bold, and the variety of toppings and sauces cater to different preferences. If you're craving a substantial and tasty burger, Zark's Burger won't disappoint",
-				"stars": 5,
+				"stars": 4,
 				"helpful": 3,
 				"response": "thank you",
 				"imgs": [
-					{
-						"id": 0,
-						"src": "64a7ee2bb68781e49b902afe",
-						"alt": "Image 0"
-					},
 					{
 						"id": 1,
 						"src": "64a7ee2bb68781e49b902b00",
@@ -438,22 +313,12 @@ export default [
 						"id": 2,
 						"src": "64a7ee2bb68781e49b902b02",
 						"alt": "Image 2"
-					},
-					{
-						"id": 3,
-						"src": "64a7ee2cb68781e49b902b04",
-						"alt": "Image 3"
-					},
-					{
-						"id": 4,
-						"src": "64a7ee2cb68781e49b902b06",
-						"alt": "Image 4"
 					}
 				]
 			},
 			{
 				"id": 1,
-				"title": "best food in DLSU",
+				"title": "Memorable Dining Spot",
 				"resto": "Mcdonald's DLSU",
 				"username": "PLACEHOLDER",
 				"profilepic": {
@@ -463,25 +328,10 @@ export default [
 				},
 				"datePosted": "2023-06-12T02:30:00.000Z",
 				"description": "Zark's Burger never fails to impress with its creative and tasty burger offerings. The flavor combinations are unique, and the presentation is Instagram-worthy. The burgers are cooked to perfection, and the ingredients are of high quality. A must-try for burger aficionados!",
-				"stars": 5,
+				"stars": 4,
 				"helpful": 3,
 				"response": "thank you",
 				"imgs": [
-					{
-						"id": 0,
-						"src": "64a7ee2bb68781e49b902afe",
-						"alt": "Image 0"
-					},
-					{
-						"id": 1,
-						"src": "64a7ee2bb68781e49b902b00",
-						"alt": "Image 1"
-					},
-					{
-						"id": 2,
-						"src": "64a7ee2bb68781e49b902b02",
-						"alt": "Image 2"
-					},
 					{
 						"id": 3,
 						"src": "64a7ee2cb68781e49b902b04",
@@ -531,7 +381,7 @@ export default [
 		"reviews": [
 			{
 				"id": 1,
-				"title": "best food in DLSU",
+				"title": "Highly Recommended Restaurant",
 				"resto": "Mcdonald's DLSU",
 				"username": "PLACEHOLDER",
 				"profilepic": {
@@ -559,22 +409,12 @@ export default [
 						"id": 2,
 						"src": "64a7ee20b68781e49b902ac0",
 						"alt": "Image 2"
-					},
-					{
-						"id": 3,
-						"src": "64a7ee20b68781e49b902ac2",
-						"alt": "Image 3"
-					},
-					{
-						"id": 4,
-						"src": "64a7ee21b68781e49b902ac4",
-						"alt": "Image 4"
 					}
 				]
 			},
 			{
 				"id": 1,
-				"title": "best food in DLSU",
+				"title": "Tasty Cuisine and Friendly Staff",
 				"resto": "Mcdonald's DLSU",
 				"username": "PLACEHOLDER",
 				"profilepic": {
@@ -584,40 +424,20 @@ export default [
 				},
 				"datePosted": "2023-06-12T02:30:00.000Z",
 				"description": "Jollibee is my family's go-to place for a quick and satisfying meal. The Yumburger and Jolly Spaghetti are our favorites. The food is consistently tasty, and the service is efficient. Jollibee is a reliable choice for affordable and delicious fast food.",
-				"stars": 5,
+				"stars": 4,
 				"helpful": 3,
 				"response": "thank you",
 				"imgs": [
 					{
-						"id": 0,
-						"src": "64a7ee20b68781e49b902abc",
-						"alt": "Image 0"
-					},
-					{
-						"id": 1,
-						"src": "64a7ee20b68781e49b902abe",
-						"alt": "Image 1"
-					},
-					{
-						"id": 2,
-						"src": "64a7ee20b68781e49b902ac0",
-						"alt": "Image 2"
-					},
-					{
 						"id": 3,
 						"src": "64a7ee20b68781e49b902ac2",
 						"alt": "Image 3"
-					},
-					{
-						"id": 4,
-						"src": "64a7ee21b68781e49b902ac4",
-						"alt": "Image 4"
 					}
 				]
 			},
 			{
 				"id": 1,
-				"title": "best food in DLSU",
+				"title": "Pleasant Dining Ambience",
 				"resto": "Mcdonald's DLSU",
 				"username": "PLACEHOLDER",
 				"profilepic": {
@@ -627,30 +447,10 @@ export default [
 				},
 				"datePosted": "2023-06-12T02:30:00.000Z",
 				"description": "Jollibee's Peach Mango Pie is simply heavenly! The golden crust filled with sweet mangoes and creamy peach filling is a delightful treat. Pair it with their crispy Chickenjoy for a truly satisfying meal. Jollibee is a comfort food destination for Filipinos.",
-				"stars": 5,
+				"stars": 3,
 				"helpful": 3,
 				"response": "thank you",
 				"imgs": [
-					{
-						"id": 0,
-						"src": "64a7ee20b68781e49b902abc",
-						"alt": "Image 0"
-					},
-					{
-						"id": 1,
-						"src": "64a7ee20b68781e49b902abe",
-						"alt": "Image 1"
-					},
-					{
-						"id": 2,
-						"src": "64a7ee20b68781e49b902ac0",
-						"alt": "Image 2"
-					},
-					{
-						"id": 3,
-						"src": "64a7ee20b68781e49b902ac2",
-						"alt": "Image 3"
-					},
 					{
 						"id": 4,
 						"src": "64a7ee21b68781e49b902ac4",
@@ -695,7 +495,7 @@ export default [
 		"reviews": [
 			{
 				"id": 1,
-				"title": "best food in DLSU",
+				"title": "Good Value for Money",
 				"resto": "Mcdonald's DLSU",
 				"username": "PLACEHOLDER",
 				"profilepic": {
@@ -705,7 +505,7 @@ export default [
 				},
 				"datePosted": "2023-06-13T11:15:00.000Z",
 				"description": "Tinuhog ni Benny is a hidden gem for grilled Filipino dishes. The smoky flavors of their skewered meats and seafood are fantastic. The meats are tender, and the marinades are flavorful. With a cozy ambiance and friendly staff, Tinuhog ni Benny offers a delightful dining experience",
-				"stars": 5,
+				"stars": 4,
 				"helpful": 3,
 				"response": "thank you",
 				"imgs": [
@@ -713,32 +513,12 @@ export default [
 						"id": 0,
 						"src": "64a7ee28b68781e49b902aee",
 						"alt": "Image 0"
-					},
-					{
-						"id": 1,
-						"src": "64a7ee28b68781e49b902af0",
-						"alt": "Image 1"
-					},
-					{
-						"id": 2,
-						"src": "64a7ee28b68781e49b902af2",
-						"alt": "Image 2"
-					},
-					{
-						"id": 3,
-						"src": "64a7ee29b68781e49b902af4",
-						"alt": "Image 3"
-					},
-					{
-						"id": 4,
-						"src": "64a7ee29b68781e49b902af6",
-						"alt": "Image 4"
 					}
 				]
 			},
 			{
 				"id": 1,
-				"title": "best food in DLSU",
+				"title": "Satisfying and Flavorful Dishes",
 				"resto": "Mcdonald's DLSU",
 				"username": "PLACEHOLDER",
 				"profilepic": {
@@ -748,15 +528,10 @@ export default [
 				},
 				"datePosted": "2023-06-12T02:30:00.000Z",
 				"description": "Tinuhog ni Benny is the place to go for mouthwatering grilled delicacies. The aroma of their barbecue fills the air, and the taste is even better. The pork barbecue and chicken inasal are my top choices. It's a great spot to enjoy a satisfying meal with friends and family",
-				"stars": 5,
+				"stars": 4,
 				"helpful": 3,
 				"response": "thank you",
 				"imgs": [
-					{
-						"id": 0,
-						"src": "64a7ee28b68781e49b902aee",
-						"alt": "Image 0"
-					},
 					{
 						"id": 1,
 						"src": "64a7ee28b68781e49b902af0",
@@ -771,17 +546,12 @@ export default [
 						"id": 3,
 						"src": "64a7ee29b68781e49b902af4",
 						"alt": "Image 3"
-					},
-					{
-						"id": 4,
-						"src": "64a7ee29b68781e49b902af6",
-						"alt": "Image 4"
 					}
 				]
 			},
 			{
 				"id": 1,
-				"title": "best food in DLSU",
+				"title": "Nice Place to Dine",
 				"resto": "Mcdonald's DLSU",
 				"username": "PLACEHOLDER",
 				"profilepic": {
@@ -795,26 +565,6 @@ export default [
 				"helpful": 3,
 				"response": "thank you",
 				"imgs": [
-					{
-						"id": 0,
-						"src": "64a7ee28b68781e49b902aee",
-						"alt": "Image 0"
-					},
-					{
-						"id": 1,
-						"src": "64a7ee28b68781e49b902af0",
-						"alt": "Image 1"
-					},
-					{
-						"id": 2,
-						"src": "64a7ee28b68781e49b902af2",
-						"alt": "Image 2"
-					},
-					{
-						"id": 3,
-						"src": "64a7ee29b68781e49b902af4",
-						"alt": "Image 3"
-					},
 					{
 						"id": 4,
 						"src": "64a7ee29b68781e49b902af6",
@@ -849,7 +599,7 @@ export default [
 		"reviews": [
 			{
 				"id": 1,
-				"title": "best food in DLSU",
+				"title": "Quality Food and Service",
 				"resto": "Mcdonald's DLSU",
 				"username": "PLACEHOLDER",
 				"profilepic": {
@@ -859,7 +609,7 @@ export default [
 				},
 				"datePosted": "2023-06-13T11:15:00.000Z",
 				"description": "Bonchon's Korean-style fried chicken is a game-changer. The chicken is incredibly crispy on the outside and juicy on the inside. The soy garlic glaze adds a perfect balance of sweet and savory flavors. Bonchon's attention to detail in their cooking process makes their chicken outstanding.",
-				"stars": 5,
+				"stars": 4,
 				"helpful": 3,
 				"response": "thank you",
 				"imgs": [
@@ -877,22 +627,12 @@ export default [
 						"id": 2,
 						"src": "64a7ee1eb68781e49b902ab0",
 						"alt": "Image 2"
-					},
-					{
-						"id": 3,
-						"src": "64a7ee1eb68781e49b902ab2",
-						"alt": "Image 3"
-					},
-					{
-						"id": 4,
-						"src": "64a7ee1eb68781e49b902ab4",
-						"alt": "Image 4"
 					}
 				]
 			},
 			{
 				"id": 1,
-				"title": "best food in DLSU",
+				"title": "Cozy and Welcoming Restaurant",
 				"resto": "Mcdonald's DLSU",
 				"username": "PLACEHOLDER",
 				"profilepic": {
@@ -902,25 +642,10 @@ export default [
 				},
 				"datePosted": "2023-06-12T02:30:00.000Z",
 				"description": "Bonchon's Bibimbap is my go-to dish when I visit. The combination of fresh vegetables, savory meat, and a perfectly cooked sunny-side-up egg is a treat for the taste buds. The flavors blend beautifully, creating a satisfying and wholesome meal.",
-				"stars": 5,
+				"stars": 3,
 				"helpful": 3,
 				"response": "thank you",
 				"imgs": [
-					{
-						"id": 0,
-						"src": "64a7ee1db68781e49b902aac",
-						"alt": "Image 0"
-					},
-					{
-						"id": 1,
-						"src": "64a7ee1db68781e49b902aae",
-						"alt": "Image 1"
-					},
-					{
-						"id": 2,
-						"src": "64a7ee1eb68781e49b902ab0",
-						"alt": "Image 2"
-					},
 					{
 						"id": 3,
 						"src": "64a7ee1eb68781e49b902ab2",
@@ -935,7 +660,7 @@ export default [
 			},
 			{
 				"id": 1,
-				"title": "best food in DLSU",
+				"title": "A Pleasant Surprise",
 				"resto": "Mcdonald's DLSU",
 				"username": "PLACEHOLDER",
 				"profilepic": {
@@ -945,35 +670,10 @@ export default [
 				},
 				"datePosted": "2023-06-12T02:30:00.000Z",
 				"description": "Bonchon is the ultimate destination for Korean fried chicken lovers. Their chicken wings are addictive with their crispy coating and flavorful sauces. The Kimchi Fried Rice is a perfect accompaniment, and the Tteokbokki is a delightful spicy treat. Bonchon offers a fusion of Korean flavors that keeps me coming back for more.",
-				"stars": 5,
+				"stars": 4,
 				"helpful": 3,
 				"response": "thank you",
 				"imgs": [
-					{
-						"id": 0,
-						"src": "64a7ee1db68781e49b902aac",
-						"alt": "Image 0"
-					},
-					{
-						"id": 1,
-						"src": "64a7ee1db68781e49b902aae",
-						"alt": "Image 1"
-					},
-					{
-						"id": 2,
-						"src": "64a7ee1eb68781e49b902ab0",
-						"alt": "Image 2"
-					},
-					{
-						"id": 3,
-						"src": "64a7ee1eb68781e49b902ab2",
-						"alt": "Image 3"
-					},
-					{
-						"id": 4,
-						"src": "64a7ee1eb68781e49b902ab4",
-						"alt": "Image 4"
-					}
 				]
 			}
 		]
@@ -1008,7 +708,7 @@ export default [
 		"reviews": [
 			{
 				"id": 1,
-				"title": "best food in DLSU",
+				"title": "Reliable and Consistent",
 				"resto": "Mcdonald's DLSU",
 				"username": "PLACEHOLDER",
 				"profilepic": {
@@ -1018,7 +718,7 @@ export default [
 				},
 				"datePosted": "2023-06-13T11:15:00.000Z",
 				"description": "24 Chicken knows how to do Korean-style fried chicken right. The chicken is crispy, tender, and packed with flavor. The variety of sauces, from classic soy garlic to spicy options, offers something for everyone. With generous portions and friendly service, 24 Chicken is a go-to spot",
-				"stars": 5,
+				"stars": 4,
 				"helpful": 3,
 				"response": "thank you",
 				"imgs": [
@@ -1031,22 +731,12 @@ export default [
 						"id": 1,
 						"src": "64a7ee1bb68781e49b902aa4",
 						"alt": "Image 1"
-					},
-					{
-						"id": 2,
-						"src": "64a7ee1cb68781e49b902aa6",
-						"alt": "Image 2"
-					},
-					{
-						"id": 3,
-						"src": "64a7ee1cb68781e49b902aa8",
-						"alt": "Image 3"
 					}
 				]
 			},
 			{
 				"id": 1,
-				"title": "best food in DLSU",
+				"title": "Worth Every Penny",
 				"resto": "Mcdonald's DLSU",
 				"username": "PLACEHOLDER",
 				"profilepic": {
@@ -1061,30 +751,15 @@ export default [
 				"response": "thank you",
 				"imgs": [
 					{
-						"id": 0,
-						"src": "64a7ee1bb68781e49b902aa2",
-						"alt": "Image 0"
-					},
-					{
-						"id": 1,
-						"src": "64a7ee1bb68781e49b902aa4",
-						"alt": "Image 1"
-					},
-					{
 						"id": 2,
 						"src": "64a7ee1cb68781e49b902aa6",
 						"alt": "Image 2"
-					},
-					{
-						"id": 3,
-						"src": "64a7ee1cb68781e49b902aa8",
-						"alt": "Image 3"
 					}
 				]
 			},
 			{
 				"id": 1,
-				"title": "best food in DLSU",
+				"title": "Casual Dining Gem",
 				"resto": "Mcdonald's DLSU",
 				"username": "PLACEHOLDER",
 				"profilepic": {
@@ -1094,25 +769,10 @@ export default [
 				},
 				"datePosted": "2023-06-12T02:30:00.000Z",
 				"description": "24 Chicken's Snow Cheese Chicken is a must-try. The combination of crispy chicken and creamy cheese creates a unique and delightful flavor. The menu offers a variety of chicken cuts and flavors, allowing you to customize your meal. 24 Chicken is a go-to spot for Korean fried chicken lovers",
-				"stars": 5,
+				"stars": 4,
 				"helpful": 3,
 				"response": "thank you",
 				"imgs": [
-					{
-						"id": 0,
-						"src": "64a7ee1bb68781e49b902aa2",
-						"alt": "Image 0"
-					},
-					{
-						"id": 1,
-						"src": "64a7ee1bb68781e49b902aa4",
-						"alt": "Image 1"
-					},
-					{
-						"id": 2,
-						"src": "64a7ee1cb68781e49b902aa6",
-						"alt": "Image 2"
-					},
 					{
 						"id": 3,
 						"src": "64a7ee1cb68781e49b902aa8",
