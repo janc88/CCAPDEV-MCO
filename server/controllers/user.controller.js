@@ -5,7 +5,6 @@ import { uploadImage } from "./image.controller.js";
 import defaults from "../defaults/defaults.json" assert { type: "json" };
 import fs from "fs";
 
-const getAllUsers = async (req, res) => {};
 
 const isUsernameTaken = async (req, res) => {
   try {
@@ -81,9 +80,6 @@ const updateUser = async (req, res) => {
 		const {description, old_password, new_password} = req.body;
 		const avatar = req.file;
 		const newData = {};
-		
-		console.log(req.body);
-		console.log(req.file);
 
 		if (description !== user.description)
 			newData.description = description;
@@ -95,12 +91,7 @@ const updateUser = async (req, res) => {
 		}
 		if (avatar) {
 			await Image.deleteOne({ _id: user.avatar }, { session });
-			const newImage = new Image({
-				name: avatar.originalname,
-				data: avatar.buffer,
-				mimeType: avatar.mimetype,
-			});
-			await newImage.save({session});
+			const newImage = uploadImage(avatar, session);
 			newData.avatar = newImage._id;
 		}
 		await user.updateOne(newData, { session });
@@ -137,4 +128,4 @@ const getUserInfoByUsername = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
-export { getAllUsers, createUser, getUserInfoByUsername, isUsernameTaken, updateUser };
+export { createUser, getUserInfoByUsername, isUsernameTaken, updateUser };
