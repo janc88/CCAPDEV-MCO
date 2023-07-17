@@ -5,6 +5,19 @@ import { uploadImage } from "./image.controller.js";
 import defaults from "../defaults/defaults.json" assert { type: "json" };
 import fs from "fs";
 
+const getDefaultAvatar = async () => {
+	const avatar = defaults.user.avatar;
+	return new Promise((resolve, reject) => {
+		fs.readFile(avatar.path, (err, data) => {
+			if (err) reject(err);
+			else resolve({
+				originalname: avatar.name,
+				buffer: data,
+				mimetype: avatar.mimeType
+			});
+		})
+	});
+};
 
 const isUsernameTaken = async (req, res) => {
   try {
@@ -18,20 +31,6 @@ const isUsernameTaken = async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-};
-
-const getDefaultAvatar = async () => {
-	const avatar = defaults.user.avatar;
-	return new Promise((resolve, reject) => {
-		fs.readFile(avatar.path, (err, data) => {
-			if (err) reject(err);
-			else resolve({
-				originalname: avatar.name,
-				buffer: data,
-				mimetype: avatar.mimeType
-			});
-		})
-	});
 };
 
 const createUser = async (req, res) => {
@@ -59,7 +58,7 @@ const createUser = async (req, res) => {
 	await session.commitTransaction();
 	session.endSession();
 
-    res.status(200).json(newUser);
+    res.status(200).json(newUser.userInfo);
   } catch (error) {
 	console.error(error);
     res.status(500).json({ error: error.message });
@@ -99,7 +98,8 @@ const updateUser = async (req, res) => {
 		await session.commitTransaction();
 		session.endSession();
 
-		res.status(200).json(await User.findOne({ username }));
+		const newUser = await User.findOne({ username })
+		res.status(200).json(newUser.userInfo);
 	} catch (error) {
 		console.error(error);
 		res.status(500).json({ error: error.message });
@@ -116,13 +116,7 @@ const getUserInfoByUserid = async (req, res) => {
       return res.status(404).json({ error: "User not found" });
     }
 
-    const userInfo = {
-      username: user.username,
-      description: user.description,
-      avatar: user.avatar,
-    };
-
-    res.status(200).json(userInfo);
+    res.status(200).json(user.userInfo);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -141,7 +135,7 @@ const loginUser = async (req, res) => {
 			return res.status(401).json({ error: "Wrong password" });
 		}
 
-		res.status(200).json(user);
+		res.status(200).json(user.userInfo);
 	} catch (error) {
 		res.status(500).json({ error: error.message });
 	}
