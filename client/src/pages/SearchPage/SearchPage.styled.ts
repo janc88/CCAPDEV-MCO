@@ -64,3 +64,4 @@ export const GridContainer = styled.div`
 	grid-gap: 30px;
 	justify-items: center;
 `;
+

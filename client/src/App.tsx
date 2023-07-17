@@ -23,19 +23,15 @@ function App() {
         <Route path="/home" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
-        <Route path="/restaurants" element={<SearchPage />} />
+        <Route path="/search-restaurants/:query" element={<SearchPage />} />
         <Route path="/restaurants/:id" element={<RestaurantPage />} />
         <Route
           path="/profile"
-          element={
-            <ProfilePage
-              reviews={userInfo.reviews}
-            />
-          }
+          element={<ProfilePage reviews={userInfo.reviews} />}
         />
         <Route path="/edit-profile" element={<EditProfilePage />} />
         <Route path="/edit-review" element={<EditReviewPage />} />
-		<Route path="/change-password" element={<EditPasswordPage />} />
+        <Route path="/change-password" element={<EditPasswordPage />} />
       </Routes>
     </UserProvider>
   );

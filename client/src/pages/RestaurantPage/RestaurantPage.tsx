@@ -25,7 +25,7 @@ const NotFound: React.FC<{ id: string }> = ({ id }) => {
 				<Card>
 					<Title>Restaurant {id} not found</Title>
 					<Divider />
-					<Send onClick={() => navigate('/Restaurants')}>
+					<Send onClick={() => navigate('/search-restaurants/all')}>
 						Return to Restaurants
 					</Send>
 				</Card>

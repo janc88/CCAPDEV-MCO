@@ -31,11 +31,9 @@ export const SearchIcon = styled(Search)<SearchInputProps>`
   visibility: ${({hasIcon}) => hasIcon ? 'visible' : 'hidden'};
 `;
 
-  export const SearchInput = styled.input.attrs({
-	type: "text"
-  })<SearchInputProps>`
+  export const SearchInput = styled.div`
 	width: 100%;
-	margin-left: ${({hasIcon}) => (hasIcon) ?'25px' : '-65px'};
+	margin-left: 25px;
 	padding-right: 25px;
   
 	color: black;

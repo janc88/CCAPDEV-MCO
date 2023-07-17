@@ -49,7 +49,7 @@ function Navbar() {
           <FontAwesomeIcon icon={faHouse} size="lg" fixedWidth />
           <NavButton marginleft={5}>Home</NavButton>
         </NavbarLink>
-        <NavbarLink to="/restaurants">
+        <NavbarLink to="/search-restaurants/all">
           <FontAwesomeIcon icon={faUtensils} size="lg" fixedWidth />
           <NavButton marginleft={5}>Restaurants</NavButton>
         </NavbarLink>
