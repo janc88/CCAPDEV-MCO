@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import {
   LogOutButton,
   ProfilePic,
@@ -10,19 +10,23 @@ import {
 } from "./UserInfoCard.styled";
 import { ImageInput } from "../../components/Input/Input"
 import ShortText from "./ShortText";
-import { useUser } from "../../contexts/UserContext";
+import { useUserContext, User } from "../../contexts/UserContext";
 import { useNavigate } from "react-router-dom";
 import SimplePopup from "../SmallModal/SimplePopup";
 
 
 interface UserInfoCardProps {
   isEditProfile?: boolean;
+  isMyProfile?: boolean;
+  user: User | null;
 }
 
 const UserInfoCard: React.FC<UserInfoCardProps> = ({
+  user,
   isEditProfile,
+  isMyProfile,
 }) => {
-  const { user, logout } = useUser();
+  const { logout } = useUserContext();
   const navigate = useNavigate();
   const handleLogout = () => {
 	logout();
@@ -31,10 +35,10 @@ const UserInfoCard: React.FC<UserInfoCardProps> = ({
   if (user === null) return (
 	<UserInfoCardContainer>
 		<SimplePopup 
-			title="You are not logged in"
-			onConfirm={()=>navigate('/login')}
-			onCancel={()=>navigate('/login')}
-			content="Please log in"/>
+			title="User not found"
+			onConfirm={()=>navigate('/home')}
+			onCancel={()=>navigate('/home')}
+			content="Return to home page"/>
 	</UserInfoCardContainer>
   );
 
@@ -55,7 +59,7 @@ const UserInfoCard: React.FC<UserInfoCardProps> = ({
       </ProfilePicContainer>
       <UserName>{user?.userName}</UserName>
 	  <ShortText maxLines={3} text={user?.accountDesc || ''}/>
-      {!isEditProfile && (
+      {!isEditProfile && isMyProfile && (
         <LogOutButton bgcolor="white" tcolor="black" onClick={handleLogout}>
           Log Out
         </LogOutButton>

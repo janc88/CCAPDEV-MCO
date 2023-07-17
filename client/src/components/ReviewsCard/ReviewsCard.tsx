@@ -9,7 +9,7 @@ import ReviewCard from "../ReviewCard/ReviewCard";
 import ViewWriteModal from "../ModalPopups/ViewWriteModal";
 import { SearchBar } from "./Input";
 import SmallModal from "../SmallModal/SmallModal";
-import { useUser } from "../../contexts/UserContext";
+import { useUserContext } from "../../contexts/UserContext";
 import { useParams } from "react-router-dom";
 import { useSingleRestaurant } from "../../contexts/RestoHook";
 
@@ -57,7 +57,7 @@ const ReviewsCard: React.FC<ReviewsCardProps> = ({
     setIsSmallModalVisible((wasModalVisible) => !wasModalVisible);
   };
 
-  const { user } = useUser();
+  const { user } = useUserContext();
   const { id } = useParams<{ id: string }>();
 
   return (

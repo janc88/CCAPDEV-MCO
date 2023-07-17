@@ -17,10 +17,12 @@ import {
 	passwordValidation, 
 	usernameValidation
  } from "./validations";
-import { useUser } from "../../contexts/UserContext";
+import { useUserContext } from "../../contexts/UserContext";
+import { useUser } from "../../contexts/UserHook";
 
 function LoginPage() {
-  const { login, usernameExists } = useUser();
+  const { login } = useUserContext();
+  const { usernameExists } = useUser();
   const navigate = useNavigate();
   const methods = useForm();
   

@@ -17,7 +17,7 @@ import { Button } from "../../styles/Button.styled";
 import logo from "../../imgs/banana.svg";
 import UserCard from "./UserCard";
 import NavSearch from "./NavSearch";
-import { useUser } from "../../contexts/UserContext";
+import { useUserContext } from "../../contexts/UserContext";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -28,7 +28,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 function Navbar() {
-  const { user } = useUser();
+  const { user } = useUserContext();
   const navigate = useNavigate();
 
   return (

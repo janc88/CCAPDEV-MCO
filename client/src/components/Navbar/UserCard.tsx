@@ -9,10 +9,10 @@ import {
   UserOption,
 } from "./styles/UserCard.styled";
 import pic from "../../imgs/banana.svg"; //sample only
-import { useUser } from "../../contexts/UserContext";
+import { useUserContext } from "../../contexts/UserContext";
 
 function UserCard() {
-  const { user, logout } = useUser();
+  const { user, logout } = useUserContext();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const actionRef = useRef<HTMLDivElement>(null);
 

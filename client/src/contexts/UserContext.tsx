@@ -21,7 +21,6 @@ interface UserContextType {
 	login: (username: string, password: string) => Promise<User | null>;
 	updateUser: (description: string, avatar: File | null) => Promise<void>;
 	updatePassword: (old_password: string, new_password: string) => Promise<void>;
-	usernameExists: (username: string) => Promise<boolean>;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -86,21 +85,23 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 
 
 	const login = useCallback(async (username: string, password: string) => {
-		const response = await fetch(`http://localhost:8080/api/users/${username}`);
+		const response = await fetch(`http://localhost:8080/api/users/login`, {
+			method: "POST",
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ username, password })
+		});
 		if (!response.ok)
-			throw new Error("Error validating user");
+			return null;
 		const data = await response.json();
-		if (data.username === username &&
-			data.password === password) {
-			const newUser = {
-				userName: data.username,
-				profilePicture: 'http://localhost:8080/api/images/' + data.avatar,
-				accountDesc: data.description,
-			}
-			setUser(newUser);
-			return newUser;
+		const newUser = {
+			userName: data.username,
+			profilePicture: 'http://localhost:8080/api/images/' + data.avatar,
+			accountDesc: data.description,
 		}
-		return null;
+		setUser(newUser);
+		return newUser;
 	}, [setUser]);
 
 	const signup = useCallback(async (user: User, password: string, profilePicture: File) => {
@@ -121,35 +122,21 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 		await login(user.userName, password);
 	}, [login]);
 
-	const usernameExists = useCallback(async (username: String) => {
-	  console.log('checking username availability')
-	  const response = await fetch(`http://localhost:8080/api/users/taken/${username}`, {
-		method: "GET"
-	  });
-	  if (!response.ok) {
-		throw new Error("Error checking username availability");
-	  }
-	  
-	  const data = await response.json();
-	  return data.isTaken;
-	}, []);
-
 	return (
 		<UserContext.Provider value={{
 			user, logout,
 			signup, login,
-			updateUser, updatePassword,
-			usernameExists
+			updateUser, updatePassword
 		}}>
 			{children}
 		</UserContext.Provider>
 	);
 };
 
-export const useUser = () => {
+export const useUserContext = () => {
 	const context = useContext(UserContext);
 	if (context === undefined) {
-		throw new Error('useUser must be used within a UserProvider');
+		throw new Error('useUserContext must be used within a UserProvider');
 	}
 	return context;
 }

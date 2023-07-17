@@ -15,7 +15,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { confirmPwdValidation, passwordValidation, usernameValidation } from "./validations";
 import { ImageInput, Input } from "../../components/Input/Input";
 import Checkbox from "../../components/Input/Checkbox";
-import { useUser } from "../../contexts/UserContext";
+import { useUser } from "../../contexts/UserHook";
 
 interface CardProps {
 	values: any;

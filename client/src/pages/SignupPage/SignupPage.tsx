@@ -6,11 +6,11 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Swiper as SwiperClass } from "swiper/types";
 
 import "./styles/swiper.css";
-import { useUser } from "../../contexts/UserContext";
+import { useUserContext } from "../../contexts/UserContext";
 import { useNavigate } from "react-router-dom";
 
 function SignupPage() {
-  const { signup } = useUser();
+  const { signup } = useUserContext();
   const [swiperRef, setSwiperRef] = useState<SwiperClass>();
   const [formData, setFormData] = useState({});
   const navigate = useNavigate();

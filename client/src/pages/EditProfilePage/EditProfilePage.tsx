@@ -23,12 +23,12 @@ import { useNavigate } from "react-router-dom";
 import { FormProvider, useForm } from "react-hook-form";
 import { Input } from "../../components/Input/Input"
 import Popup from "../../components/SmallModal/SimplePopup";
-import { useUser } from "../../contexts/UserContext";
+import { useUserContext } from "../../contexts/UserContext";
 import { SideText } from "../styles/LoginPage.styled";
 
 function EditProfilePage() {
   const navigate = useNavigate();
-  const { user, updateUser } = useUser();
+  const { user, updateUser } = useUserContext();
   const methods = useForm({
 	values: {description: user?.accountDesc}
   });
@@ -57,7 +57,10 @@ function EditProfilePage() {
 		content="Are you sure you want to cancel editing your profile?"/>}
       <CenterContainer>
         <UserCardContainer>
-          <UserInfoCard isEditProfile />
+          <UserInfoCard 
+		  	isEditProfile={true}
+			isMyProfile={true}
+			user={user}/>
         </UserCardContainer>
         <EditProfileCard>
           <Header>Edit Profile</Header>

@@ -26,7 +26,11 @@ function App() {
         <Route path="/search-restaurants/:query" element={<SearchPage />} />
         <Route path="/restaurants/:id" element={<RestaurantPage />} />
         <Route
-          path="/profile"
+          path="/profile/:userId"
+          element={<ProfilePage reviews={userInfo.reviews} />}
+        />
+		<Route
+          path="/profile/"
           element={<ProfilePage reviews={userInfo.reviews} />}
         />
         <Route path="/edit-profile" element={<EditProfilePage />} />
