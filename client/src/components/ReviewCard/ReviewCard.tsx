@@ -28,7 +28,7 @@ import { Button } from "../../styles/Button.styled";
 import BaseModalWrapper from "../ModalPopups/ViewOwnerResponseModal";
 import ViewReviewModal from "../ModalPopups/ViewReviewModal";
 import SmallModal from "../SmallModal/SmallModal";
-import { UserContext } from "../../contexts/UserContext";
+import { useUser } from "../../contexts/UserContext";
 
 interface ReviewCardProps extends ReviewProps {
   showOverlay?: boolean;
@@ -140,7 +140,7 @@ const ReviewCard: React.FC<ReviewCardProps> = (review) => {
     setIsSmallModalVisible((wasModalVisible) => !wasModalVisible);
   };
 
-  const { user } = useContext(UserContext);
+  const { user } = useUser();
 
   useEffect(() => {
     loadImages(image, ppic);

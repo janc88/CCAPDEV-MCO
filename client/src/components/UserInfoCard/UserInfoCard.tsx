@@ -10,7 +10,7 @@ import {
 } from "./UserInfoCard.styled";
 import { ImageInput } from "../../components/Input/Input"
 import ShortText from "./ShortText";
-import { UserContext } from "../../contexts/UserContext";
+import { useUser } from "../../contexts/UserContext";
 import { useNavigate } from "react-router-dom";
 import SimplePopup from "../SmallModal/SimplePopup";
 
@@ -22,7 +22,7 @@ interface UserInfoCardProps {
 const UserInfoCard: React.FC<UserInfoCardProps> = ({
   isEditProfile,
 }) => {
-  const { user, logout } = useContext(UserContext);
+  const { user, logout } = useUser();
   const navigate = useNavigate();
   const handleLogout = () => {
 	logout();

@@ -23,7 +23,7 @@ import StarRating from "../StarRating/StarRating";
 import ImageWithCloseButton from "./ImageClose";
 import Rating from "./Ratings";
 import { TitleBox, DescriptionBox } from "./InputWriteModal";
-import { UserContext } from "../../contexts/UserContext";
+import { useUser } from "../../contexts/UserContext";
 
 interface BaseModalWrapperProps {
   isModalVisible: boolean;
@@ -49,7 +49,7 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & ReviewProps & { restaur
   const [description, setDescription] = useState('');
 
   const image = reviewProps.imgs[0];
-  const { user } = useContext(UserContext);
+  const { user } = useUser();
 
   const loadImages = async (image: ImageProps) => {
     try {

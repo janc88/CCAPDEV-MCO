@@ -10,11 +10,11 @@ import {
 import { useNavigate } from "react-router-dom";
 import { FormProvider, useForm } from "react-hook-form";
 import { Input } from "../../components/Input/Input";
-import { UserContext } from "../../contexts/UserContext";
+import { useUser } from "../../contexts/UserContext";
 import { passwordValidation, confirmPwdValidation } from "./validations";
 
 function EditPasswordPage() {
-  const { updatePassword} = useContext(UserContext);
+  const { updatePassword} = useUser();
   const navigate = useNavigate();
   const form = useForm();
   

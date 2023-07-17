@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Modal from "./ViewModal";
 import {
   DesktopModalContainer,
@@ -33,7 +33,7 @@ import {
 } from "../ReviewCard/ReviewCard.styled";
 import StarRating from "../StarRating/StarRating";
 import SmallModal from "../SmallModal/SmallModal";
-import { UserContext } from "../../contexts/UserContext";
+import { useUser } from "../../contexts/UserContext";
 import DeleteModal from "../SmallModal/DeleteModal";
 import { useNavigate } from "react-router-dom";
 
@@ -130,7 +130,7 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & ReviewProps> = ({
     setIsDeleteModalVisible((wasModalVisible) => !wasModalVisible);
   };
 
-  const { user } = useContext(UserContext);
+  const { user } = useUser();
 
   useEffect(() => {
     loadImages(images, ppic);

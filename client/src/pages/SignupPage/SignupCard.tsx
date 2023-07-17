@@ -15,6 +15,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { confirmPwdValidation, passwordValidation, usernameValidation } from "./validations";
 import { ImageInput, Input } from "../../components/Input/Input";
 import Checkbox from "../../components/Input/Checkbox";
+import { useUser } from "../../contexts/UserContext";
 
 interface CardProps {
 	values: any;
@@ -25,7 +26,18 @@ interface CardProps {
 export const SignupCard: React.FC<CardProps> = ({ onSubmit, values}) => {
 	const navigate = useNavigate();
 	const form = useForm({values: values});
-	const handleSubmit = form.handleSubmit(data => onSubmit(data))
+	const {usernameExists} = useUser();
+	const handleSubmit = form.handleSubmit(async data => {
+		const exists = await usernameExists(data.username);
+		if (exists) {
+		  form.setError('username', { 
+			type: 'server', 
+			message: 'Username already exists'
+		  });
+		  return;
+		}
+		onSubmit(data)
+	});
 
 	return (
 	  <FormProvider {...form}>
@@ -98,7 +110,7 @@ export const SignupDetailsCard: React.FC<CardProps> = ({ onSubmit, onPrev, value
 			  	id='stayLoggedIn'
 				tooltip="Stay logged in"
 				label="Remember me"
-				labelSize={19} />
+				labelSize={'19px'} />
 			  <FlexRight>
 				<SideText onClick={() => navigate('/login')}>
 				  Already have an account?

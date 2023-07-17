@@ -1,4 +1,4 @@
-import React, { ReactNode, createContext, useState, useEffect, useCallback } from 'react';
+import React, { ReactNode, createContext, useState, useEffect, useCallback, useContext } from 'react';
 import Cookies from 'js-cookie';
 
 export interface User {
@@ -9,47 +9,42 @@ export interface User {
 
 interface UserContextType {
 	user: User | null;
-	/**
-	 * sets user in cookies and state
-	 */
-	login: (user: User) => void;
 	signup: (user: User, password: string, profilePicture: File) => Promise<void>;
 	/**
 	 * clears user from cookies and state
 	 */
 	logout: () => void;
 	/**
+	 * sets user in cookies and state
 	 * @returns User if valid, null otherwise
 	 */
-	validateUser: (username: string, password: string) => Promise<User | null>;
+	login: (username: string, password: string) => Promise<User | null>;
 	updateUser: (description: string, avatar: File | null) => Promise<void>;
 	updatePassword: (old_password: string, new_password: string) => Promise<void>;
+	usernameExists: (username: string) => Promise<boolean>;
 }
 
-export const UserContext = createContext<UserContextType>({
-	user: null,
-	login: () => { },
-	logout: () => { },
-	signup: () => Promise.resolve(),
-	validateUser: () => Promise.resolve(null),
-	updateUser: () => Promise.resolve(),
-	updatePassword: () => Promise.resolve(),
-});
+const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
-	const [user, setUser] = useState<User | null>(null);
+	const [user, _setUser] = useState<User | null>(null);
+
 	useEffect(() => {
 		const savedUser = Cookies.get('user');
 		if (savedUser) {
 			const parsedUser = JSON.parse(savedUser);
-			setUser(parsedUser);
+			_setUser(parsedUser);
 		}
 	}, []);
-
-	const login = useCallback((user: User) => {
+	const setUser = useCallback((user: User) => {
 		Cookies.set('user', JSON.stringify(user));
-		setUser(user);
+		_setUser(user);
 	}, []);
+	const logout = useCallback(() => {
+		Cookies.remove('user');
+		_setUser(null);
+	}, []);
+
 
 	const updatePassword = useCallback(async (old_password: string, new_password: string) => {
 		if (user === null)
@@ -82,32 +77,31 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 		const data = await response.json();
 		if (!response.ok)
 			throw new Error("Error updating user");
-		login({
+		setUser({
 			userName: data.username,
 			profilePicture: 'http://localhost:8080/api/images/' + data.avatar,
 			accountDesc: data.description,
 		});
-	}, [user, login]);
+	}, [user, setUser]);
 
 
-	const validateUser = useCallback(async (username: string, password: string) => {
-		try {
-			const response = await fetch(`http://localhost:8080/api/users/${username}`);
-			if (!response.ok)
-				throw new Error("Error validating user");
-			const data = await response.json();
-			if (data.username === username &&
-				data.password === password)
-				return {
-					userName: data.username,
-					profilePicture: 'http://localhost:8080/api/images/' + data.avatar,
-					accountDesc: data.description,
-				};
-		} catch (error) {
-			console.error("Error validating login:", error);
+	const login = useCallback(async (username: string, password: string) => {
+		const response = await fetch(`http://localhost:8080/api/users/${username}`);
+		if (!response.ok)
+			throw new Error("Error validating user");
+		const data = await response.json();
+		if (data.username === username &&
+			data.password === password) {
+			const newUser = {
+				userName: data.username,
+				profilePicture: 'http://localhost:8080/api/images/' + data.avatar,
+				accountDesc: data.description,
+			}
+			setUser(newUser);
+			return newUser;
 		}
 		return null;
-	}, []);
+	}, [setUser]);
 
 	const signup = useCallback(async (user: User, password: string, profilePicture: File) => {
 		const formData = new FormData();
@@ -124,25 +118,38 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 		if (!response.ok)
 			throw new Error("Error creating user");
 
-		const loginUser = await validateUser(user.userName, password)
-		if (loginUser === null)
-			throw new Error("Error creating user");
+		await login(user.userName, password);
+	}, [login]);
 
-		login(loginUser);
-	}, [login, validateUser]);
-
-	const logout = useCallback(() => {
-		Cookies.remove('user');
-		setUser(null);
+	const usernameExists = useCallback(async (username: String) => {
+	  console.log('checking username availability')
+	  const response = await fetch(`http://localhost:8080/api/users/taken/${username}`, {
+		method: "GET"
+	  });
+	  if (!response.ok) {
+		throw new Error("Error checking username availability");
+	  }
+	  
+	  const data = await response.json();
+	  return data.isTaken;
 	}, []);
 
 	return (
 		<UserContext.Provider value={{
-			user, login, logout,
-			signup, validateUser,
-			updateUser, updatePassword
+			user, logout,
+			signup, login,
+			updateUser, updatePassword,
+			usernameExists
 		}}>
 			{children}
 		</UserContext.Provider>
 	);
 };
+
+export const useUser = () => {
+	const context = useContext(UserContext);
+	if (context === undefined) {
+		throw new Error('useUser must be used within a UserProvider');
+	}
+	return context;
+}

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import {
   PageContainer,
   CenterContainer,
@@ -15,41 +15,35 @@ import { Input } from "../../components/Input/Input";
 import Checkbox from "../../components/Input/Checkbox";
 import { 
 	passwordValidation, 
-	usernameValidation,
-	validateUsername
+	usernameValidation
  } from "./validations";
-import { UserContext } from "../../contexts/UserContext";
+import { useUser } from "../../contexts/UserContext";
 
 function LoginPage() {
-  const { login, validateUser } = useContext(UserContext);
+  const { login, usernameExists } = useUser();
   const navigate = useNavigate();
   const methods = useForm();
   
   const submitForm = methods.handleSubmit(async (data) => {
-    try {
-      const uname = await validateUsername(data.username);
-      if (typeof uname === "string") {
+      const exists = await usernameExists(data.username);
+      if (!exists) {
         methods.setError('username', { 
           type: 'server', 
-          message: uname
+          message: 'Username doesn\'t exist!'
         });
         return;
       }
 
-      const user = await validateUser(data.username, data.password);
+      const user = await login(data.username, data.password);
       if (user === null) {
         methods.setError('password', { 
           type: 'server', 
           message: 'Invalid password'
         });
         return;
-      }
-      
-      login(user);
-      navigate("/home");
-    } catch (error) {
-      console.error("Error logging in:", error);
-    }
+      } else {
+        navigate("/home");
+	  }
   });
 
   return (

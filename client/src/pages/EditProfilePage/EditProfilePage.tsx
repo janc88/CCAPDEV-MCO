@@ -23,12 +23,12 @@ import { useNavigate } from "react-router-dom";
 import { FormProvider, useForm } from "react-hook-form";
 import { Input } from "../../components/Input/Input"
 import Popup from "../../components/SmallModal/SimplePopup";
-import { UserContext } from "../../contexts/UserContext";
+import { useUser } from "../../contexts/UserContext";
 import { SideText } from "../styles/LoginPage.styled";
 
 function EditProfilePage() {
   const navigate = useNavigate();
-  const { user, updateUser } = useContext(UserContext);
+  const { user, updateUser } = useUser();
   const methods = useForm({
 	values: {description: user?.accountDesc}
   });

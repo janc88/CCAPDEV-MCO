@@ -9,7 +9,7 @@ import ReviewCard from "../ReviewCard/ReviewCard";
 import ViewWriteModal from "../ModalPopups/ViewWriteModal";
 import { SearchBar } from "./Input";
 import SmallModal from "../SmallModal/SmallModal";
-import { UserContext } from "../../contexts/UserContext";
+import { useUser } from "../../contexts/UserContext";
 
 interface ReviewsCardProps {
   reviewList: ReviewProps[];
@@ -55,7 +55,7 @@ const ProfileReviewsCard: React.FC<ReviewsCardProps> = ({
     setIsSmallModalVisible((wasModalVisible) => !wasModalVisible);
   };
 
-  const { user } = useContext(UserContext);
+  const { user } = useUser();
   
   return (
     <RestoReviewsContainer isUserReview={showOverLay}>

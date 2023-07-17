@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { CenterContainer, PageContainer } from "../styles/LoginPage.styled";
 import { SignupCard, SignupDetailsCard } from "./SignupCard";
 
@@ -6,11 +6,11 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Swiper as SwiperClass } from "swiper/types";
 
 import "./styles/swiper.css";
-import { UserContext } from "../../contexts/UserContext";
+import { useUser } from "../../contexts/UserContext";
 import { useNavigate } from "react-router-dom";
 
 function SignupPage() {
-  const { signup } = useContext(UserContext);
+  const { signup } = useUser();
   const [swiperRef, setSwiperRef] = useState<SwiperClass>();
   const [formData, setFormData] = useState({});
   const navigate = useNavigate();
