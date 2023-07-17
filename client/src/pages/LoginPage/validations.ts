@@ -3,7 +3,7 @@ import { RegisterOptions } from "react-hook-form";
 export const validateUsername = async (username: string) => {
   try {
     const response = await fetch("http://localhost:8080/api/users/taken", {
-      method: "POST",
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
       },

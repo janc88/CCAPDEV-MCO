@@ -59,7 +59,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 		formData.append('new_password', new_password);
 
 		const response = await fetch(`http://localhost:8080/api/users/update/${user.userName}`, {
-			method: "POST",
+			method: "PATCH",
 			body: formData
 		});
 		await response.json();
@@ -76,7 +76,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 			formData.append('avatar', avatar);
 
 		const response = await fetch(`http://localhost:8080/api/users/update/${user.userName}`, {
-			method: "POST",
+			method: "PATCH",
 			body: formData
 		});
 		const data = await response.json();

@@ -3,7 +3,7 @@ import { RegisterOptions, UseFormReturn } from "react-hook-form";
 const usernameExists = async (username: String) => {
   try {
     const response = await fetch("http://localhost:8080/api/users/taken", {
-      method: "POST",
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
