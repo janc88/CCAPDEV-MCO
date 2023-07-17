@@ -2,6 +2,7 @@ import React, { ReactNode, createContext, useState, useEffect, useCallback, useC
 import Cookies from 'js-cookie';
 
 export interface User {
+	id: string;
 	userName: string;
 	profilePicture: string | null;
 	accountDesc: string;
@@ -77,8 +78,9 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 		if (!response.ok)
 			throw new Error("Error updating user");
 		setUser({
+			id: data.id,
 			userName: data.username,
-			profilePicture: 'http://localhost:8080/api/images/' + data.avatar,
+			profilePicture: data.avatar,
 			accountDesc: data.description,
 		});
 	}, [user, setUser]);
@@ -96,8 +98,9 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 			return null;
 		const data = await response.json();
 		const newUser = {
+			id: data.id,
 			userName: data.username,
-			profilePicture: 'http://localhost:8080/api/images/' + data.avatar,
+			profilePicture: data.avatar,
 			accountDesc: data.description,
 		}
 		setUser(newUser);

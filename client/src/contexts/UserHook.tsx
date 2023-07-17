@@ -29,8 +29,9 @@ export const useUser = (): userHook => {
 
 		const data = await response.json();
 		return {
+			id: data.id,
 			userName: data.username,
-			profilePicture: 'http://localhost:8080/api/images/' + data.avatar,
+			profilePicture: data.avatar,
 			accountDesc: data.description,
 		};
 	}, []);
