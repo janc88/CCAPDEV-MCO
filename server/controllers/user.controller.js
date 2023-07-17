@@ -106,11 +106,11 @@ const updateUser = async (req, res) => {
 	}
 };
 
-const getUserInfoByUsername = async (req, res) => {
+const getUserInfoByUserid = async (req, res) => {
   try {
-    const { username } = req.params;
+    const { id } = req.params;
 
-    const user = await User.findOne({ username });
+    const user = await User.findOne({ _id: id });
 
     if (!user) {
       return res.status(404).json({ error: "User not found" });
@@ -120,7 +120,6 @@ const getUserInfoByUsername = async (req, res) => {
       username: user.username,
       description: user.description,
       avatar: user.avatar,
-      password: user.password,
     };
 
     res.status(200).json(userInfo);
@@ -128,4 +127,23 @@ const getUserInfoByUsername = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
-export { createUser, getUserInfoByUsername, isUsernameTaken, updateUser };
+
+const loginUser = async (req, res) => {
+	try {
+		const { username, password } = req.body;
+		const user = await User.findOne({ username });
+
+		if (!user) {
+			return res.status(404).json({ error: "User not found" });
+		}
+		
+		if (user.password !== password) {
+			return res.status(401).json({ error: "Wrong password" });
+		}
+
+		res.status(200).json(user);
+	} catch (error) {
+		res.status(500).json({ error: error.message });
+	}
+};
+export { createUser, getUserInfoByUserid, isUsernameTaken, updateUser, loginUser };
