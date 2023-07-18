@@ -1,9 +1,9 @@
 import { useCallback } from "react";
 import { User } from "./UserContext";
 
-interface userHook {
+export interface userHook {
 	usernameExists: (username: string) => Promise<boolean>;
-	fetchUserDetails: (username: string) => Promise<User | null>;
+	fetchUserDetails: (id: string) => Promise<User | null>;
 }
 
 export const useUser = (): userHook => {
@@ -20,8 +20,8 @@ export const useUser = (): userHook => {
 		return data.isTaken;
 	}, []);
 
-	const fetchUserDetails = useCallback(async (username: string) => {
-		const response = await fetch(`http://localhost:8080/api/users/${username}`, {
+	const fetchUserDetails = useCallback(async (id: string) => {
+		const response = await fetch(`http://localhost:8080/api/users/${id}`, {
 			method: "GET"
 		});
 		if (!response.ok)

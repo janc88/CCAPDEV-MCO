@@ -1,4 +1,5 @@
 import React, { ReactNode, createContext, useState, useEffect, useCallback, useContext } from 'react';
+import { useUser, userHook } from './UserHook';
 import Cookies from 'js-cookie';
 
 export interface User {
@@ -8,7 +9,7 @@ export interface User {
 	accountDesc: string;
 }
 
-interface UserContextType {
+interface UserContextType extends userHook {
 	user: User | null;
 	signup: (user: User, password: string, profilePicture: File) => Promise<void>;
 	/**
@@ -28,6 +29,7 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
 	const [user, _setUser] = useState<User | null>(null);
+	const hook = useUser();
 
 	useEffect(() => {
 		const savedUser = Cookies.get('user');
@@ -127,6 +129,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 
 	return (
 		<UserContext.Provider value={{
+			...hook,
 			user, logout,
 			signup, login,
 			updateUser, updatePassword

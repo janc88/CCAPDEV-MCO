@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { Review } from "./ReviewHook";
 
 export interface Restaurant {
 	id: string;
@@ -8,13 +9,14 @@ export interface Restaurant {
 	coverImg: string;
 	imgs: string[];
 	starCount: number[];
-	allReviews: string[] | null;
+	allReviews: Review[] | null;
 }
 
 interface RestaurantsType {
 	fetchFeaturedRestaurants: () => Promise<Restaurant[]>;
 	fetchRestaurant: (restaurantId: string) => Promise<Restaurant | null>;
-	fetchReviews: (restaurant: Restaurant) => Promise<void>;
+	fetchReviews: (restaurant: Restaurant) => Promise<Review[] | null>;
+	fetchReviewsByRestoId: (restaurantId: string) => Promise<Review[] | null>;
 }
 /**
  * hook for fetching restaurants in general
@@ -49,26 +51,32 @@ export const useRestaurants = (): RestaurantsType => {
 		return resto;
 	}, []);
 
-	const fetchReviews = useCallback(async () => {
+	const fetchReviewsByRestoId = useCallback(async (restaurantId: string): Promise<Review[] | null> => {
 		throw new Error('Not implemented');
 	}, []);
+
+	const fetchReviews = useCallback(async (resto: Restaurant): Promise<Review[] | null> => {
+		const reviews = await fetchReviewsByRestoId(resto.id);
+		resto.allReviews = reviews;
+		return reviews;
+	}, [fetchReviewsByRestoId]);
 
 	return {
 		fetchFeaturedRestaurants,
 		fetchRestaurant,
-		fetchReviews
+		fetchReviews,
+		fetchReviewsByRestoId
 	}
 };
 
-interface SingleRestaurantType {
+interface SingleRestaurantType extends RestaurantsType {
 	restaurant: Restaurant | null;
 	isFetched: boolean;
-	fetchRestaurant: (restaurantId: string) => Promise<Restaurant | null>;
-	fetchReviews: (restaurant: Restaurant) => Promise<void>;
 }
 
 export const useSingleRestaurant = (restoId: string): SingleRestaurantType => {
-	const { fetchRestaurant, fetchReviews } = useRestaurants();
+	const hook = useRestaurants();
+	const { fetchRestaurant } = hook;
 	const [restaurant, setRestaurant] = useState<Restaurant | null>(null);
 	const [isFetched, setIsFetched] = useState<boolean>(false);
 
@@ -80,9 +88,8 @@ export const useSingleRestaurant = (restoId: string): SingleRestaurantType => {
 	}, [fetchRestaurant, restoId]);
 
 	return {
+		...hook,
 		restaurant,
 		isFetched,
-		fetchRestaurant,
-		fetchReviews
 	}
 };
