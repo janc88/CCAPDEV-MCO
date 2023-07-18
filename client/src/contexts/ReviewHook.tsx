@@ -1,3 +1,6 @@
+import { useCallback } from "react";
+
+
 export interface Review {
 	id: string;
 	title: string;
@@ -17,7 +20,8 @@ export interface ReviewData {
 	stars: number;
 	imgs: File[];
 }
-interface ReviewHookType {
+interface ReviewActionsType {
+	fetchReviews: (resto: {restoId: string}) => Promise<Review[] | null>;
 	createReview: (data: ReviewData) => Promise<Review>;
 	editReview: (id: string, data: ReviewData) => Promise<Review>;
 	deleteReview: (id: string) => Promise<void>;
@@ -29,8 +33,12 @@ export const useReviewActions = ({
 }: {
 	restoId: string,
 	userId: string,
-}): ReviewHookType => {
-	const createReview = async ({
+}): ReviewActionsType => {
+	const fetchReviews = useCallback(async ({restoId}) => {
+		throw new Error("Not implemented");
+	}, []);
+
+	const createReview = useCallback(async ({
 		title, 
 		body,
 		stars,
@@ -53,23 +61,25 @@ export const useReviewActions = ({
 		if (!response.ok)
 			throw new Error("Error creating review");
 		return data;
-	}
-	const editReview = async (id: string, {
+	}, [restoId, userId]);
+
+	const editReview = useCallback(async (id: string, {
 		title, 
 		body,
 		stars,
 		imgs,
 	}: ReviewData) => {
 		throw new Error("Not implemented");
-	}
-	const deleteReview = async (id: string) => {
+	}, []);
+	const deleteReview = useCallback(async (id: string) => {
 		throw new Error("Not implemented");
-	}
-	const voteReview = async (id: string, type: "up" | "down" | "none") => {
+	}, []);
+	const voteReview = useCallback(async (id: string, type: "up" | "down" | "none") => {
 		throw new Error("Not implemented");
-	}
+	}, []);
 
 	return {
+		fetchReviews,
 		createReview,
 		editReview,
 		deleteReview,

@@ -16,10 +16,10 @@ import {
   RightArrow,
 } from "./styles/RestoCarousel.styled";
 
-import { RestoProps } from "../../components/RestoCard/RestoCard";
+import { Restaurant } from "../../contexts/RestoHook";
 
 interface RestoCarouselProps {
-  restoList: RestoProps[];
+  restoList: Restaurant[];
 }
 
 const RestoCarousel: React.FC<RestoCarouselProps> = ({ restoList }) => {

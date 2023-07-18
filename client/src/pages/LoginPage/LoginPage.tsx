@@ -18,11 +18,9 @@ import {
 	usernameValidation
  } from "./validations";
 import { useUserContext } from "../../contexts/UserContext";
-import { useUser } from "../../contexts/UserHook";
 
 function LoginPage() {
-  const { login } = useUserContext();
-  const { usernameExists } = useUser();
+  const { login, usernameExists } = useUserContext();
   const navigate = useNavigate();
   const methods = useForm();
   

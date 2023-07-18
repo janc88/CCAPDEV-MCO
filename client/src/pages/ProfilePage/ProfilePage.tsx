@@ -13,7 +13,6 @@ import UserInfoCard from "../../components/UserInfoCard/UserInfoCard";
 import ProfileReviewsCard from "../../components/ReviewsCard/ProfileReviewsCard";
 import { useParams } from "react-router-dom";
 import { User, useUserContext } from "../../contexts/UserContext";
-import { useUser } from "../../contexts/UserHook";
 
 interface ProfilePageProps {
   reviews: ReviewProps[];
@@ -22,8 +21,7 @@ interface ProfilePageProps {
 const ProfilePage: React.FC<ProfilePageProps> = (userInfo) => {
   const { userId } = useParams();
 
-  const { user: loggedInUser } = useUserContext();
-  const { fetchUserDetails } = useUser();
+  const { user: loggedInUser, fetchUserDetails } = useUserContext();
 
   const [ isMyProfile, setIsMyProfile ] = useState(false);
   const [ user, setUser ] = useState<User | null>(null);
