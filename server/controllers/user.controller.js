@@ -58,7 +58,7 @@ const createUser = async (req, res) => {
 	await session.commitTransaction();
 	session.endSession();
 
-    res.status(200).json(newUser.userInfo);
+    res.status(200).json(newUser.userInfo());
   } catch (error) {
 	console.error(error);
     res.status(500).json({ error: error.message });
@@ -99,7 +99,7 @@ const updateUser = async (req, res) => {
 		session.endSession();
 
 		const newUser = await User.findOne({ username })
-		res.status(200).json(newUser.userInfo);
+		res.status(200).json(newUser.userInfo());
 	} catch (error) {
 		console.error(error);
 		res.status(500).json({ error: error.message });
@@ -116,7 +116,7 @@ const getUserInfoByUserid = async (req, res) => {
       return res.status(404).json({ error: "User not found" });
     }
 
-    res.status(200).json(user.userInfo);
+    res.status(200).json(user.userInfo());
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -135,7 +135,7 @@ const loginUser = async (req, res) => {
 			return res.status(401).json({ error: "Wrong password" });
 		}
 
-		res.status(200).json(user.userInfo);
+		res.status(200).json(user.userInfo());
 	} catch (error) {
 		res.status(500).json({ error: error.message });
 	}

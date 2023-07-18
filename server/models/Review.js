@@ -29,6 +29,35 @@ const ReviewSchema = new mongoose.Schema({
   imgs: [{ type: String, required: false }],
 });
 
+ReviewSchema.virtual('votes').get(function () {
+	return this.upvotes.length - this.downvotes.length;
+});
+
+ReviewSchema.methods.publicView = async function () {
+	await this.populate('user').execPopulate();
+	return {
+	  id: this._id,
+	  title: this.title,
+	  body: this.body,
+	  datePosted: this.datePosted,
+	  user: this.user.userInfo(),
+	  restaurant: this.restaurant,
+	  stars: this.stars,
+	  votes: this.votes,
+	  ownerResponse: this.ownerResponse,
+	  imgs: this.imgs.map((img) => 'http://localhost:8080/api/images/' + img),
+	};
+};
+
+ReviewSchema.methods.userView = async function (user) {
+	const obj = await this.publicView();
+	const voteType = 
+		this.upvotes.includes(user) ? 'upvote' : 
+		this.downvotes.includes(user) ? 'downvote' : 'none';
+	obj.voteType = voteType;
+	return obj;
+};
+
 const reviewModel = mongoose.model("Review", ReviewSchema);
 
 export default reviewModel;

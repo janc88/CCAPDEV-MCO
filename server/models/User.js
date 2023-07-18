@@ -17,14 +17,14 @@ const UserSchema = new mongoose.Schema({
   ],
 });
 
-UserSchema.virtual("userInfo").get(function () {
+UserSchema.methods.userInfo = function () {
 	return {
 	  id: this._id,
 	  username: this.username,
 	  description: this.description,
 	  avatar: 'http://localhost:8080/api/images/' + this.avatar,
 	};
-});
+};
 
 const userModel = mongoose.model("User", UserSchema);
 
