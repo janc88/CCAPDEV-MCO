@@ -24,6 +24,7 @@ import ImageWithCloseButton from "./ImageClose";
 import Rating from "./Ratings";
 import { TitleBox, DescriptionBox } from "./InputWriteModal";
 import { useUserContext } from "../../contexts/UserContext";
+import { useReviewActions } from "../../contexts/ReviewHook";
 
 interface BaseModalWrapperProps {
   isModalVisible: boolean;
@@ -34,7 +35,6 @@ interface StarRatingProps {
   rating: number;
   size: string;
 }
-
 const BaseModalWrapper: React.FC<BaseModalWrapperProps & ReviewProps & { restaurantId: string }> = ({
   onBackdropClick,
   isModalVisible,
@@ -42,6 +42,9 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & ReviewProps & { restaur
   ...reviewProps
 }) => {
   const [images, setImages] = useState<string[]>([]);
+  const [imageFiles, setImageFiles] = useState<File[]>([]);
+
+  
   const [rating, setRating] = React.useState(0);
   const [loadedImage, setLoadedImage] = useState<string>();
   const [starRating, setStarRating] = useState(0);
@@ -50,6 +53,22 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & ReviewProps & { restaur
 
   const image = reviewProps.imgs[0];
   const { user } = useUserContext();
+  const { createReview } = useReviewActions({ restoId: restaurantId, userId: user?.id || '' });
+
+
+  const handleImageUpload = (event: ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    if (files && files.length > 0) {
+      setImageFiles((prevImages) => [...prevImages, ...Array.from(files)]);
+    }
+  };
+  useEffect(() => {
+	const newImages = imageFiles.map((file) => URL.createObjectURL(file));
+	setImages(newImages);
+	return () => {
+		newImages.forEach((newImage) => URL.revokeObjectURL(newImage));
+	};
+  }, [imageFiles]);
 
   const loadImages = async (image: ImageProps) => {
     try {
@@ -83,33 +102,15 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & ReviewProps & { restaur
       console.error('Error: Title, rating, and description are required.');
       return;
     }
-  
+
+    await createReview({
+      title,
+      body: description,
+      stars: rating,
+      imgs: imageFiles,
+    });
+
     try {
-      const reviewData = {
-        title: title.trim(),
-        body: description.trim(),
-        stars: rating,
-        user: user,
-        restaurant: restaurantId,
-        images: images,
-      };
-  
-      const response = await fetch("http://localhost:8080/api/reviews/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(reviewData),
-      });
-  
-      const newReview = await response.json();
-      if (response.ok) {
-        console.log('Review created:', newReview);
-      } else {
-        console.error('Error creating review:', newReview);
-        console.log(reviewData);
-      }
-  
       setImages([]);
       setRating(0);
       setTitle('');
@@ -118,16 +119,6 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & ReviewProps & { restaur
       onBackdropClick();
     } catch (error) {
       console.error('Error creating review:', error);
-    }
-  };
-  
-  const handleImageUpload = (event: ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files;
-    if (files && files.length > 0) {
-      const imageUrls = Array.from(files).map((file) =>
-        URL.createObjectURL(file)
-      );
-      setImages((prevImages) => [...prevImages, ...imageUrls]);
     }
   };
 
