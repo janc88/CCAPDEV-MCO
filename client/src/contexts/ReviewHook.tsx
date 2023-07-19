@@ -35,7 +35,21 @@ export const useReviewActions = ({
 	userId: string,
 }): ReviewActionsType => {
 	const fetchReviews = useCallback(async ({restoId}) => {
-		throw new Error("Not implemented");
+		const response = await fetch(`http://localhost:8080/api/reviews/resto/${restoId}`, {
+			method: "GET"
+		});
+		if (!response.ok)
+			return null;
+
+		const data = await response.json();
+		const fetchedReviews = data.map((review) => ({
+			...review,
+			reviews: null,
+			id: review._id,
+			imgs: review.imgs.map((img: string) => `http://localhost:8080/api/images/${img}`),
+		}));
+		console.log(fetchedReviews);
+		return fetchedReviews;
 	}, []);
 
 	const createReview = useCallback(async ({

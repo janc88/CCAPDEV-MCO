@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {
   Header,
   RestoReviewsContainer,
@@ -12,7 +12,7 @@ import SmallModal from "../SmallModal/SmallModal";
 import { useUserContext } from "../../contexts/UserContext";
 import { useParams } from "react-router-dom";
 import { useSingleRestaurant } from "../../contexts/RestoHook";
-
+  
 interface ReviewsCardProps {
   reviewList: ReviewProps[];
   showOverLay?: boolean; //show overlay of restoname in the review image
