@@ -4,6 +4,10 @@ import User from "../models/User.js";
 import Restaurant from "../models/Restaurant.js";
 import { uploadImage } from "../controllers/image.controller.js"
 
+
+/**
+ * for now, all requests use the public view
+ */
 const getAllReviews = async (req, res) => {};
 const getReviewDetails = async (req, res) => {};
 
@@ -71,14 +75,79 @@ const createReview = async (req, res) => {
     await newReview.save({session});
     await session.commitTransaction();
 	await session.endSession();
-    res.status(200).json(newReview);
+    res.status(200).json(newReview.publicView());
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: error.message });
   }
 };
 
-const updateReview = async (req, res) => {};
+const updateReview = async (req, res) => {
+	try {
+		const { id } = req.params;
+		const { title, body, stars, } = req.body;
+		const images = req.files;
+
+		const foundReview = await Review.findById(id);
+		if (!foundReview)
+			return res.status(404).json({ error: "Review not found" });
+		
+		const session = await mongoose.startSession();
+		session.startTransaction();
+		if (images) {
+			const imgs = (await Promise.all(
+				images.map((image) => uploadImage(image, session))
+			)).map(image => image._id);
+			foundReview.imgs.forEach(async (img) => await img.deleteOne());
+			foundReview.imgs = imgs;
+		}
+		if (title) foundReview.title = title;
+		if (body) foundReview.body = body;
+		if (stars) foundReview.stars = stars;
+		await foundReview.save({session});
+		await session.commitTransaction();
+		await session.endSession();
+		res.status(200).json(foundReview.publicView());
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({ error: error.message });
+	}
+};
+const voteReview = async (req, res) => {
+	try {
+		const { id } = req.params;
+		const { userId, voteType } = req.body;
+
+		const foundReview = await Review.findById(id);
+		if (!foundReview)
+			return res.status(404).json({ error: "Review not found" });
+		const foundUser = await User.findById(userId);
+		if (!foundUser)
+			return res.status(404).json({ error: "User not found" });
+		
+		const session = await mongoose.startSession();
+		session.startTransaction();
+		
+		if (foundReview.upvotes.includes(userId))
+			foundReview.upvotes.pull(userId);
+		else if (foundReview.downvotes.includes(userId))
+			foundReview.downvotes.pull(userId);
+		
+		if (voteType === 'upvote')
+			foundReview.upvotes.push(userId);
+		else if (voteType === 'downvote')
+			foundReview.downvotes.push(userId);
+		
+		await foundReview.save({session});
+		await session.commitTransaction();
+		await session.endSession();
+		res.status(200).json(foundReview.publicView());
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({ error: error.message });
+	}
+};
+
 const deleteReview = async (req, res) => {};
 
 export {
