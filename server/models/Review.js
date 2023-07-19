@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import User from "./User.js";
 
 const ReviewSchema = new mongoose.Schema({
   title: { type: String, required: true },
@@ -34,13 +35,13 @@ ReviewSchema.virtual('votes').get(function () {
 });
 
 ReviewSchema.methods.publicView = async function () {
-	await this.populate('user').execPopulate();
+	const user = await User.findById(this.user);
 	return {
 	  id: this._id,
 	  title: this.title,
 	  body: this.body,
 	  datePosted: this.datePosted,
-	  user: this.user.userInfo(),
+	  user: user.userInfo(),
 	  restaurant: this.restaurant,
 	  stars: this.stars,
 	  votes: this.votes,

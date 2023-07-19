@@ -12,7 +12,7 @@ const getReviewsByRestoId = async (req, res) => {
 		const { id } = req.params;
 		const { userId } = req.body;
 		
-		const restaurant = await Restaurant.findById(id).populate('reviews').exec();
+		const restaurant = await Restaurant.findById(id).populate('allReviews').exec();
 		if (!restaurant)
 			return res.status(404).json({ error: "Restaurant not found" });
 		if (userId && !(await User.findById(userId)))
@@ -20,10 +20,10 @@ const getReviewsByRestoId = async (req, res) => {
 		
 		let reviews = null
 		if (userId)
-			reviews = restaurant.reviews.map(review => review.userView(userId));
+			reviews = restaurant.allReviews.map(review => review.userView(userId));
 		else
-			reviews = restaurant.reviews.map(review => review.publicView());
-
+			reviews = restaurant.allReviews.map(review => review.publicView());
+		reviews = await Promise.all(reviews);
 		res.status(200).json(reviews);
 	} catch (error) {
 		console.error(error);
@@ -82,6 +82,7 @@ const updateReview = async (req, res) => {};
 const deleteReview = async (req, res) => {};
 
 export {
+  getReviewsByRestoId,
   getAllReviews,
   getReviewDetails,
   createReview,
