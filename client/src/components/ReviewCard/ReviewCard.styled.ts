@@ -136,6 +136,7 @@ export const ThumbsUpIcon = styled(ThumbsUp)<{ isClicked: boolean }>`
 
   &:hover {
     color: #ff794f;
+    cursor: pointer;
   }
 `;
 
@@ -148,6 +149,7 @@ export const ThumbsDownIcon = styled(ThumbsDown)<{ isClicked: boolean }>`
 
   &:hover {
     color: #ff794f;
+    cursor: pointer;
   }
 `;
 

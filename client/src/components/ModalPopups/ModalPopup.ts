@@ -212,6 +212,7 @@ export const EditIcon = styled(Edit)<{ isClicked: boolean }>`
 
   &:hover {
     color: #ff794f;
+    cursor: pointer;
   }
 `;
 
@@ -222,6 +223,7 @@ export const TrashAltIcon = styled(TrashAlt)<{ isClicked: boolean }>`
 
   &:hover {
     color: #ff794f;
+    cursor: pointer;
   }
 `;
 
