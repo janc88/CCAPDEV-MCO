@@ -3,31 +3,58 @@ import Review from "../models/Review.js";
 import User from "../models/User.js";
 import Restaurant from "../models/Restaurant.js";
 
+const sendReview = async (req, res, review, user) => {
+	let { userId } = req.body;
+	
+	if (user) {
+		userId = user._id;
+	} else if (userId && !(await User.findById(userId))) {
+		return res.status(404).json({ error: "User not found" });
+	}
 
-/**
- * for now, all requests use the public view
- */
-const getAllReviews = async (req, res) => {};
-const getReviewDetails = async (req, res) => {};
+	if (userId)
+		res.status(200).json(review.userView(userId));
+	else
+		res.status(200).json(review.publicView());
+};
+const sendAllReviews = async (req, res, reviews) => {
+	const { userId } = req.body;
+
+	if (userId && !(await User.findById(userId)))
+		return res.status(404).json({ error: "User not found" });
+	
+	if (userId)
+		reviews = reviews.map(review => review.userView(userId));
+	else
+		reviews = reviews.map(review => review.publicView());
+	reviews = await Promise.all(reviews);
+	res.status(200).json(reviews);
+}
+
+const getReviewDetails = async (req, res) => {
+	try {
+		const { id } = req.params;
+
+		const foundReview = await Review.findById(id);
+		if (!foundReview)
+			return res.status(404).json({ error: "Review not found" });
+		
+		sendReview(req, res, foundReview);
+	} catch	(error) {
+		console.error(error);
+		res.status(500).json({ error: error.message });
+	}
+};
 
 const getReviewsByRestoId = async (req, res) => {
 	try {
 		const { id } = req.params;
-		const { userId } = req.body;
 		
 		const restaurant = await Restaurant.findById(id).populate('allReviews').exec();
 		if (!restaurant)
 			return res.status(404).json({ error: "Restaurant not found" });
-		if (userId && !(await User.findById(userId)))
-			return res.status(404).json({ error: "User not found" });
-		
-		let reviews = null
-		if (userId)
-			reviews = restaurant.allReviews.map(review => review.userView(userId));
-		else
-			reviews = restaurant.allReviews.map(review => review.publicView());
-		reviews = await Promise.all(reviews);
-		res.status(200).json(reviews);
+
+		sendAllReviews(req, res, restaurant.allReviews);
 	} catch (error) {
 		console.error(error);
 		res.status(500).json({ error: error.message });
@@ -74,7 +101,8 @@ const createReview = async (req, res) => {
     await newReview.save({session});
     await session.commitTransaction();
 	await session.endSession();
-    res.status(200).json(newReview.publicView());
+
+    sendReview(req, res, newReview, foundUser);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: error.message });
@@ -84,12 +112,18 @@ const createReview = async (req, res) => {
 const updateReview = async (req, res) => {
 	try {
 		const { id } = req.params;
-		const { title, body, stars, } = req.body;
+		const { title, body, stars, userId } = req.body;
 		const images = req.files;
 
 		const foundReview = await Review.findById(id);
 		if (!foundReview)
 			return res.status(404).json({ error: "Review not found" });
+		
+		const foundUser = await User.findById(userId);
+		if (!foundUser)
+			return res.status(404).json({ error: "User not found" });
+		if (foundReview.user !== userId)
+			return res.status(403).json({ error: "User not authorized" });
 		
 		const session = await mongoose.startSession();
 		session.startTransaction();
@@ -97,7 +131,7 @@ const updateReview = async (req, res) => {
 			const imgs = (await Promise.all(
 				images.map((image) => Image.uploadImage(image, session))
 			)).map(image => image._id);
-			foundReview.imgs.forEach(async (img) => await img.deleteOne());
+			Promise.all(foundReview.imgs.map((img) => img.deleteOne()));
 			foundReview.imgs = imgs;
 		}
 		if (title) foundReview.title = title;
@@ -106,7 +140,8 @@ const updateReview = async (req, res) => {
 		await foundReview.save({session});
 		await session.commitTransaction();
 		await session.endSession();
-		res.status(200).json(foundReview.publicView());
+		
+		sendReview(req, res, foundReview, foundUser);
 	} catch (error) {
 		console.error(error);
 		res.status(500).json({ error: error.message });
@@ -140,20 +175,56 @@ const voteReview = async (req, res) => {
 		await foundReview.save({session});
 		await session.commitTransaction();
 		await session.endSession();
-		res.status(200).json(foundReview.publicView());
+		
+		sendReview(req, res, foundReview, foundUser);
 	} catch (error) {
 		console.error(error);
 		res.status(500).json({ error: error.message });
 	}
 };
 
-const deleteReview = async (req, res) => {};
+const deleteReview = async (req, res) => {
+	try {
+		const { id } = req.params;
+
+		const { userId } = req.body;
+
+		const foundUser = await User.findById(userId);
+		if (!foundUser)
+			return res.status(404).json({ error: "User not found" });
+
+		const foundReview = await Review.findById(id);
+
+		if (!foundReview)
+			return res.status(404).json({ error: "Review not found" });
+		if (foundReview.user !== userId)
+			return res.status(403).json({ error: "User not authorized" });
+		
+		const session = await mongoose.startSession();
+		session.startTransaction();
+		
+		await Promise.all(foundReview.imgs.map((img) => img.deleteOne()));
+
+		await foundUser.reviews.pull(foundReview._id);
+		await foundUser.save({session});
+
+		await foundReview.restaurant.reviews.pull(foundReview._id);
+		await foundReview.restaurant.save({session});
+
+		await foundReview.deleteOne();
+		await session.commitTransaction();
+		await session.endSession();
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({ error: error.message });
+	}
+};
 
 export {
   getReviewsByRestoId,
-  getAllReviews,
   getReviewDetails,
   createReview,
   updateReview,
   deleteReview,
+  voteReview
 };
