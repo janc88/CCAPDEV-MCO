@@ -2,7 +2,6 @@ import mongoose from "mongoose";
 import Review from "../models/Review.js";
 import User from "../models/User.js";
 import Restaurant from "../models/Restaurant.js";
-import { uploadImage } from "../controllers/image.controller.js"
 
 
 /**
@@ -52,7 +51,7 @@ const createReview = async (req, res) => {
 	session.startTransaction();
 
 	const imgs = (await Promise.all(
-		images.map((image) => uploadImage(image, session))
+		images.map((image) => Image.uploadImage(image, session))
 	)).map(image => image._id);
 
 	foundUser.reviews.push(newReview._id);
@@ -96,7 +95,7 @@ const updateReview = async (req, res) => {
 		session.startTransaction();
 		if (images) {
 			const imgs = (await Promise.all(
-				images.map((image) => uploadImage(image, session))
+				images.map((image) => Image.uploadImage(image, session))
 			)).map(image => image._id);
 			foundReview.imgs.forEach(async (img) => await img.deleteOne());
 			foundReview.imgs = imgs;

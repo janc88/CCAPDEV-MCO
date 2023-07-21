@@ -3,15 +3,6 @@ import Image from "../models/Image.js";
 const createImage = async (req, res) => {
 	
 }
-const uploadImage = async (file, session = undefined) => {
-	const newImage = new Image({
-		name: file.originalname,
-		data: file.buffer,
-		mimeType: file.mimetype,
-	});
-	await newImage.save(session || {session});
-	return newImage;
-}
 const getImage = async (req, res) => {
 	const imageId = req.params.id;
 	try {
@@ -31,5 +22,5 @@ const deleteImage = async (req, res) => {
 }
 
 export {
-	createImage, getImage, deleteImage, uploadImage
+	createImage, getImage, deleteImage
 };

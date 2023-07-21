@@ -1,6 +1,6 @@
 import Restaurant from "../models/Restaurant.js";
 import User from "../models/User.js";
-import { uploadImage } from "./image.controller.js";
+import Image from "../models/Image.js";
 
 const getAllRestaurants = async (req, res) => {
   res.status(501).send('Not Implemented');
@@ -47,9 +47,9 @@ const createRestaurant = async (req, res) => {
 	const session = await mongoose.startSession();
 	session.startTransaction();
 
-	const newCoverImg = await uploadImage(coverImg, session);
+	const newCoverImg = await Image.uploadImage(coverImg, session);
 	const newImgs = await Promise.all(
-		imgs.map(img => uploadImage(img, session))
+		imgs.map(img => Image.uploadImage(img, session))
 	);
 
 	const newRestaurant = new Restaurant({

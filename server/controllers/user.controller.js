@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 import User from "../models/User.js";
 import Image from "../models/Image.js"
-import { uploadImage } from "./image.controller.js";
 import defaults from "../defaults/defaults.json" assert { type: "json" };
 import fs from "fs";
 
@@ -46,7 +45,7 @@ const createUser = async (req, res) => {
 	const session = await mongoose.startSession();
 	session.startTransaction();
 
-	const newImage = await uploadImage(avatar, session);
+	const newImage = await Image.uploadImage(avatar, session);
 	
     const newUser = new User({
 		username,
@@ -90,7 +89,7 @@ const updateUser = async (req, res) => {
 		}
 		if (avatar) {
 			await Image.deleteOne({ _id: user.avatar }, { session });
-			const newImage = uploadImage(avatar, session);
+			const newImage = Image.uploadImage(avatar, session);
 			newData.avatar = newImage._id;
 		}
 		await user.updateOne(newData, { session });
