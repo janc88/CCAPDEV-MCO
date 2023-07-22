@@ -9,7 +9,7 @@ import UserInfoCard from "../../components/UserInfoCard/UserInfoCard";
 import ProfileReviewsCard from "../../components/ReviewsCard/ProfileReviewsCard";
 import { useParams } from "react-router-dom";
 import { User, useUserContext } from "../../contexts/UserContext";
-import { useReviews, Review } from "../../contexts/ReviewHook";
+import { useReviewActions, Review } from "../../contexts/ReviewHook";
 
 
 const ProfilePage: React.FC = () => {
@@ -21,20 +21,23 @@ const ProfilePage: React.FC = () => {
   const [ user, setUser ] = useState<User | null>(null);
   const [ reviews, setReviews ] = useState<Review[] | null>(null);
   const [ loading, setLoading ] = useState(true);
-
-  const { fetchReviews } = useReviews();
+  
+  const { fetchUserReviews } = useReviewActions({
+    restoId: '',
+    userId: user?.id ?? '',
+  });
 
 	useEffect(() => {
 		const doStuff = async () => {
 			if (!userId) {
-				const reviews = await fetchReviews({ userId: loggedInUser?.id });
+				const reviews = await fetchUserReviews({ userId: loggedInUser?.id ?? ''});
 
 				setReviews(reviews);
 				setUser(loggedInUser);
 				setIsMyProfile(true)
 				setLoading(false)
 			} else {
-				const reviews = await fetchReviews({ userId });
+				const reviews = await fetchUserReviews({ userId });
 				const user = await fetchUserDetails(userId);
 				setReviews(reviews);
 				setUser(user);
@@ -43,7 +46,7 @@ const ProfilePage: React.FC = () => {
 			}
 		}
 		doStuff();
-	}, [fetchReviews, fetchUserDetails, loggedInUser, userId])
+	}, [fetchUserReviews, fetchUserDetails, loggedInUser, userId])
 
   if (loading) return (
   	<ProfilePageContainer>Loading...</ProfilePageContainer>

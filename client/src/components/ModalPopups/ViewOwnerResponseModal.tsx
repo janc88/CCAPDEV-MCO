@@ -128,7 +128,7 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & Review> = ({
               <ReviewTitle>{reviewProps.title}</ReviewTitle>
               <UserContainer>
                 <RestoAvatar src={profilePic} />
-                <UserName>Username here</UserName>
+                <UserName>{reviewProps.user.username}</UserName>
               </UserContainer>
             </LeftContainer>
 

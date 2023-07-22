@@ -32,8 +32,6 @@ const ProfileReviewsCard: React.FC<ReviewsCardProps> = ({
   const toggleSmallModal = () => {
     setIsSmallModalVisible((wasModalVisible) => !wasModalVisible);
   };
-
-  // const { user } = useUserContext();
   
   return (
     <RestoReviewsContainer isUserReview={showOverLay}>
@@ -58,13 +56,6 @@ const ProfileReviewsCard: React.FC<ReviewsCardProps> = ({
         isModalVisible={isSmallModalVisible}
         onBackdropClick={toggleSmallModal}
       />
-
-      {/* <ViewWriteModal
-        isModalVisible={showWriteModal}
-        onBackdropClick={toggleWriteModal}
-        restaurantId={id || ""}
-        {...reviewList[1]} //temporary only
-      /> */}
     </RestoReviewsContainer>
   );
 };

@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import Review from "../models/Review.js";
 import User from "../models/User.js";
 import Restaurant from "../models/Restaurant.js";
+import Image from "../models/Image.js";
 
 const sendReview = async (req, res, review, user) => {
 	let { userId } = req.body;
@@ -98,11 +99,6 @@ const createReview = async (req, res) => {
 		images.map((image) => Image.uploadImage(image, session))
 	)).map(image => image._id);
 
-	foundUser.reviews.push(newReview._id);
-	foundRestaurant.reviews.push(newReview._id);
-	await foundUser.save({session});
-	await foundRestaurant.save({session});
-
     const newReview = new Review({
       title,
       body,
@@ -110,10 +106,15 @@ const createReview = async (req, res) => {
       user,
       restaurant,
       stars,
-	  upvotes: [user],
+	  upvotes: [],
 	  downvotes: [],
       imgs,
     });
+
+	foundUser.allReviews.push(newReview._id);
+	foundRestaurant.allReviews.push(newReview._id);
+	await foundUser.save({session});
+	await foundRestaurant.save({session});
 
     await newReview.save({session});
     await session.commitTransaction();

@@ -25,6 +25,7 @@ export interface ReviewData {
 }
 interface ReviewActionsType {
 	fetchReviews: (resto: {restoId: string}) => Promise<Review[] | null>;
+	fetchUserReviews: (user: {userId: string}) => Promise<Review[] | null>;
 	createReview: (data: ReviewData) => Promise<Review>;
 	editReview: (id: string, data: ReviewData) => Promise<Review>;
 	deleteReview: (id: string) => Promise<void>;
@@ -39,6 +40,22 @@ export const useReviewActions = ({
 }): ReviewActionsType => {
 	const fetchReviews = useCallback(async ({restoId}) => {
 		const response = await fetch(`http://localhost:8080/api/reviews/resto/${restoId}`, {
+			method: "GET"
+		});
+		if (!response.ok)
+			return null;
+
+		const data = await response.json();
+		const fetchedReviews = data.map((review) => ({
+			...review,
+			datePosted: new Date(review.datePosted),
+		}));
+		console.log(fetchedReviews);
+		return fetchedReviews;
+	}, []);
+
+	const fetchUserReviews = useCallback(async ({userId}) => {
+		const response = await fetch(`http://localhost:8080/api/reviews/user/${userId}`, {
 			method: "GET"
 		});
 		if (!response.ok)
@@ -95,6 +112,7 @@ export const useReviewActions = ({
 
 	return {
 		fetchReviews,
+		fetchUserReviews,
 		createReview,
 		editReview,
 		deleteReview,

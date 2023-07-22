@@ -29,6 +29,8 @@ import ViewReviewModal from "../ModalPopups/ViewReviewModal";
 import SmallModal from "../SmallModal/SmallModal";
 import { useUserContext } from "../../contexts/UserContext";
 import { Review } from "../../contexts/ReviewHook";
+import default_img from '../../../src/imgs/banana.svg'
+
 
 interface ReviewCardProps extends Review {
   showOverlay?: boolean;
@@ -204,7 +206,7 @@ const ReviewCard: React.FC<ReviewCardProps> = (review) => {
         </Footer>
       </ReviewContentContainer>
       <ReviewImgContainer>  
-        <ReviewImg src={loadedImage} />
+        <ReviewImg src={loadedImage || default_img} />
         <RestoNameContainer showOverlay={review.showOverlay}> 
           <RestoName>{review.restaurant.name}</RestoName>
         </RestoNameContainer>
