@@ -12,9 +12,14 @@ import SmallModal from "../SmallModal/SmallModal";
 import { useUserContext } from "../../contexts/UserContext";
 import { useParams } from "react-router-dom";
 import { useSingleRestaurant } from "../../contexts/RestoHook";
+import { getReviewsByRestoId } from "../../../../server/controllers/review.controller";
+import { 
+  Review,
+  useReviewActions,
+} from "../../contexts/ReviewHook";
   
 interface ReviewsCardProps {
-  reviewList: ReviewProps[];
+  reviewList: Review[];
   showOverLay?: boolean; //show overlay of restoname in the review image
 }
 
@@ -24,19 +29,19 @@ export interface ImageProps {
   alt: string;
 }
 
-export interface ReviewProps {
-  id: number;
-  resto: string;
-  title: string;
-  username: string;
-  profilepic: ImageProps;
-  datePosted: Date;
-  description: string;
-  stars: number;
-  helpful: number;
-  response: string;
-  imgs: ImageProps[];
-}
+// export interface ReviewProps {
+//   id: number;
+//   resto: string;
+//   title: string;
+//   username: string;
+//   profilepic: ImageProps;
+//   datePosted: Date;
+//   description: string;
+//   stars: number;
+//   helpful: number;
+//   response: string;
+//   imgs: ImageProps[];
+// }
 
 const ReviewsCard: React.FC<ReviewsCardProps> = ({
   reviewList,
@@ -59,6 +64,21 @@ const ReviewsCard: React.FC<ReviewsCardProps> = ({
 
   const { user } = useUserContext();
   const { id } = useParams<{ id: string }>();
+  
+  const { fetchReviews } = useReviewActions({
+    restoId: id ?? '',
+    userId: user?.id ?? '',
+  });
+  const [fetchedReviews, setReviews] = useState<Review[]>([]);
+
+  useEffect(() => {
+    fetchReviews({ restoId: id ?? '' }).then((reviews) => {
+      setReviews(reviews ?? []);
+    });
+  }, [fetchReviews, id]);
+
+  console.log(fetchedReviews);
+  // implement search results only array later
 
   return (
     <RestoReviewsContainer isUserReview={showOverLay}>
@@ -74,8 +94,8 @@ const ReviewsCard: React.FC<ReviewsCardProps> = ({
       </Header>
       
       <ReviewsContainer isUserReview={showOverLay}>
-        {reviewList.map((review) => (
-          (review.title.includes(reviewFilter) || review.description.includes(reviewFilter)) && 
+        {fetchedReviews.map((review) => (
+          (review.title.includes(reviewFilter) || review.body.includes(reviewFilter)) && 
           <ReviewCard {...review} showOverlay={showOverLay} />
         ))}
       </ReviewsContainer>

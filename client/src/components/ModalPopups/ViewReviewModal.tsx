@@ -14,7 +14,6 @@ import {
   ViewCardContainer,
   ReviewImgsContainer,
 } from "./ModalPopup";
-import { ImageProps, ReviewProps } from "../ReviewsCard/ReviewsCard";
 import {
   Footer,
   ReviewTitle,
@@ -32,6 +31,7 @@ import StarRating from "../StarRating/StarRating";
 import SmallModal from "../SmallModal/SmallModal";
 import { useUserContext } from "../../contexts/UserContext";
 import DeleteModal from "../SmallModal/DeleteModal";
+import { Review } from "../../contexts/ReviewHook";
 
 interface BaseModalWrapperProps {
   isModalVisible: boolean;
@@ -39,7 +39,7 @@ interface BaseModalWrapperProps {
   relativeTime: string;
 }
 
-const BaseModalWrapper: React.FC<BaseModalWrapperProps & ReviewProps> = ({
+const BaseModalWrapper: React.FC<BaseModalWrapperProps & Review> = ({
   onBackdropClick,
   isModalVisible,
   relativeTime,
@@ -47,7 +47,7 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & ReviewProps> = ({
 }) => {
   const [loadedImages, setLoadedImages] = useState<string[]>([]);
   const [profilePic, setProfilePic] = useState<string>();
-  const [thumbsUpCount, setThumbsUpCount] = useState(reviewProps.helpful);
+  const [thumbsUpCount, setThumbsUpCount] = useState(reviewProps.votes);
   const [thumbsDownCount, setThumbsDownCount] = useState(0);
   const [isThumbsUpClicked, setIsThumbsUpClicked] = useState(false);
   const [isThumbsDownClicked, setIsThumbsDownClicked] = useState(false);
@@ -57,19 +57,19 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & ReviewProps> = ({
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
 
   const images = reviewProps.imgs;
-  const ppic = reviewProps.profilepic;
+  const ppic = reviewProps.user.avatar;
   const navigate = useNavigate();
 
-  const loadImages = async (imageList: ImageProps[], ppic: ImageProps) => {
+  const loadImages = async (imageList: string[], ppic: string) => {
     try {
-      const profilePic = await import(`../../imgs/${ppic.src}`);
+      const profilePic = await import(`../../imgs/${ppic}`);
       setProfilePic(profilePic.default);
     } catch (error) {
       console.error("Error loading image:", error);
     }
     const loadedImages = await Promise.all(
       imageList.map(async (image) => {
-        const loadedImage = await import(`../../imgs/${image.src}`);
+        const loadedImage = await import(`../../imgs/${image}`);
         return loadedImage.default;
       })
     );
@@ -158,14 +158,14 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & ReviewProps> = ({
           </Header>
 
           <ReviewCardContainer>
-            {reviewProps.description}
+            {reviewProps.body}
             <br></br>
             <ReviewImgsContainer>
               {loadedImages.map((imageSrc, index) => (
                 <ImageReview
-                  key={images[index].id}
+                  // key={images[index].id}
                   src={imageSrc}
-                  alt={images[index].alt}
+                  // alt={images[index].alt}
                 />
               ))}
             </ReviewImgsContainer>

@@ -23,19 +23,19 @@ import {
   RestoName,
 } from "./ReviewCard.styled";
 import StarRating from "../StarRating/StarRating";
-import { ReviewProps, ImageProps } from "../ReviewsCard/ReviewsCard";
 import { Button } from "../../styles/Button.styled";
 import BaseModalWrapper from "../ModalPopups/ViewOwnerResponseModal";
 import ViewReviewModal from "../ModalPopups/ViewReviewModal";
 import SmallModal from "../SmallModal/SmallModal";
 import { useUserContext } from "../../contexts/UserContext";
+import { Review } from "../../contexts/ReviewHook";
 
-interface ReviewCardProps extends ReviewProps {
+interface ReviewCardProps extends Review {
   showOverlay?: boolean;
 }
 
 const ReviewCard: React.FC<ReviewCardProps> = (review) => {
-  const [thumbsUpCount, setThumbsUpCount] = useState(review.helpful);
+  const [thumbsUpCount, setThumbsUpCount] = useState(review.votes);
   const [thumbsDownCount, setThumbsDownCount] = useState(0);
   const [isThumbsUpClicked, setIsThumbsUpClicked] = useState(false);
   const [isThumbsDownClicked, setIsThumbsDownClicked] = useState(false);
@@ -45,12 +45,12 @@ const ReviewCard: React.FC<ReviewCardProps> = (review) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isSmallModalVisible, setIsSmallModalVisible] = useState(false);
   const image = review.imgs[0];
-  const ppic = review.profilepic;
+  const ppic = review.user.avatar;
 
-  const loadImages = async (image: ImageProps, ppic: ImageProps) => {
+  const loadImages = async (image: string, ppic: string) => {
     try {
-      const loadedImage = await import(`../../imgs/${image.src}`);
-      const profilePic = await import(`../../imgs/${image.src}`);
+      const loadedImage = await import(`../../imgs/${image}`);
+      const profilePic = await import(`../../imgs/${image}`);
       setLoadedImage(loadedImage.default);
       setProfilePic(profilePic.default);
     } catch (error) {
@@ -155,7 +155,7 @@ const ReviewCard: React.FC<ReviewCardProps> = (review) => {
             <ReviewTitle>{review.title}</ReviewTitle>
             <UserContainer>
               <ProfilePic src={profilePic} />
-              <UserName>{review.username}</UserName>
+              <UserName>{review.user.username}</UserName>
             </UserContainer>
           </LeftContainer>
           <RightContainer>
@@ -165,7 +165,7 @@ const ReviewCard: React.FC<ReviewCardProps> = (review) => {
         </Header>
 
         <ReviewDescription onClick={toggleReviewModal}>
-          {review.description}
+          {review.body}
         </ReviewDescription>
 
         <ViewReviewModal
@@ -224,7 +224,7 @@ const ReviewCard: React.FC<ReviewCardProps> = (review) => {
       <ReviewImgContainer>  
         <ReviewImg src={loadedImage} />
         <RestoNameContainer showOverlay={review.showOverlay}> 
-          <RestoName>{review.resto}</RestoName>
+          <RestoName>{review.restaurant}</RestoName>
         </RestoNameContainer>
       </ReviewImgContainer>
     </ReviewCardContainer>

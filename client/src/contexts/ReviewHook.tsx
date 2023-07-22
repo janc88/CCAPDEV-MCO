@@ -1,4 +1,5 @@
 import { useCallback } from "react";
+import { User } from "./UserContext";
 
 
 export interface Review {
@@ -6,8 +7,9 @@ export interface Review {
 	title: string;
 	body: string;
 	datePosted: Date;
-	user: string;
+	user: User;
 	restaurant: string;
+	stars: number;
 	votes: number;
 	voteType: "up" | "down" | "none";
 	ownerResponse: string;
@@ -44,10 +46,7 @@ export const useReviewActions = ({
 		const data = await response.json();
 		const fetchedReviews = data.map((review) => ({
 			...review,
-			reviews: null,
-			id: review._id,
 			datePosted: new Date(review.datePosted),
-			imgs: review.imgs.map((img: string) => `http://localhost:8080/api/images/${img}`),
 		}));
 		console.log(fetchedReviews);
 		return fetchedReviews;

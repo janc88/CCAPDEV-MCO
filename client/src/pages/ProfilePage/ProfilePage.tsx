@@ -6,16 +6,14 @@ import {
   RightContainer,
 } from "./ProfilePage.styled";
 import ReviewsCard from "../../components/ReviewsCard/ReviewsCard";
-import {
-  ReviewProps,
-} from "../../components/ReviewsCard/ReviewsCard";
 import UserInfoCard from "../../components/UserInfoCard/UserInfoCard";
 import ProfileReviewsCard from "../../components/ReviewsCard/ProfileReviewsCard";
 import { useParams } from "react-router-dom";
 import { User, useUserContext } from "../../contexts/UserContext";
+import { Review } from "../../contexts/ReviewHook";
 
 interface ProfilePageProps {
-  reviews: ReviewProps[];
+  reviews: Review[];
 }
 
 const ProfilePage: React.FC<ProfilePageProps> = (userInfo) => {

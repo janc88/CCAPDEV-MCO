@@ -17,7 +17,6 @@ import {
   WriteRating,
   RatingText,
 } from "./ModalPopup";
-import { ImageProps, ReviewProps } from "../ReviewsCard/ReviewsCard";
 
 import StarRating from "../StarRating/StarRating";
 import ImageWithCloseButton from "./ImageClose";
@@ -25,6 +24,7 @@ import Rating from "./Ratings";
 import { TitleBox, DescriptionBox } from "./InputWriteModal";
 import { useUserContext } from "../../contexts/UserContext";
 import { useReviewActions } from "../../contexts/ReviewHook";
+import { Review } from "../../contexts/ReviewHook";
 
 interface BaseModalWrapperProps {
   isModalVisible: boolean;
@@ -35,7 +35,7 @@ interface StarRatingProps {
   rating: number;
   size: string;
 }
-const BaseModalWrapper: React.FC<BaseModalWrapperProps & ReviewProps & { restaurantId: string }> = ({
+const BaseModalWrapper: React.FC<BaseModalWrapperProps & Review & { restaurantId: string }> = ({
   onBackdropClick,
   isModalVisible,
   restaurantId,
@@ -70,9 +70,9 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & ReviewProps & { restaur
 	};
   }, [imageFiles]);
 
-  const loadImages = async (image: ImageProps) => {
+  const loadImages = async (image: string) => {
     try {
-      const loadedImage = await import(`../../imgs/${image.src}`);
+      const loadedImage = await import(`../../imgs/${image}`);
       setLoadedImage(loadedImage.default);
     } catch (error) {
       console.error("Error loading image:", error);

@@ -10,31 +10,32 @@ import ViewWriteModal from "../ModalPopups/ViewWriteModal";
 import { SearchBar } from "./Input";
 import SmallModal from "../SmallModal/SmallModal";
 import { useUserContext } from "../../contexts/UserContext";
+import { Review } from "../../contexts/ReviewHook";
 
 interface ReviewsCardProps {
-  reviewList: ReviewProps[];
+  reviewList: Review[];
   showOverLay?: boolean; //show overlay of restoname in the review image
 }
 
-export interface ImageProps {
-  id: number;
-  src: string;
-  alt: string;
-}
+// export interface ImageProps {
+//   id: number;
+//   src: string;
+//   alt: string;
+// }
 
-export interface ReviewProps {
-  id: number;
-  resto: string;
-  title: string;
-  username: string;
-  profilepic: ImageProps;
-  datePosted: Date;
-  description: string;
-  stars: number;
-  helpful: number;
-  response: string;
-  imgs: ImageProps[];
-}
+// export interface ReviewProps {
+//   id: number;
+//   resto: string;
+//   title: string;
+//   username: string;
+//   profilepic: ImageProps;
+//   datePosted: Date;
+//   description: string;
+//   stars: number;
+//   helpful: number;
+//   response: string;
+//   imgs: ImageProps[];
+// }
 
 const ProfileReviewsCard: React.FC<ReviewsCardProps> = ({
   reviewList,
@@ -55,7 +56,7 @@ const ProfileReviewsCard: React.FC<ReviewsCardProps> = ({
     setIsSmallModalVisible((wasModalVisible) => !wasModalVisible);
   };
 
-  const { user } = useUserContext();
+  // const { user } = useUserContext();
   
   return (
     <RestoReviewsContainer isUserReview={showOverLay}>
@@ -71,7 +72,7 @@ const ProfileReviewsCard: React.FC<ReviewsCardProps> = ({
       
       <ReviewsContainer isUserReview={showOverLay}>
         {reviewList.map((review) => (
-      (review.title.includes(reviewFilter) || review.description.includes(reviewFilter)) && 
+      (review.title.includes(reviewFilter) || review.body.includes(reviewFilter)) && 
           <ReviewCard {...review} showOverlay={showOverLay} />
         ))}
       </ReviewsContainer>
@@ -81,11 +82,12 @@ const ProfileReviewsCard: React.FC<ReviewsCardProps> = ({
         onBackdropClick={toggleSmallModal}
       />
 
-      <ViewWriteModal
-              isModalVisible={showWriteModal}
-              onBackdropClick={toggleWriteModal}
-              {...reviewList[1]} //temporary only
-      />
+      {/* <ViewWriteModal
+        isModalVisible={showWriteModal}
+        onBackdropClick={toggleWriteModal}
+        restaurantId={id || ""}
+        {...reviewList[1]} //temporary only
+      /> */}
     </RestoReviewsContainer>
   );
 };

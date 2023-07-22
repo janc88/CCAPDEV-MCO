@@ -4,9 +4,9 @@ import Cookies from 'js-cookie';
 
 export interface User {
 	id: string;
-	userName: string;
-	profilePicture: string | null;
-	accountDesc: string;
+	username: string;
+	description: string;
+	avatar: string;
 }
 
 interface UserContextType extends userHook {
@@ -55,7 +55,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 		formData.append('old_password', old_password);
 		formData.append('new_password', new_password);
 
-		const response = await fetch(`http://localhost:8080/api/users/update/${user.userName}`, {
+		const response = await fetch(`http://localhost:8080/api/users/update/${user.username}`, {
 			method: "PATCH",
 			body: formData
 		});
@@ -72,7 +72,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 		if (avatar !== null)
 			formData.append('avatar', avatar);
 
-		const response = await fetch(`http://localhost:8080/api/users/update/${user.userName}`, {
+		const response = await fetch(`http://localhost:8080/api/users/update/${user.username}`, {
 			method: "PATCH",
 			body: formData
 		});
@@ -81,9 +81,9 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 			throw new Error("Error updating user");
 		setUser({
 			id: data.id,
-			userName: data.username,
-			profilePicture: data.avatar,
-			accountDesc: data.description,
+			username: data.username,
+			description: data.description,
+			avatar: data.avatar,
 		});
 	}, [user, setUser]);
 
@@ -101,9 +101,9 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 		const data = await response.json();
 		const newUser = {
 			id: data.id,
-			userName: data.username,
-			profilePicture: data.avatar,
-			accountDesc: data.description,
+			username: data.username,
+			description: data.description,
+			avatar: data.avatar,
 		}
 		setUser(newUser);
 		return newUser;
@@ -111,8 +111,8 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 
 	const signup = useCallback(async (user: User, password: string, profilePicture: File) => {
 		const formData = new FormData();
-		formData.append('username', user.userName);
-		formData.append('description', user.accountDesc);
+		formData.append('username', user.username);
+		formData.append('description', user.description);
 		formData.append('avatar', profilePicture);
 		formData.append('password', password);
 
@@ -124,7 +124,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 		if (!response.ok)
 			throw new Error("Error creating user");
 
-		await login(user.userName, password);
+		await login(user.username, password);
 	}, [login]);
 
 	return (
