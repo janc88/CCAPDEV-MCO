@@ -12,7 +12,7 @@ export interface Review {
 	restaurant: Restaurant;
 	stars: number;
 	votes: number;
-	voteType: "up" | "down" | "none";
+	voteType?: "up" | "down" | "none";
 	ownerResponse: string;
 	imgs: string[];
 }
