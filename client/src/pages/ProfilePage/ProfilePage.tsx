@@ -42,6 +42,7 @@ const ProfilePage: React.FC<ProfilePageProps> = (userInfo) => {
   	<ProfilePageContainer>Loading...</ProfilePageContainer>
   );
   
+  
   return (
     <ProfilePageContainer>
       <LeftContainer>
