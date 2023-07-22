@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import Rating from "../../components/ModalPopups/Ratings";
 import {
-  Card,
   PageContainer,
 } from "../styles/LoginPage.styled";
 import {

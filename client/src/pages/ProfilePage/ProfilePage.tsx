@@ -5,38 +5,45 @@ import {
   ProfilePageContainer,
   RightContainer,
 } from "./ProfilePage.styled";
-import ReviewsCard from "../../components/ReviewsCard/ReviewsCard";
 import UserInfoCard from "../../components/UserInfoCard/UserInfoCard";
 import ProfileReviewsCard from "../../components/ReviewsCard/ProfileReviewsCard";
 import { useParams } from "react-router-dom";
 import { User, useUserContext } from "../../contexts/UserContext";
-import { Review } from "../../contexts/ReviewHook";
+import { useReviews, Review } from "../../contexts/ReviewHook";
 
-interface ProfilePageProps {
-  reviews: Review[];
-}
 
-const ProfilePage: React.FC<ProfilePageProps> = (userInfo) => {
+const ProfilePage: React.FC = () => {
   const { userId } = useParams();
 
   const { user: loggedInUser, fetchUserDetails } = useUserContext();
 
   const [ isMyProfile, setIsMyProfile ] = useState(false);
   const [ user, setUser ] = useState<User | null>(null);
+  const [ reviews, setReviews ] = useState<Review[] | null>(null);
   const [ loading, setLoading ] = useState(true);
 
-  useEffect(() => {
-	if (!userId) {
-	  setUser(loggedInUser)
-	  setIsMyProfile(true)
-	  setLoading(false)
-	} else {
-	  fetchUserDetails(userId).then((user) => {
-		setUser(user);
-		setLoading(false);
-	  });
-	}
-  }, [fetchUserDetails, loggedInUser, userId])
+  const { fetchReviews } = useReviews();
+
+	useEffect(() => {
+		const doStuff = async () => {
+			if (!userId) {
+				const reviews = await fetchReviews({ userId: loggedInUser?.id });
+
+				setReviews(reviews);
+				setUser(loggedInUser);
+				setIsMyProfile(true)
+				setLoading(false)
+			} else {
+				const reviews = await fetchReviews({ userId });
+				const user = await fetchUserDetails(userId);
+				setReviews(reviews);
+				setUser(user);
+				setIsMyProfile(false);
+				setLoading(false);
+			}
+		}
+		doStuff();
+	}, [fetchReviews, fetchUserDetails, loggedInUser, userId])
 
   if (loading) return (
   	<ProfilePageContainer>Loading...</ProfilePageContainer>
@@ -51,7 +58,7 @@ const ProfilePage: React.FC<ProfilePageProps> = (userInfo) => {
 			isMyProfile={isMyProfile}/>
       </LeftContainer>
       <RightContainer>
-        <ProfileReviewsCard reviewList={userInfo.reviews} showOverLay />
+        <ProfileReviewsCard reviewList={reviews ?? []} showOverLay />
       </RightContainer>
       <EmptyContainer></EmptyContainer>
     </ProfilePageContainer>

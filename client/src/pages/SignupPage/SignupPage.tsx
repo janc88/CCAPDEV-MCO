@@ -27,9 +27,10 @@ function SignupPage() {
   const handleSubmit = async (formData: any) => {
     try {
       const user = {
-        userName: formData.username,
-        profilePicture: null,
-        accountDesc: formData.accountdesc,
+		id: '',
+        username: formData.username,
+        avatar: formData.profilepicture,
+        description: formData.accountdesc,
       };
       signup(user, formData.password, formData.profilepicture);
       navigate("/home");
