@@ -46,6 +46,7 @@ export const useReviewActions = ({
 			...review,
 			reviews: null,
 			id: review._id,
+			datePosted: new Date(review.datePosted),
 			imgs: review.imgs.map((img: string) => `http://localhost:8080/api/images/${img}`),
 		}));
 		console.log(fetchedReviews);
