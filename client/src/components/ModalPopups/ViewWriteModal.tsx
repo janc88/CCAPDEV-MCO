@@ -46,7 +46,7 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & Review & { restaurantId
 
   
   const [rating, setRating] = React.useState(0);
-  const [loadedImage, setLoadedImage] = useState<string>();
+  const loadedImage = reviewProps.imgs[0];
   const [starRating, setStarRating] = useState(0);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -69,20 +69,6 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & Review & { restaurantId
 		newImages.forEach((newImage) => URL.revokeObjectURL(newImage));
 	};
   }, [imageFiles]);
-
-  const loadImages = async (image: string) => {
-    try {
-      const loadedImage = await import(`../../imgs/${image}`);
-      setLoadedImage(loadedImage.default);
-    } catch (error) {
-      console.error("Error loading image:", error);
-    }
-  };
-
-  useEffect(() => {
-    loadImages(image);
-    console.log(new Date());
-  }, [image]);
 
   if (!isModalVisible) {
     return null;

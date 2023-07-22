@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState } from "react";
 import {
   Footer,
   Header,
@@ -40,23 +40,10 @@ const ReviewCard: React.FC<ReviewCardProps> = (review) => {
   const [isThumbsUpClicked, setIsThumbsUpClicked] = useState(false);
   const [isThumbsDownClicked, setIsThumbsDownClicked] = useState(false);
 
-  const [loadedImage, setLoadedImage] = useState<string>();
-  const [profilePic, setProfilePic] = useState<string>();
+  const loadedImage = review.imgs[0];
+  const profilePic = review.user.avatar;
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isSmallModalVisible, setIsSmallModalVisible] = useState(false);
-  const image = review.imgs[0];
-  const ppic = review.user.avatar;
-
-  const loadImages = async (image: string, ppic: string) => {
-    try {
-      const loadedImage = await import(`../../imgs/${image}`);
-      const profilePic = await import(`../../imgs/${image}`);
-      setLoadedImage(loadedImage.default);
-      setProfilePic(profilePic.default);
-    } catch (error) {
-      console.error("Error loading image:", error);
-    }
-  };
 
   const getTimeDifference = (specificDate: Date): string => {
     const currentDate: Date = new Date();
@@ -141,11 +128,6 @@ const ReviewCard: React.FC<ReviewCardProps> = (review) => {
   };
 
   const { user } = useUserContext();
-
-  useEffect(() => {
-    loadImages(image, ppic);
-    console.log(new Date());
-  }, [image, ppic]);
 
   return (
     <ReviewCardContainer>

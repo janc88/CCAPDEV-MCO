@@ -26,25 +26,9 @@ export const EditReviewPage = () => {
   const navigate = useNavigate();
   const { state } = location;
 
-  const [images, setImages] = useState<string[]>([]);
+  const [images, setImages] = useState<string[]>(state.imgs);
   const [loadedImages, setLoadedImages] = useState<string[]>([]);
 
-  const image = state.imgs;
-
-  const loadImages = async (imageList: ImageProps[]) => {
-    const loadedImages = await Promise.all(
-      imageList.map(async (image) => {
-        const loadedImage = await import(`../../imgs/${image.src}`);
-        return loadedImage.default;
-      })
-    );
-    setLoadedImages(loadedImages);
-  };
-
-  useEffect(() => {
-    loadImages(image);
-    console.log(new Date());
-  }, [image]);
 
   const handleImageDelete = (index: number) => {
     setImages((prevImages) => prevImages.filter((_, i) => i !== index));

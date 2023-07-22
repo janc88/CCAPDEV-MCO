@@ -45,8 +45,8 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & Review> = ({
   relativeTime,
   ...reviewProps
 }) => {
-  const [loadedImages, setLoadedImages] = useState<string[]>([]);
-  const [profilePic, setProfilePic] = useState<string>();
+  const loadedImages = reviewProps.imgs;
+  const profilePic = reviewProps.user.avatar;
   const [thumbsUpCount, setThumbsUpCount] = useState(reviewProps.votes);
   const [thumbsDownCount, setThumbsDownCount] = useState(0);
   const [isThumbsUpClicked, setIsThumbsUpClicked] = useState(false);
@@ -56,25 +56,8 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & Review> = ({
   const [isSmallModalVisible, setIsSmallModalVisible] = useState(false);
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
 
-  const images = reviewProps.imgs;
-  const ppic = reviewProps.user.avatar;
   const navigate = useNavigate();
 
-  const loadImages = async (imageList: string[], ppic: string) => {
-    try {
-      const profilePic = await import(`../../imgs/${ppic}`);
-      setProfilePic(profilePic.default);
-    } catch (error) {
-      console.error("Error loading image:", error);
-    }
-    const loadedImages = await Promise.all(
-      imageList.map(async (image) => {
-        const loadedImage = await import(`../../imgs/${image}`);
-        return loadedImage.default;
-      })
-    );
-    setLoadedImages(loadedImages);
-  };
 
   const handleThumbsUpClick = () => {
     if (isThumbsUpClicked) {
@@ -128,9 +111,6 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & Review> = ({
 
   const { user } = useUserContext();
 
-  useEffect(() => {
-    loadImages(images, ppic);
-  }, [images, ppic]);
 
   if (!isModalVisible) {
     return null;
