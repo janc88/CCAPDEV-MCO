@@ -11,15 +11,16 @@ const ImageSchema = new mongoose.Schema({
   description: { type: String, required: true },*/
 });
 
-ImageSchema.statics.uploadImage = async (file, session = undefined) => {
-	const newImage = new Image({
+
+ImageSchema.static('uploadImage', async function (file, session = undefined) {
+	const newImage = new this({
 		name: file.originalname,
 		data: file.buffer,
 		mimeType: file.mimetype,
 	});
 	await newImage.save(session || {session});
 	return newImage;
-}
+});
 
 const imageModel = mongoose.model("Image", ImageSchema);
 

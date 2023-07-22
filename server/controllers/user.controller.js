@@ -89,7 +89,7 @@ const updateUser = async (req, res) => {
 		}
 		if (avatar) {
 			await Image.deleteOne({ _id: user.avatar }, { session });
-			const newImage = Image.uploadImage(avatar, session);
+			const newImage = await Image.uploadImage(avatar, session);
 			newData.avatar = newImage._id;
 		}
 		await user.updateOne(newData, { session });
