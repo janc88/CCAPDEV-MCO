@@ -20,31 +20,14 @@ interface RestaurantsType {
 export const useRestaurants = (): RestaurantsType => {
 	const fetchFeaturedRestaurants = useCallback(async () => {
 		const response = await fetch('http://localhost:8080/api/restaurants/featured');
-		const restoJson = await response.json();
-		const featured = restoJson.map((resto) => ({
-			...resto,
-			reviews: null,
-			id: resto._id,
-			imgs: resto.imgs.map((img: string) => `http://localhost:8080/api/images/${img}`),
-			coverImg: `http://localhost:8080/api/images/${resto.coverImg}`,
-		}));
-		return featured;
+		return await response.json();
 	}, []);
 
 	const fetchRestaurant = useCallback(async (restaurantId: string): Promise<Restaurant | null> => {
 		const response = await fetch(`http://localhost:8080/api/restaurants/${restaurantId}`);
 		if (!response.ok)
 			return null;
-
-		const restoJson = await response.json();
-		const resto = {
-			...restoJson,
-			id: restoJson._id,
-			reviews: null,
-			imgs: restoJson.imgs.map((img: string) => `http://localhost:8080/api/images/${img}`),
-			coverImg: `http://localhost:8080/api/images/${restoJson.coverImg}`,
-		};
-		return resto;
+		return await response.json();
 	}, []);
 
 	return {
