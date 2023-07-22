@@ -97,7 +97,12 @@ const createReview = async (req, res) => {
 	const imgs = (await Promise.all(
 		images.map((image) => Image.uploadImage(image, session))
 	)).map(image => image._id);
-	
+
+	foundUser.reviews.push(newReview._id);
+	foundRestaurant.reviews.push(newReview._id);
+	await foundUser.save({session});
+	await foundRestaurant.save({session});
+
     const newReview = new Review({
       title,
       body,
@@ -109,11 +114,6 @@ const createReview = async (req, res) => {
 	  downvotes: [],
       imgs,
     });
-
-	foundUser.allReviews.push(newReview._id);
-	foundRestaurant.allReviews.push(newReview._id);
-	await foundUser.save({session});
-	await foundRestaurant.save({session});
 
     await newReview.save({session});
     await session.commitTransaction();

@@ -30,7 +30,7 @@ const RestaurantSchema = new mongoose.Schema({
   }]
 });
 
-RestaurantSchema.methods.publicView = async function () {
+RestaurantSchema.methods.publicView = function () {
 	return {
 		id: this._id,
 		name: this.name,
