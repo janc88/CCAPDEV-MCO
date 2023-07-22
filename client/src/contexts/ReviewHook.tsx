@@ -1,5 +1,6 @@
 import { useCallback } from "react";
 import { User } from "./UserContext";
+import { Restaurant } from "./RestoHook";
 
 
 export interface Review {
@@ -8,7 +9,7 @@ export interface Review {
 	body: string;
 	datePosted: Date;
 	user: User;
-	restaurant: string;
+	restaurant: Restaurant;
 	stars: number;
 	votes: number;
 	voteType: "up" | "down" | "none";

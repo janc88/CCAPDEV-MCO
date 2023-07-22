@@ -221,7 +221,7 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & Review> = ({
         <Response>
           <HeaderResponse>
             <RestoAvatar src={profilePic} />
-            {reviewProps.restaurant}
+            {reviewProps.restaurant.name}
           </HeaderResponse>
           {reviewProps.ownerResponse}
         </Response>

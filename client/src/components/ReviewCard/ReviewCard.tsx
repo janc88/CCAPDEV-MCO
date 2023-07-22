@@ -206,7 +206,7 @@ const ReviewCard: React.FC<ReviewCardProps> = (review) => {
       <ReviewImgContainer>  
         <ReviewImg src={loadedImage} />
         <RestoNameContainer showOverlay={review.showOverlay}> 
-          <RestoName>{"temp fix aaaaa" || review.restaurant}</RestoName>
+          <RestoName>{review.restaurant.name}</RestoName>
         </RestoNameContainer>
       </ReviewImgContainer>
     </ReviewCardContainer>
