@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Rating from "../../components/ModalPopups/Ratings";
-import { ImageProps } from "../../components/ReviewsCard/ReviewsCard";
 import {
   Card,
   PageContainer,
@@ -65,7 +64,7 @@ export const EditReviewPage = () => {
         </Subheader>
 
         <TextArea>
-          {state.description}
+          {state.body}
         </TextArea>
 
         <Subheader>

@@ -17,26 +17,6 @@ interface ReviewsCardProps {
   showOverLay?: boolean; //show overlay of restoname in the review image
 }
 
-// export interface ImageProps {
-//   id: number;
-//   src: string;
-//   alt: string;
-// }
-
-// export interface ReviewProps {
-//   id: number;
-//   resto: string;
-//   title: string;
-//   username: string;
-//   profilepic: ImageProps;
-//   datePosted: Date;
-//   description: string;
-//   stars: number;
-//   helpful: number;
-//   response: string;
-//   imgs: ImageProps[];
-// }
-
 const ProfileReviewsCard: React.FC<ReviewsCardProps> = ({
   reviewList,
   showOverLay = false,
