@@ -30,6 +30,19 @@ const RestaurantSchema = new mongoose.Schema({
   }]
 });
 
+RestaurantSchema.methods.publicView = async function () {
+	return {
+		id: this._id,
+		name: this.name,
+		description: this.description,
+		address: this.address,
+		coverImg: 'http://localhost:8080/api/images/' + this.coverImg,
+		imgs: this.imgs.map((img) => 'http://localhost:8080/api/images/' + img),
+		starCount: this.starCount,
+	};
+};
+
+
 const restaurantModel = mongoose.model("Restaurant", RestaurantSchema);
 
 export default restaurantModel;
