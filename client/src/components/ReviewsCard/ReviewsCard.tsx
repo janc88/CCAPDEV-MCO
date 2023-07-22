@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Header,
   RestoReviewsContainer,
@@ -11,8 +11,6 @@ import { SearchBar } from "./Input";
 import SmallModal from "../SmallModal/SmallModal";
 import { useUserContext } from "../../contexts/UserContext";
 import { useParams } from "react-router-dom";
-import { useSingleRestaurant } from "../../contexts/RestoHook";
-import { getReviewsByRestoId } from "../../../../server/controllers/review.controller";
 import { 
   Review,
   useReviewActions,

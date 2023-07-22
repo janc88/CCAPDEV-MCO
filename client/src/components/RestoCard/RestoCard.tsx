@@ -17,14 +17,14 @@ const RestoCard: React.FC<Restaurant> = (resto) => {
   const [averageStars, setAverageStars] = useState<number>();
   const [numRatings, setNumRatings] = useState<number>();
 
-  const computeAverageRating = (starcount: any) => {
+  const computeAverageRating = (starcount: number[]) => {
     const totalRatings = starcount.reduce((acc, count, index) => acc + count * (index + 1), 0);
     const totalStars = starcount.reduce((acc, count, index) => acc + count, 0);
     const averageRating = totalRatings / totalStars;
     return Math.round(averageRating * 10) / 10;
   };
 
-  const getTotalRatings = (starcount: any) => {
+  const getTotalRatings = (starcount: number[]) => {
     const totalRatings = starcount.reduce((acc, count) => acc + count, 0);
     return totalRatings;
   };

@@ -41,7 +41,7 @@ function SearchPage() {
       setFeaturedRestaurants(restos);
       setSearchMatches(findMatches(query, featuredRestaurants));
     });
-  }, [fetchFeaturedRestaurants, searchMatches]);
+  }, [featuredRestaurants, fetchFeaturedRestaurants, query, searchMatches]);
 
   return (
     <>

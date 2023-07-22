@@ -1,15 +1,12 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import {
   Header,
   RestoReviewsContainer,
   ReviewsContainer,
-  WriteReview,
 } from "./ReviewsCard.styled";
 import ReviewCard from "../ReviewCard/ReviewCard";
-import ViewWriteModal from "../ModalPopups/ViewWriteModal";
 import { SearchBar } from "./Input";
 import SmallModal from "../SmallModal/SmallModal";
-import { useUserContext } from "../../contexts/UserContext";
 import { Review } from "../../contexts/ReviewHook";
 
 interface ReviewsCardProps {
