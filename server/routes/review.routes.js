@@ -19,7 +19,7 @@ router.route("/user/:id").get(getReviewsByUserId);
 router.route("/:id").get(getReviewDetails);
 router.route("/").post(upload.array('imgs'), createReview);
 router.route("/:id").patch(upload.array('imgs'), updateReview);
-router.route("/:id").delete(deleteReview);
+router.route("/:reviewId").delete(deleteReview);
 router.route("/vote/:id").patch(voteReview);
 
 
