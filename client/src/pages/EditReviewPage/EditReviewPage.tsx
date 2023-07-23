@@ -30,7 +30,7 @@ export const EditReviewPage = () => {
 
   const [images, setImages] = useState<string[]>(state.imgs);
   const [imageFiles, setImageFiles] = useState<File[]>([]);
-  const [rating, setRating] = React.useState(0);
+  const [rating, setRating] = React.useState<number>(state.stars);
 
   const handleImageUpload = (event: ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
@@ -50,7 +50,6 @@ export const EditReviewPage = () => {
   const saveModal = () => {
     navigate(-1);
   };
-
   
 
   useEffect(() => {
@@ -81,7 +80,7 @@ export const EditReviewPage = () => {
         <RatingContainer>
             <Rating
               count={5}
-              value={state.stars}
+              value={rating}
               edit={true}
               onChange={(value) => setRating(value)}
             />

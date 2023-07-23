@@ -77,8 +77,9 @@ export const RatingContainer = styled.div`
   display: flex;
   align-items: center;
   padding-left: 1.5rem;
-  padding-top: 1rem;
-  margin-top: 1rem;
+  padding-top: 0.5rem;
+  margin-top: 0.75rem;
+  margin-bottom: -0.5rem;
 `;
 
 export const RatingText = styled.p`
