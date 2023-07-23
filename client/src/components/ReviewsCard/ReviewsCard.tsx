@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Header,
   RestoReviewsContainer,
@@ -11,18 +11,16 @@ import { SearchBar } from "./Input";
 import SmallModal from "../SmallModal/SmallModal";
 import { useUserContext } from "../../contexts/UserContext";
 import { 
-  Review,
+  Review, useReviews,
 } from "../../contexts/ReviewHook";
   
 interface ReviewsCardProps {
   restoId: string;
-  reviewList: Review[];
   showOverLay?: boolean; //show overlay of restoname in the review image
 }
 
 const ReviewsCard: React.FC<ReviewsCardProps> = ({
   restoId,
-  reviewList,
   showOverLay = false,
 }) => {
   const [showWriteModal, setshowWriteModal] = useState(false);
@@ -41,6 +39,15 @@ const ReviewsCard: React.FC<ReviewsCardProps> = ({
   };
 
   const { user } = useUserContext();
+  
+  const { fetchReviews } = useReviews();
+  const [fetchedReviews, setReviews] = useState<Review[]>([]);
+
+  useEffect(() => {
+    fetchReviews({ restoId }).then((reviews) => {
+      setReviews(reviews ?? []);
+    });
+  }, [fetchReviews, restoId]);
 
   return (
     <RestoReviewsContainer isUserReview={showOverLay}>
@@ -56,7 +63,7 @@ const ReviewsCard: React.FC<ReviewsCardProps> = ({
       </Header>
       
       <ReviewsContainer isUserReview={showOverLay}>
-        {reviewList.map((review) => (
+        {fetchedReviews.map((review) => (
           (review.title.includes(reviewFilter) || review.body.includes(reviewFilter)) && 
           <ReviewCard {...review} showOverlay={showOverLay} />
         ))}
