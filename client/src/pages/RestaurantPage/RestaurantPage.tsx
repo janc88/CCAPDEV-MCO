@@ -66,11 +66,11 @@ const RestaurantPage: React.FC = () => {
 			)} />
       </LeftContainer>
       <MiddleContainer>
-		{/*TODO add reviews*/}
+		{/*TODO fix linter error*/}
         <ReviewsCard reviewList={restoList[0].reviews} />
       </MiddleContainer>
       <RightContainer>
-		{/*TODO add reviews*/}
+		{/*TODO fix linter error*/}
         <SummaryCard
           numrating={resto.allReviews?.length || 0}
           rating={0.5}

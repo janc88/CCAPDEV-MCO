@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import {
   AvatarContainer,
   AvatarText,
@@ -30,7 +30,7 @@ function EditProfilePage() {
   const navigate = useNavigate();
   const { user, updateUser } = useUserContext();
   const methods = useForm({
-	values: {description: user?.accountDesc}
+	values: {description: user?.description}
   });
   const [ cancelPopup, setCancelPopup ] = useState(false);
   const handleCancel = () => setCancelPopup(true);
@@ -63,18 +63,18 @@ function EditProfilePage() {
 			user={user}/>
         </UserCardContainer>
         <EditProfileCard>
-          <Header>Edit Profile</Header>
+      <Header>Edit Profile</Header>
 		  <DescriptionContainer>
 		    <Input 
 		  	  type="textarea" 
 			  id="description" 
 			  label={<DescriptionLabel>Description (Max of 100 characters)</DescriptionLabel>} />
 
-			<SideTextContainer>
-              <SideText onClick={() => navigate("/change-password")}>
-                Change My Password
-              </SideText>
-            </SideTextContainer>
+			  <SideTextContainer>
+          <SideText onClick={() => navigate("/change-password")}>
+            Change My Password
+          </SideText>
+        </SideTextContainer>
 		  </DescriptionContainer>
 		  
 

@@ -19,7 +19,7 @@ const AboutRestoCard: React.FC<Restaurant> = (resto) => {
       <RatingContainer>
 		{/*TODO add ratings*/}
         <StarRating rating={0.5} size="sm" />
-        <NumRating>({resto.allReviews?.length})</NumRating>
+        <NumRating>({resto.starCount.reduce((a, b) => a+b,0)})</NumRating>
       </RatingContainer>
       <RestoImage src={resto.coverImg} />
       <RestoAddress>{resto.address}</RestoAddress>

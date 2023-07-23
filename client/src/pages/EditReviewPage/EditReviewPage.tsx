@@ -1,9 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import Rating from "../../components/ModalPopups/Ratings";
-import { ImageProps } from "../../components/ReviewsCard/ReviewsCard";
 import {
-  Card,
   PageContainer,
 } from "../styles/LoginPage.styled";
 import {
@@ -26,25 +23,9 @@ export const EditReviewPage = () => {
   const navigate = useNavigate();
   const { state } = location;
 
-  const [images, setImages] = useState<string[]>([]);
+  const [images, setImages] = useState<string[]>(state.imgs);
   const [loadedImages, setLoadedImages] = useState<string[]>([]);
 
-  const image = state.imgs;
-
-  const loadImages = async (imageList: ImageProps[]) => {
-    const loadedImages = await Promise.all(
-      imageList.map(async (image) => {
-        const loadedImage = await import(`../../imgs/${image.src}`);
-        return loadedImage.default;
-      })
-    );
-    setLoadedImages(loadedImages);
-  };
-
-  useEffect(() => {
-    loadImages(image);
-    console.log(new Date());
-  }, [image]);
 
   const handleImageDelete = (index: number) => {
     setImages((prevImages) => prevImages.filter((_, i) => i !== index));
@@ -81,7 +62,7 @@ export const EditReviewPage = () => {
         </Subheader>
 
         <TextArea>
-          {state.description}
+          {state.body}
         </TextArea>
 
         <Subheader>

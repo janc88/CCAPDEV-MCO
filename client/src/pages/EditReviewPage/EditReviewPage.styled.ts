@@ -1,6 +1,5 @@
 import styled from 'styled-components';
-import { Edit, TrashAlt, Image } from '@styled-icons/fa-solid';
-import { Button } from "../../styles/Button.styled";
+import { Edit } from '@styled-icons/fa-solid';
 
 export const EditReviewContainer = styled.div`
   display: flex;

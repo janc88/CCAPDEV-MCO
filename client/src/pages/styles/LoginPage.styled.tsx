@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Button } from "../../styles/Button.styled";
 import { BackgroundPic } from "../../styles/BackgroundPic.styled";
+import React from "react";
 
 export const PageContainer = styled(BackgroundPic)`
 	overflow: auto;
