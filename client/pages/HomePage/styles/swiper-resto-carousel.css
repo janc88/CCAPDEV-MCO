@@ -1,0 +1,29 @@
+.resto-carousel :root {
+  --swiper-theme-color: #ff794f;
+}
+
+.resto-carousel .swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.resto-carousel .swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.resto-carousel .swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.swiper-custom-pagination {
+  position: relative;
+  top: 18px;
+  width: auto !important;
+  left: auto !important;
+  margin: 1rem 0;
+}

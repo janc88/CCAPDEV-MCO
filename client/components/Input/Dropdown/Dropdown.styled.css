@@ -1,0 +1,23 @@
+.dropdown {
+    position: absolute;
+  }
+  
+  .dropdownList {
+    top: 100%;
+    left: 0;
+    width: 150px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    z-index: 1;
+    text-align: left;
+  }
+  
+  .dropdownList > p {
+    padding: 10px;
+    padding-left: 20px;
+  }
+  
+  .dropdownList > p:hover {
+    background-color: #FF794F;
+  }
