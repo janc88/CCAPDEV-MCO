@@ -1,4 +1,6 @@
 import { useCallback } from "react";
+import { User } from "./UserContext";
+import { Restaurant } from "./RestoHook";
 
 
 export interface Review {
@@ -6,12 +8,18 @@ export interface Review {
 	title: string;
 	body: string;
 	datePosted: Date;
-	user: string;
-	restaurant: string;
+	user: User;
+	restaurant: Restaurant;
+	stars: number;
 	votes: number;
-	voteType: "up" | "down" | "none";
+	voteType?: "up" | "down" | "none";
 	ownerResponse: string;
 	imgs: string[];
+}
+
+interface UseReviewsType {
+	fetchReviews: (resto: {restoId: string}) => Promise<Review[] | null>;
+	fetchUserReviews: (user: {userId: string}) => Promise<Review[] | null>;
 }
 
 export interface ReviewData {
@@ -20,20 +28,14 @@ export interface ReviewData {
 	stars: number;
 	imgs: File[];
 }
-interface ReviewActionsType {
-	fetchReviews: (resto: {restoId: string}) => Promise<Review[] | null>;
+interface ReviewActionsType extends UseReviewsType {
 	createReview: (data: ReviewData) => Promise<Review>;
 	editReview: (id: string, data: ReviewData) => Promise<Review>;
 	deleteReview: (id: string) => Promise<void>;
 	voteReview: (id: string, type: "up" | "down" | "none") => Promise<void>;
 }
 
-export const useReviewActions = ({
-	restoId, userId
-}: {
-	restoId: string,
-	userId: string,
-}): ReviewActionsType => {
+export const useReviews = (): UseReviewsType => {
 	const fetchReviews = useCallback(async ({restoId}) => {
 		const response = await fetch(`http://localhost:8080/api/reviews/resto/${restoId}`, {
 			method: "GET"
@@ -44,14 +46,42 @@ export const useReviewActions = ({
 		const data = await response.json();
 		const fetchedReviews = data.map((review) => ({
 			...review,
-			reviews: null,
-			id: review._id,
 			datePosted: new Date(review.datePosted),
-			imgs: review.imgs.map((img: string) => `http://localhost:8080/api/images/${img}`),
 		}));
 		console.log(fetchedReviews);
 		return fetchedReviews;
 	}, []);
+
+	const fetchUserReviews = useCallback(async ({userId}) => {
+		const response = await fetch(`http://localhost:8080/api/reviews/user/${userId}`, {
+			method: "GET"
+		});
+		if (!response.ok)
+			return null;
+
+		const data = await response.json();
+		const fetchedReviews = data.map((review) => ({
+			...review,
+			datePosted: new Date(review.datePosted),
+		}));
+		console.log(fetchedReviews);
+		return fetchedReviews;
+	}, []);
+
+	return {
+		fetchReviews,
+		fetchUserReviews
+	}
+}
+
+export const useReviewActions = ({
+	restoId, userId
+}: {
+	restoId: string,
+	userId: string,
+}): ReviewActionsType => {
+
+	const methods = useReviews();
 
 	const createReview = useCallback(async ({
 		title, 
@@ -94,7 +124,7 @@ export const useReviewActions = ({
 	}, []);
 
 	return {
-		fetchReviews,
+		...methods,
 		createReview,
 		editReview,
 		deleteReview,

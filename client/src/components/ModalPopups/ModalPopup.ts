@@ -186,11 +186,12 @@ export const LineBreak = styled.hr`
 `;
 
 export const RestoAvatar = styled.img`
-border-radius: 50%;
-height: 1.5rem;
-width: 1.5rem;
-margin-top:0.3rem;
-margin-right: 0.5rem;
+  border-radius: 50%;
+  height: 1.5rem;
+  width: 1.5rem;
+  margin-top:0.3rem;
+  margin-right: 0.5rem;
+  object-fit: cover;
 `;
 
 export const Header = styled.div`

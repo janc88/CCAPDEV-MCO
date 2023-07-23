@@ -9,9 +9,7 @@ import LoginPage from "./pages/LoginPage/LoginPage";
 import SignupPage from "./pages/SignupPage/SignupPage";
 import SearchPage from "./pages/SearchPage/SearchPage";
 import { UserProvider } from "./contexts/UserContext";
-import { userInfo } from "./data/data";
 import EditReviewPage from "./pages/EditReviewPage/EditReviewPage";
-import AboutRestoCard from "./pages/RestaurantPage/AboutRestoCard";
 import EditPasswordPage from "./pages/EditPasswordPage/EditPasswordPage";
 
 function App() {
@@ -27,11 +25,11 @@ function App() {
         <Route path="/restaurants/:id" element={<RestaurantPage />} />
         <Route
           path="/profile/:userId"
-          element={<ProfilePage reviews={userInfo.reviews} />}
+          element={<ProfilePage/>}
         />
 		<Route
           path="/profile/"
-          element={<ProfilePage reviews={userInfo.reviews} />}
+          element={<ProfilePage/>}
         />
         <Route path="/edit-profile" element={<EditProfilePage />} />
         <Route path="/edit-review" element={<EditReviewPage />} />

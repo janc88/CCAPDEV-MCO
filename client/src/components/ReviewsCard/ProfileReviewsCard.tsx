@@ -1,39 +1,17 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import {
   Header,
   RestoReviewsContainer,
   ReviewsContainer,
-  WriteReview,
 } from "./ReviewsCard.styled";
 import ReviewCard from "../ReviewCard/ReviewCard";
-import ViewWriteModal from "../ModalPopups/ViewWriteModal";
 import { SearchBar } from "./Input";
 import SmallModal from "../SmallModal/SmallModal";
-import { useUserContext } from "../../contexts/UserContext";
+import { Review } from "../../contexts/ReviewHook";
 
 interface ReviewsCardProps {
-  reviewList: ReviewProps[];
+  reviewList: Review[];
   showOverLay?: boolean; //show overlay of restoname in the review image
-}
-
-export interface ImageProps {
-  id: number;
-  src: string;
-  alt: string;
-}
-
-export interface ReviewProps {
-  id: number;
-  resto: string;
-  title: string;
-  username: string;
-  profilepic: ImageProps;
-  datePosted: Date;
-  description: string;
-  stars: number;
-  helpful: number;
-  response: string;
-  imgs: ImageProps[];
 }
 
 const ProfileReviewsCard: React.FC<ReviewsCardProps> = ({
@@ -54,8 +32,6 @@ const ProfileReviewsCard: React.FC<ReviewsCardProps> = ({
   const toggleSmallModal = () => {
     setIsSmallModalVisible((wasModalVisible) => !wasModalVisible);
   };
-
-  const { user } = useUserContext();
   
   return (
     <RestoReviewsContainer isUserReview={showOverLay}>
@@ -71,7 +47,7 @@ const ProfileReviewsCard: React.FC<ReviewsCardProps> = ({
       
       <ReviewsContainer isUserReview={showOverLay}>
         {reviewList.map((review) => (
-      (review.title.includes(reviewFilter) || review.description.includes(reviewFilter)) && 
+      (review.title.includes(reviewFilter) || review.body.includes(reviewFilter)) && 
           <ReviewCard {...review} showOverlay={showOverLay} />
         ))}
       </ReviewsContainer>
@@ -79,12 +55,6 @@ const ProfileReviewsCard: React.FC<ReviewsCardProps> = ({
       <SmallModal
         isModalVisible={isSmallModalVisible}
         onBackdropClick={toggleSmallModal}
-      />
-
-      <ViewWriteModal
-              isModalVisible={showWriteModal}
-              onBackdropClick={toggleWriteModal}
-              {...reviewList[1]} //temporary only
       />
     </RestoReviewsContainer>
   );

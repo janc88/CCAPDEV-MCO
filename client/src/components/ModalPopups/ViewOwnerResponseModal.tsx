@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Modal from "./ViewModal";
 import {
   DesktopModalContainer,
@@ -17,7 +17,6 @@ import {
   EditDeleteContainer,
   ReviewImgsContainer,
 } from "./ModalPopup";
-import { ImageProps, ReviewProps } from "../ReviewsCard/ReviewsCard";
 import {
   Footer,
   ReviewTitle,
@@ -36,6 +35,7 @@ import SmallModal from "../SmallModal/SmallModal";
 import { useUserContext } from "../../contexts/UserContext";
 import DeleteModal from "../SmallModal/DeleteModal";
 import { useNavigate } from "react-router-dom";
+import { Review } from "../../contexts/ReviewHook";
 
 interface BaseModalWrapperProps {
   isModalVisible: boolean;
@@ -43,15 +43,15 @@ interface BaseModalWrapperProps {
   relativeTime: string;
 }
 
-const BaseModalWrapper: React.FC<BaseModalWrapperProps & ReviewProps> = ({
+const BaseModalWrapper: React.FC<BaseModalWrapperProps & Review> = ({
   onBackdropClick,
   isModalVisible,
   relativeTime,
   ...reviewProps
 }) => {
-  const [loadedImages, setLoadedImages] = useState<string[]>([]);
-  const [profilePic, setProfilePic] = useState<string>();
-  const [thumbsUpCount, setThumbsUpCount] = useState(reviewProps.helpful);
+  const loadedImages = reviewProps.imgs;
+  const profilePic = reviewProps.user.avatar;
+  const [thumbsUpCount, setThumbsUpCount] = useState(reviewProps.votes);
   const [thumbsDownCount, setThumbsDownCount] = useState(0);
   const [isThumbsUpClicked, setIsThumbsUpClicked] = useState(false);
   const [isThumbsDownClicked, setIsThumbsDownClicked] = useState(false);
@@ -60,26 +60,7 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & ReviewProps> = ({
   const [isSmallModalVisible, setIsSmallModalVisible] = useState(false);
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
   
-
-  const images = reviewProps.imgs;
-  const ppic = reviewProps.profilepic;
   const navigate = useNavigate();
-
-  const loadImages = async (imageList: ImageProps[], ppic: ImageProps) => {
-    try {
-      const profilePic = await import(`../../imgs/${ppic.src}`);
-      setProfilePic(profilePic.default);
-    } catch (error) {
-      console.error("Error loading image:", error);
-    }
-    const loadedImages = await Promise.all(
-      imageList.map(async (image) => {
-        const loadedImage = await import(`../../imgs/${image.src}`);
-        return loadedImage.default;
-      })
-    );
-    setLoadedImages(loadedImages);
-  };
 
   const handleThumbsUpClick = () => {
     if (isThumbsUpClicked) {
@@ -132,10 +113,6 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & ReviewProps> = ({
 
   const { user } = useUserContext();
 
-  useEffect(() => {
-    loadImages(images, ppic);
-  }, [images, ppic]);
-
   if (!isModalVisible) {
     return null;
   }
@@ -151,7 +128,7 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & ReviewProps> = ({
               <ReviewTitle>{reviewProps.title}</ReviewTitle>
               <UserContainer>
                 <RestoAvatar src={profilePic} />
-                <UserName>Username here</UserName>
+                <UserName>{reviewProps.user.username}</UserName>
               </UserContainer>
             </LeftContainer>
 
@@ -162,14 +139,14 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & ReviewProps> = ({
           </Header>
 
           <ReviewCardContainer>
-            {reviewProps.description}
+            {reviewProps.body}
             <br></br>
             <ReviewImgsContainer>
               {loadedImages.map((imageSrc, index) => (
                 <ImageReview
-                  key={images[index].id}
+                  // key={images[index].id}
                   src={imageSrc}
-                  alt={images[index].alt}
+                  // alt={images[index].alt}
                 />
               ))}
             </ReviewImgsContainer>
@@ -244,9 +221,9 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & ReviewProps> = ({
         <Response>
           <HeaderResponse>
             <RestoAvatar src={profilePic} />
-            {reviewProps.resto}
+            {reviewProps.restaurant.name}
           </HeaderResponse>
-          {reviewProps.response}
+          {reviewProps.ownerResponse}
         </Response>
       </DesktopModalContainer>
     </Modal>

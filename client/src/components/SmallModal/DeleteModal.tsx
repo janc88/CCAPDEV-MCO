@@ -3,14 +3,12 @@ import Modal from "../Modal/Modal";
 import {
   DesktopSmallModalContainer,
   Title,
-  BodyText,
   DeleteText,
 } from "./SmallModal.styled";
 
-import { Divider, SideText, Send } from "../../pages/styles/LoginPage.styled";
-import { useLocation, useNavigate } from "react-router-dom";
-import { FlexRight } from "../../styles/Flex.styled";
-import { ButtonContainer, CancelButton, SaveButton, SaveCancelButtonContainer } from "../ModalPopups/ModalPopup";
+import { Divider } from "../../pages/styles/LoginPage.styled";
+import { useNavigate } from "react-router-dom";
+import { CancelButton, SaveButton, SaveCancelButtonContainer } from "../ModalPopups/ModalPopup";
 import React from "react";
 
 interface BaseModalWrapperProps {
@@ -22,7 +20,7 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps> = ({
   onBackdropClick,
   isModalVisible,
 }) => {
-  const location = useLocation();
+  //const location = useLocation();
   const navigate = useNavigate();
 
   if (!isModalVisible) {

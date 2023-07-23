@@ -27,7 +27,7 @@ export const useRestaurants = (): RestaurantsType => {
 		const response = await fetch(`http://localhost:8080/api/restaurants/${restaurantId}`);
 		if (!response.ok)
 			return null;
-		return await response.json();
+		return await response.json();;
 	}, []);
 
 	return {

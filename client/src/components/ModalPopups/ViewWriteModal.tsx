@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState, useContext } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import Modal from "./ViewModal";
 import {
   DesktopModalContainer,
@@ -17,7 +17,6 @@ import {
   WriteRating,
   RatingText,
 } from "./ModalPopup";
-import { ImageProps, ReviewProps } from "../ReviewsCard/ReviewsCard";
 
 import StarRating from "../StarRating/StarRating";
 import ImageWithCloseButton from "./ImageClose";
@@ -25,6 +24,7 @@ import Rating from "./Ratings";
 import { TitleBox, DescriptionBox } from "./InputWriteModal";
 import { useUserContext } from "../../contexts/UserContext";
 import { useReviewActions } from "../../contexts/ReviewHook";
+import { Review } from "../../contexts/ReviewHook";
 
 interface BaseModalWrapperProps {
   isModalVisible: boolean;
@@ -35,7 +35,7 @@ interface StarRatingProps {
   rating: number;
   size: string;
 }
-const BaseModalWrapper: React.FC<BaseModalWrapperProps & ReviewProps & { restaurantId: string }> = ({
+const BaseModalWrapper: React.FC<BaseModalWrapperProps & Review & { restaurantId: string }> = ({
   onBackdropClick,
   isModalVisible,
   restaurantId,
@@ -46,7 +46,7 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & ReviewProps & { restaur
 
   
   const [rating, setRating] = React.useState(0);
-  const [loadedImage, setLoadedImage] = useState<string>();
+  const loadedImage = reviewProps.imgs[0];
   const [starRating, setStarRating] = useState(0);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -69,20 +69,6 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & ReviewProps & { restaur
 		newImages.forEach((newImage) => URL.revokeObjectURL(newImage));
 	};
   }, [imageFiles]);
-
-  const loadImages = async (image: ImageProps) => {
-    try {
-      const loadedImage = await import(`../../imgs/${image.src}`);
-      setLoadedImage(loadedImage.default);
-    } catch (error) {
-      console.error("Error loading image:", error);
-    }
-  };
-
-  useEffect(() => {
-    loadImages(image);
-    console.log(new Date());
-  }, [image]);
 
   if (!isModalVisible) {
     return null;

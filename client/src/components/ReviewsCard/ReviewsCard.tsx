@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Header,
   RestoReviewsContainer,
@@ -11,31 +11,14 @@ import { SearchBar } from "./Input";
 import SmallModal from "../SmallModal/SmallModal";
 import { useUserContext } from "../../contexts/UserContext";
 import { useParams } from "react-router-dom";
-import { useSingleRestaurant } from "../../contexts/RestoHook";
+import { 
+  Review,
+  useReviews,
+} from "../../contexts/ReviewHook";
   
 interface ReviewsCardProps {
-  reviewList: ReviewProps[];
+  reviewList: Review[];
   showOverLay?: boolean; //show overlay of restoname in the review image
-}
-
-export interface ImageProps {
-  id: number;
-  src: string;
-  alt: string;
-}
-
-export interface ReviewProps {
-  id: number;
-  resto: string;
-  title: string;
-  username: string;
-  profilepic: ImageProps;
-  datePosted: Date;
-  description: string;
-  stars: number;
-  helpful: number;
-  response: string;
-  imgs: ImageProps[];
 }
 
 const ReviewsCard: React.FC<ReviewsCardProps> = ({
@@ -59,6 +42,15 @@ const ReviewsCard: React.FC<ReviewsCardProps> = ({
 
   const { user } = useUserContext();
   const { id } = useParams<{ id: string }>();
+  
+  const { fetchReviews } = useReviews();
+  const [fetchedReviews, setReviews] = useState<Review[]>([]);
+
+  useEffect(() => {
+    fetchReviews({ restoId: id ?? '' }).then((reviews) => {
+      setReviews(reviews ?? []);
+    });
+  }, [fetchReviews, id]);
 
   return (
     <RestoReviewsContainer isUserReview={showOverLay}>
@@ -74,8 +66,8 @@ const ReviewsCard: React.FC<ReviewsCardProps> = ({
       </Header>
       
       <ReviewsContainer isUserReview={showOverLay}>
-        {reviewList.map((review) => (
-          (review.title.includes(reviewFilter) || review.description.includes(reviewFilter)) && 
+        {fetchedReviews.map((review) => (
+          (review.title.includes(reviewFilter) || review.body.includes(reviewFilter)) && 
           <ReviewCard {...review} showOverlay={showOverLay} />
         ))}
       </ReviewsContainer>

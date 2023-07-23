@@ -54,4 +54,5 @@ export const ProfilePic = styled(motion.img).attrs(({src}) => ({src: src}))`
     width: 47px;
     height: 47px;
     border: 1px solid #555;
+    object-fit: cover;
 `;

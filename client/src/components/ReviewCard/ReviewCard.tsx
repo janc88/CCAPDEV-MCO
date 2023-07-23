@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState } from "react";
 import {
   Footer,
   Header,
@@ -23,40 +23,29 @@ import {
   RestoName,
 } from "./ReviewCard.styled";
 import StarRating from "../StarRating/StarRating";
-import { ReviewProps, ImageProps } from "../ReviewsCard/ReviewsCard";
 import { Button } from "../../styles/Button.styled";
 import BaseModalWrapper from "../ModalPopups/ViewOwnerResponseModal";
 import ViewReviewModal from "../ModalPopups/ViewReviewModal";
 import SmallModal from "../SmallModal/SmallModal";
 import { useUserContext } from "../../contexts/UserContext";
+import { Review } from "../../contexts/ReviewHook";
+import default_img from '../../../src/imgs/banana.svg'
 
-interface ReviewCardProps extends ReviewProps {
+
+interface ReviewCardProps extends Review {
   showOverlay?: boolean;
 }
 
 const ReviewCard: React.FC<ReviewCardProps> = (review) => {
-  const [thumbsUpCount, setThumbsUpCount] = useState(review.helpful);
+  const [thumbsUpCount, setThumbsUpCount] = useState(review.votes);
   const [thumbsDownCount, setThumbsDownCount] = useState(0);
   const [isThumbsUpClicked, setIsThumbsUpClicked] = useState(false);
   const [isThumbsDownClicked, setIsThumbsDownClicked] = useState(false);
 
-  const [loadedImage, setLoadedImage] = useState<string>();
-  const [profilePic, setProfilePic] = useState<string>();
+  const loadedImage = review.imgs[0];
+  const profilePic = review.user.avatar;
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isSmallModalVisible, setIsSmallModalVisible] = useState(false);
-  const image = review.imgs[0];
-  const ppic = review.profilepic;
-
-  const loadImages = async (image: ImageProps, ppic: ImageProps) => {
-    try {
-      const loadedImage = await import(`../../imgs/${image.src}`);
-      const profilePic = await import(`../../imgs/${image.src}`);
-      setLoadedImage(loadedImage.default);
-      setProfilePic(profilePic.default);
-    } catch (error) {
-      console.error("Error loading image:", error);
-    }
-  };
 
   const getTimeDifference = (specificDate: Date): string => {
     const currentDate: Date = new Date();
@@ -142,11 +131,6 @@ const ReviewCard: React.FC<ReviewCardProps> = (review) => {
 
   const { user } = useUserContext();
 
-  useEffect(() => {
-    loadImages(image, ppic);
-    console.log(new Date());
-  }, [image, ppic]);
-
   return (
     <ReviewCardContainer>
       <ReviewContentContainer>
@@ -155,7 +139,7 @@ const ReviewCard: React.FC<ReviewCardProps> = (review) => {
             <ReviewTitle>{review.title}</ReviewTitle>
             <UserContainer>
               <ProfilePic src={profilePic} />
-              <UserName>{review.username}</UserName>
+              <UserName>{review.user.username}</UserName>
             </UserContainer>
           </LeftContainer>
           <RightContainer>
@@ -165,7 +149,7 @@ const ReviewCard: React.FC<ReviewCardProps> = (review) => {
         </Header>
 
         <ReviewDescription onClick={toggleReviewModal}>
-          {review.description}
+          {review.body}
         </ReviewDescription>
 
         <ViewReviewModal
@@ -222,9 +206,9 @@ const ReviewCard: React.FC<ReviewCardProps> = (review) => {
         </Footer>
       </ReviewContentContainer>
       <ReviewImgContainer>  
-        <ReviewImg src={loadedImage} />
+        <ReviewImg src={loadedImage || default_img} />
         <RestoNameContainer showOverlay={review.showOverlay}> 
-          <RestoName>{review.resto}</RestoName>
+          <RestoName>{review.restaurant.name}</RestoName>
         </RestoNameContainer>
       </ReviewImgContainer>
     </ReviewCardContainer>

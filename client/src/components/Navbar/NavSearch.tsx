@@ -21,11 +21,11 @@ const NavSearch = () => {
     setInputValue(event.target.value);
   };
 
-  const isBlankOrSpaces = (str) => {
+  const isBlankOrSpaces = (str: string) => {
     return str.trim() === "";
   };
 
-  const handleKeyPress = (event) => {
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter" && !isBlankOrSpaces(inputValue)) {
       navigate(`/search-restaurants/${inputValue}`);
 	  setInputValue("");	
