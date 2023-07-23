@@ -136,7 +136,7 @@ const updateReview = async (req, res) => {
 	try {
 		const { id } = req.params;
 		const { title, body, stars, userId } = req.body;
-		const images = req.files || [];
+		const images = req.files;
 
 		const foundReview = await Review.findById(id);
 		if (!foundReview)
