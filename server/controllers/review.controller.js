@@ -227,7 +227,7 @@ const deleteReview = async (req, res) => {
 
 		if (!foundReview)
 			return res.status(404).json({ error: "Review not found" });
-		if (foundReview.user !== userId)
+		if (foundReview.user.toString() !== userId)
 			return res.status(403).json({ error: "User not authorized" });
 
 		const foundResto = await Restaurant.findById(foundReview.restaurant);
@@ -236,18 +236,23 @@ const deleteReview = async (req, res) => {
 		const session = await mongoose.startSession();
 		session.startTransaction();
 		
-		await Promise.all(foundReview.imgs.map((img) => img.deleteOne()));
+		await Promise.all(
+			foundReview.imgs.map((img) => 
+				Image.findByIdAndDelete(img, {session})
+			)
+		);
 
-		await foundUser.reviews.pull(foundReview._id);
+		await foundUser.allReviews.pull(foundReview._id);
 		await foundUser.save({session});
 
-		await foundResto.reviews.pull(foundReview._id);
+		await foundResto.allReviews.pull(foundReview._id);
 		await foundResto.starCount[foundReview.stars - 1]--;
 		await foundResto.save({session});
-
-		await foundReview.deleteOne();
+		await foundReview.deleteOne({session});
 		await session.commitTransaction();
 		await session.endSession();
+
+		res.status(200).json({ message: "Review deleted" });
 	} catch (error) {
 		console.error(error);
 		res.status(500).json({ error: error.message });

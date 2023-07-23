@@ -18,6 +18,7 @@ interface SummaryCardProps {
 const SummaryCard: React.FC<SummaryCardProps> = ({ratings}) => {
   const total = ratings.reduce((a, b) => a + b, 0);
   const avg = ratings.reduce((a, b, ind) => a + b * (ind + 1), 0) / total
+
   const renderBars = () => {
     const bars: ReactNode[] = [];
 

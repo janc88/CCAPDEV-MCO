@@ -1,4 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, {
+	useEffect,
+	useState,
+} from "react";
 import {
   LeftContainer,
   MiddleContainer,
@@ -13,8 +16,9 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import { CenterContainer, PageContainer, Card, Title, Divider, Send } from "../styles/LoginPage.styled";
 import { Restaurant, useRestaurants } from "../../contexts/RestoHook";
-import { Review, useReviews } from "../../contexts/ReviewHook";
 
+import { User } from "../../contexts/UserContext";
+import { Review, useReviews } from "../../contexts/ReviewHook";
 
 const NotFound: React.FC<{ id: string }> = ({ id }) => {
 	const navigate = useNavigate();
@@ -33,14 +37,16 @@ const NotFound: React.FC<{ id: string }> = ({ id }) => {
 	);
 };
 
-const RestaurantPage: React.FC = () => {
+const OwnerPage: React.FC<{owner: User}> = ({
+	owner
+}) => {
   const { id } = useParams<{ id: string }>();
-
   const [fetchedReviews, setReviews] = useState<Review[]>([]);
   const [resto, setResto] = useState<Restaurant>();
   const [isFetched, setIsFetched] = useState(false);
   const { fetchRestaurant } = useRestaurants();
   const { fetchReviews } = useReviews();
+
 
   useEffect(() => {
 	if (!id) return;
@@ -55,9 +61,9 @@ const RestaurantPage: React.FC = () => {
 	doStuff();
   }, [fetchRestaurant, fetchReviews, id]);
 
-
   if (!id) return (<NotFound id="" />);
 
+  
 
   if (!isFetched) return (
   	<RestaurantPageContainer className="resto-gallery">
@@ -66,11 +72,6 @@ const RestaurantPage: React.FC = () => {
   );
 
   if (!resto) return (<NotFound id={id} />);
-
-  console.log("numReviews", fetchedReviews.length);
-  console.log("starCount", resto.starCount);
-  console.log("totalStars", resto.starCount.reduce((a, b, ind) => a + b * (ind + 1), 0));
-  console.log("totalReviews", resto.starCount.reduce((a, b) => a + b, 0));
 
   return (
     <RestaurantPageContainer className="resto-gallery">
@@ -99,4 +100,4 @@ const RestaurantPage: React.FC = () => {
   );
 };
 
-export default RestaurantPage;
+export default OwnerPage;
