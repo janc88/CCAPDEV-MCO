@@ -101,30 +101,7 @@ export const EditIcon = styled(Edit)`
 `;
 
 export const ImageReviewContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  margin-left: 25px;
-  margin-right: 35px;
-  margin-top: 1rem;
-
-  &::-webkit-scrollbar {
-    width: 10px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background-color: #f1f1f1;
-  }
-
-  /* Style the scrollbar thumb */
-  &::-webkit-scrollbar-thumb {
-    background-color: #A7A7A7;
-    border-radius: 5px;
-  }
-
-  /* Style the scrollbar on hover */
-  &::-webkit-scrollbar-thumb:hover {
-    background-color: #757575;
-  }
+  margin-left: 1.4rem;
 `;
 
 export const ImageContainer = styled.div`

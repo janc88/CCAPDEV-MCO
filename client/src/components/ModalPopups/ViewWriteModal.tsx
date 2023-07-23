@@ -25,6 +25,7 @@ import { TitleBox, DescriptionBox } from "./InputWriteModal";
 import { useUserContext } from "../../contexts/UserContext";
 import { useReviewActions } from "../../contexts/ReviewHook";
 import { Review } from "../../contexts/ReviewHook";
+import { useLocation, useNavigate } from "react-router-dom";
 
 interface BaseModalWrapperProps {
   isModalVisible: boolean;
@@ -41,6 +42,8 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & Review & { restaurantId
   restaurantId,
   ...reviewProps
 }) => {
+  const location = useLocation();
+  const navigate = useNavigate();
   const [images, setImages] = useState<string[]>([]);
   const [imageFiles, setImageFiles] = useState<File[]>([]);
 
@@ -59,9 +62,13 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & Review & { restaurantId
   const handleImageUpload = (event: ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
     if (files && files.length > 0) {
-      setImageFiles((prevImages) => [...prevImages, ...Array.from(files)]);
+      const newFiles = Array.from(files).filter(
+        (file) => !imageFiles.some((imgFile) => imgFile.name === file.name)
+      );
+      setImageFiles((prevImages) => [...prevImages, ...newFiles]);
     }
   };
+
   useEffect(() => {
 	const newImages = imageFiles.map((file) => URL.createObjectURL(file));
 	setImages(newImages);
@@ -106,10 +113,15 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & Review & { restaurantId
     } catch (error) {
       console.error('Error creating review:', error);
     }
+
+    navigate(0);
   };
 
   const handleImageDelete = (index: number) => {
     setImages((prevImages) => prevImages.filter((_, i) => i !== index));
+    setImageFiles((prevImages) =>
+      prevImages.filter((_, i) => i !== index)
+    );
   };
   
   return (
