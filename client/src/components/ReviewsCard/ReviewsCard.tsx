@@ -13,7 +13,7 @@ import { useUserContext } from "../../contexts/UserContext";
 import { useParams } from "react-router-dom";
 import { 
   Review,
-  useReviewActions,
+  useReviews,
 } from "../../contexts/ReviewHook";
   
 interface ReviewsCardProps {
@@ -43,10 +43,7 @@ const ReviewsCard: React.FC<ReviewsCardProps> = ({
   const { user } = useUserContext();
   const { id } = useParams<{ id: string }>();
   
-  const { fetchReviews } = useReviewActions({
-    restoId: id ?? '',
-    userId: user?.id ?? '',
-  });
+  const { fetchReviews } = useReviews();
   const [fetchedReviews, setReviews] = useState<Review[]>([]);
 
   useEffect(() => {

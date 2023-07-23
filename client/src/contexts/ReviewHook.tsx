@@ -17,27 +17,25 @@ export interface Review {
 	imgs: string[];
 }
 
+interface UseReviewsType {
+	fetchReviews: (resto: {restoId: string}) => Promise<Review[] | null>;
+	fetchUserReviews: (user: {userId: string}) => Promise<Review[] | null>;
+}
+
 export interface ReviewData {
 	title: string;
 	body: string;
 	stars: number;
 	imgs: File[];
 }
-interface ReviewActionsType {
-	fetchReviews: (resto: {restoId: string}) => Promise<Review[] | null>;
-	fetchUserReviews: (user: {userId: string}) => Promise<Review[] | null>;
+interface ReviewActionsType extends UseReviewsType {
 	createReview: (data: ReviewData) => Promise<Review>;
 	editReview: (id: string, data: ReviewData) => Promise<Review>;
 	deleteReview: (id: string) => Promise<void>;
 	voteReview: (id: string, type: "up" | "down" | "none") => Promise<void>;
 }
 
-export const useReviewActions = ({
-	restoId, userId
-}: {
-	restoId: string,
-	userId: string,
-}): ReviewActionsType => {
+export const useReviews = (): UseReviewsType => {
 	const fetchReviews = useCallback(async ({restoId}) => {
 		const response = await fetch(`http://localhost:8080/api/reviews/resto/${restoId}`, {
 			method: "GET"
@@ -69,6 +67,21 @@ export const useReviewActions = ({
 		console.log(fetchedReviews);
 		return fetchedReviews;
 	}, []);
+
+	return {
+		fetchReviews,
+		fetchUserReviews
+	}
+}
+
+export const useReviewActions = ({
+	restoId, userId
+}: {
+	restoId: string,
+	userId: string,
+}): ReviewActionsType => {
+
+	const methods = useReviews();
 
 	const createReview = useCallback(async ({
 		title, 
@@ -111,8 +124,7 @@ export const useReviewActions = ({
 	}, []);
 
 	return {
-		fetchReviews,
-		fetchUserReviews,
+		...methods,
 		createReview,
 		editReview,
 		deleteReview,
