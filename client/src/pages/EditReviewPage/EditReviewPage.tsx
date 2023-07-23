@@ -51,6 +51,8 @@ export const EditReviewPage = () => {
     navigate(-1);
   };
 
+  
+
   useEffect(() => {
     const newImages = imageFiles.map((file) => URL.createObjectURL(file));
     setImages((prevImages) => [...prevImages, ...newImages]);
@@ -79,7 +81,7 @@ export const EditReviewPage = () => {
         <RatingContainer>
             <Rating
               count={5}
-              value={rating}
+              value={state.stars}
               edit={true}
               onChange={(value) => setRating(value)}
             />
