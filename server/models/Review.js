@@ -16,7 +16,12 @@ const ReviewSchema = new mongoose.Schema({
     ref: 'Restaurant',
     required: true
   },
-  stars: { type: Number, required: true },
+  stars: { 
+	type: Number, 
+	required: true,
+	min: 1,
+	max: 5
+ },
   upvotes: [{
 	  type: mongoose.Schema.Types.ObjectId,
 	  ref: 'User',
