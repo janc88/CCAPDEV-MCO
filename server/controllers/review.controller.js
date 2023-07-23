@@ -237,7 +237,6 @@ const deleteReview = async (req, res) => {
   };
 
 
-
 export {
   getReviewsByRestoId,
   getReviewsByUserId,
