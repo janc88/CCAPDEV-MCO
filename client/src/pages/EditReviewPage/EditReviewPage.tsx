@@ -15,10 +15,13 @@ import {
   ButtonContainer,
   CloseButton,
   ImageContainer,
+  RatingContainer,
+  PhotoSubheader,
 } from "./EditReviewPage.styled";
 import { CancelButton, SaveButton } from "../EditProfilePage/EditProfilePage.styled";
-import { FileContainer, ImageGrid, ImageIcon, ImgCardContainer, ImgContainer, Uploadtext } from "../../components/ModalPopups/ModalPopup";
+import { FileContainer, ImageGrid, ImageIcon, ImgCardContainer, ImgContainer, RatingText, Uploadtext, WriteRating } from "../../components/ModalPopups/ModalPopup";
 import ImageWithCloseButton from "../../components/ModalPopups/ImageClose";
+import Rating from "../../components/ModalPopups/Ratings";
 
 export const EditReviewPage = () => {
   const location = useLocation();
@@ -27,6 +30,7 @@ export const EditReviewPage = () => {
 
   const [images, setImages] = useState<string[]>(state.imgs);
   const [imageFiles, setImageFiles] = useState<File[]>([]);
+  const [rating, setRating] = React.useState(0);
 
   const handleImageUpload = (event: ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
@@ -72,6 +76,16 @@ export const EditReviewPage = () => {
           {state.title}
         </InputBox>
 
+        <RatingContainer>
+            <Rating
+              count={5}
+              value={rating}
+              edit={true}
+              onChange={(value) => setRating(value)}
+            />
+            <RatingText>Your rating</RatingText>
+          </RatingContainer>
+          
         <Subheader>
           Body
           <EditIcon></EditIcon>
@@ -81,10 +95,10 @@ export const EditReviewPage = () => {
           {state.body}
         </TextArea>
 
-        <Subheader>
+        <PhotoSubheader>
           Photos
           <EditIcon></EditIcon>
-        </Subheader>
+        </PhotoSubheader>
 
         <ImageReviewContainer>
           <ImgCardContainer>

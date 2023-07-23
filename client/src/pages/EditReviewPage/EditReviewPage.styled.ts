@@ -33,11 +33,21 @@ export const Subheader = styled.span`
   margin-left: 1.75rem;
 `;
 
+export const PhotoSubheader = styled.span`
+  font-weight: 700;
+  font-size: 2rem;
+  margin-top: 1rem;
+  margin-bottom: -0.5rem;
+  text-align: left; /* Add this line to align the subheaders to the left */
+  margin-left: 1.75rem;
+`;
+
 export const InputBox = styled.textarea`
   width: 90%;
-  height: 30px;
+  height: 80px;
   margin-top: 1rem;
   padding: 0.5rem;
+  padding-bottom: 1rem;
   font-size: 1rem;
   resize: none; /* Change 'none' to 'none' to prevent resizing */
   margin-left: 1.75rem;
@@ -63,9 +73,23 @@ export const InputBox = styled.textarea`
   }
 `;
 
+export const RatingContainer = styled.div`
+  display: flex;
+  align-items: center;
+  padding-left: 1.5rem;
+  padding-top: 1rem;
+  margin-top: 1rem;
+`;
+
+export const RatingText = styled.p`
+  margin-left: 0.5rem; /* Add some space between the rating and the text */
+  font-size: 1rem;
+  font-weight: bold;
+`;
+
 export const TextArea = styled.textarea`
   width: 90%;
-  height: 150px;
+  height: 250px;
   margin-top: 0.5rem;
   padding: 0.5rem;
   font-size: 1rem;
@@ -141,7 +165,7 @@ export const ButtonContainer = styled.div`
     display: flex;
     align-items: center;
     margin-left: auto;
-    margin-top: 2.5rem;
+
     margin-bottom: 1.5rem;
     margin-right: 1rem;
 `;
