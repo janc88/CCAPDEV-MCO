@@ -8,8 +8,7 @@ export default async () => {
 		const reviews = resto.allReviews;
 		const starCount = [0, 0, 0, 0, 0];
 		for (const review of reviews)
-			starCount[review.stars - 1]++;
-		console.log('Star Count', starCount);
+			starCount[review.rating - 1]++;
 		resto.starCount = starCount;
 		await resto.save();
 	};

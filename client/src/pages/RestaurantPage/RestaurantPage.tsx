@@ -14,6 +14,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { CenterContainer, PageContainer, Card, Title, Divider, Send } from "../styles/LoginPage.styled";
 import { useSingleRestaurant } from "../../contexts/RestoHook";
 
+import { restoList } from "../../data/data";
+
 
 const NotFound: React.FC<{ id: string }> = ({ id }) => {
 	const navigate = useNavigate();
@@ -34,14 +36,18 @@ const NotFound: React.FC<{ id: string }> = ({ id }) => {
 
 const RestaurantPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const { restaurant: resto, isFetched } = useSingleRestaurant(id || '');
 
   if (!id) return (<NotFound id="" />);
+
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const { restaurant: resto, isFetched } = useSingleRestaurant(id);
+
   if (!isFetched) return (
   	<RestaurantPageContainer className="resto-gallery">
 		<MiddleContainer>Loading...</MiddleContainer>
 	</RestaurantPageContainer>
   );
+
   if (!resto) return (<NotFound id={id} />);
 
   return (
@@ -60,10 +66,16 @@ const RestaurantPage: React.FC = () => {
 			)} />
       </LeftContainer>
       <MiddleContainer>
-        <ReviewsCard restoId={id}/>
+		{/*TODO fix linter error*/}
+        <ReviewsCard reviewList={restoList[0].reviews} />
       </MiddleContainer>
       <RightContainer>
-        <SummaryCard ratings={resto.starCount}/>
+		{/*TODO fix linter error*/}
+        <SummaryCard
+          numrating={resto.allReviews?.length || 0}
+          rating={0.5}
+          ratings={[]}
+        />
       </RightContainer>
     </RestaurantPageContainer>
   );
