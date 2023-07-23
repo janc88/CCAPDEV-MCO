@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import Review from "../models/Review.js";
 import User from "../models/User.js";
 import Restaurant from "../models/Restaurant.js";
+import Image from "../models/Image.js";
 
 const sendReview = async (req, res, review, user) => {
 	let { userId } = req.body;
@@ -17,11 +18,14 @@ const sendReview = async (req, res, review, user) => {
 	else
 		res.status(200).json(review.publicView());
 };
-const sendAllReviews = async (req, res, reviews) => {
-	const { userId } = req.body;
+const sendAllReviews = async (req, res, reviews, user) => {
+	let { userId } = req.body;
 
-	if (userId && !(await User.findById(userId)))
+	if (user) {
+		userId = user._id;
+	} else if (userId && !(await User.findById(userId))) {
 		return res.status(404).json({ error: "User not found" });
+	}
 	
 	if (userId)
 		reviews = reviews.map(review => review.userView(userId));
@@ -60,6 +64,20 @@ const getReviewsByRestoId = async (req, res) => {
 		res.status(500).json({ error: error.message });
 	}
 };
+const getReviewsByUserId = async (req, res) => {
+	try {
+		const { id } = req.params;
+
+		const user = await User.findById(id).populate('allReviews').exec();
+		if (!user)
+			return res.status(404).json({ error: "User not found" });
+		
+		sendAllReviews(req, res, user.allReviews, user);
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({ error: error.message });
+	}
+};
 
 const createReview = async (req, res) => {
   try {
@@ -81,11 +99,6 @@ const createReview = async (req, res) => {
 		images.map((image) => Image.uploadImage(image, session))
 	)).map(image => image._id);
 
-	foundUser.reviews.push(newReview._id);
-	foundRestaurant.reviews.push(newReview._id);
-	await foundUser.save({session});
-	await foundRestaurant.save({session});
-
     const newReview = new Review({
       title,
       body,
@@ -93,10 +106,15 @@ const createReview = async (req, res) => {
       user,
       restaurant,
       stars,
-	  upvotes: [user],
+	  upvotes: [],
 	  downvotes: [],
       imgs,
     });
+
+	foundUser.allReviews.push(newReview._id);
+	foundRestaurant.allReviews.push(newReview._id);
+	await foundUser.save({session});
+	await foundRestaurant.save({session});
 
     await newReview.save({session});
     await session.commitTransaction();
@@ -220,8 +238,10 @@ const deleteReview = async (req, res) => {
 	}
 };
 
+
 export {
   getReviewsByRestoId,
+  getReviewsByUserId,
   getReviewDetails,
   createReview,
   updateReview,

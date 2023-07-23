@@ -7,7 +7,10 @@ const getAllRestaurants = async (req, res) => {
 };
 const getFeaturedRestaurants = async (req, res) => {
 	try {
-		const restaurants = await Restaurant.find({}).limit(10);
+		let restaurants = await Restaurant.find({}).limit(10);
+		restaurants = await Promise.all(
+			restaurants.map(resto => resto.publicView())
+		);
 		res.status(200).json(restaurants);
 	} catch (error) {
 		res.status(500).json({ error: error.message });
@@ -17,14 +20,13 @@ const getRestaurantDetails = async (req, res) => {
   try {
 	const { id } = req.params;
 
-	const restaurant = await Restaurant.findById(id)
-		.populate('allReviews');
+	const restaurant = await Restaurant.findById(id);
 
 	if (!restaurant) {
 		return res.status(404).json({ error: "Restaurant not found" });
 	}
 
-	res.status(200).json(restaurant);
+	res.status(200).json(restaurant.publicView());
   } catch (error) {
 	res.status(500).json({ error: error.message });
   }
@@ -63,7 +65,7 @@ const createRestaurant = async (req, res) => {
 	await session.commitTransaction();
 	session.endSession();
 
-	res.status(201).json(newRestaurant);
+	res.status(201).json(newRestaurant.publicView());
   } catch (error) {
 	res.status(500).json({ error: error.message });
   }
