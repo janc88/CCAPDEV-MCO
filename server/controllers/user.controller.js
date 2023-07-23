@@ -79,15 +79,15 @@ const updateUser = async (req, res) => {
 		const avatar = req.file;
 		const newData = {};
 
-		if (description !== user.description)
+		if (description !== undefined)
 			newData.description = description;
-		if (new_password) {
+		if (new_password !== undefined) {
 			if (user.password !== old_password) {
 				return res.status(409).json({ error: "Wrong password!" });
 			}
 			newData.password = new_password;
 		}
-		if (avatar) {
+		if (avatar !== undefined) {
 			await Image.deleteOne({ _id: user.avatar }, { session });
 			const newImage = await Image.uploadImage(avatar, session);
 			newData.avatar = newImage._id;

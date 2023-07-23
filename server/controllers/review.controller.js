@@ -82,11 +82,8 @@ const getReviewsByUserId = async (req, res) => {
 const createReview = async (req, res) => {
   try {
     const { title, body, stars, user, restaurant } = req.body;
-	const images = req.files;
+	const images = req.files || [];
 	const date = new Date();
-
-	if (stars < 1 || stars > 5)
-		return res.status(400).json({ error: "Invalid stars" });
 	
 	const foundUser = await User.findById(user);
 	if (!foundUser) 
@@ -102,6 +99,8 @@ const createReview = async (req, res) => {
 	const imgs = (await Promise.all(
 		images.map((image) => Image.uploadImage(image, session))
 	)).map(image => image._id);
+	if (stars < 1 || stars > 5)
+		return res.status(400).json({ error: "Invalid stars" });
 
     const newReview = new Review({
       title,
@@ -121,8 +120,8 @@ const createReview = async (req, res) => {
 
 	await foundUser.save({session});
 	await foundRestaurant.save({session});
-
     await newReview.save({session});
+
     await session.commitTransaction();
 	await session.endSession();
 
@@ -137,32 +136,33 @@ const updateReview = async (req, res) => {
 	try {
 		const { id } = req.params;
 		const { title, body, stars, userId } = req.body;
-		const images = req.files;
+		const images = req.files || [];
 
 		const foundReview = await Review.findById(id);
 		if (!foundReview)
 			return res.status(404).json({ error: "Review not found" });
 
-		const foundResto = await Restaurant.findById(foundReview.restaurant);
-		
-		const foundUser = await User.findById(userId);
-		if (!foundUser)
-			return res.status(404).json({ error: "User not found" });
 		if (foundReview.user !== userId)
 			return res.status(403).json({ error: "User not authorized" });
+
+		const foundResto = await Restaurant.findById(foundReview.restaurant);
+		const foundUser = await User.findById(foundReview.user);
 		
 		const session = await mongoose.startSession();
 		session.startTransaction();
-		if (images) {
+		
+		if (images !== undefined) {
 			const imgs = (await Promise.all(
 				images.map((image) => Image.uploadImage(image, session))
 			)).map(image => image._id);
 			Promise.all(foundReview.imgs.map((img) => img.deleteOne()));
 			foundReview.imgs = imgs;
 		}
-		if (title) foundReview.title = title;
-		if (body) foundReview.body = body;
-		if (stars) {
+		if (title !== undefined) foundReview.title = title;
+		if (body !== undefined) foundReview.body = body;
+		if (stars !== undefined) {
+			if (stars < 1 || stars > 5)
+				return res.status(400).json({ error: "Invalid stars" });
 			foundResto.starCount[foundReview.stars - 1]--;
 			foundReview.stars = stars;
 			foundResto.starCount[stars - 1]++;
@@ -187,11 +187,10 @@ const voteReview = async (req, res) => {
 		const foundReview = await Review.findById(id);
 		if (!foundReview)
 			return res.status(404).json({ error: "Review not found" });
-		const foundUser = await User.findById(userId);
-		if (!foundUser)
-			return res.status(404).json({ error: "User not found" });
 		if (userId !== foundReview.user)
 			return res.status(403).json({ error: "User not authorized" });
+		
+		const foundUser = await User.findById(foundReview.user);
 		
 		const session = await mongoose.startSession();
 		session.startTransaction();
@@ -223,19 +222,15 @@ const deleteReview = async (req, res) => {
 
 		const { userId } = req.body;
 
-		const foundUser = await User.findById(userId);
-		if (!foundUser)
-			return res.status(404).json({ error: "User not found" });
-		if (userId !== foundUser._id)
-			return res.status(403).json({ error: "User not authorized" });
-
 		const foundReview = await Review.findById(id);
-		const foundResto = await Restaurant.findById(foundReview.restaurant);
 
 		if (!foundReview)
 			return res.status(404).json({ error: "Review not found" });
 		if (foundReview.user !== userId)
 			return res.status(403).json({ error: "User not authorized" });
+
+		const foundResto = await Restaurant.findById(foundReview.restaurant);
+		const foundUser = await User.findById(foundReview.user);
 		
 		const session = await mongoose.startSession();
 		session.startTransaction();
