@@ -112,6 +112,7 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & Review> = ({
   };
 
   const { user } = useUserContext();
+  const isCurrentUser = user && user.username === reviewProps.user.username;
 
   if (!isModalVisible) {
     return null;
@@ -181,17 +182,19 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & Review> = ({
             </HelpfulContainer>
 
             <EditDeleteContainer>
-              <EditIcon 
-              isClicked={isEditClicked} 
-              onClick={() => {
-                if (user) {
-                  handleEditClick();
-                } // If logged in
-                else {
-                  toggleSmallModal();
-                }
-              }}
-            />
+            {isCurrentUser && (
+              <>
+                <EditIcon
+                  onClick={() => {
+                    if (user) {
+                      handleEditClick();
+                    } // If logged in
+                    else {
+                      toggleSmallModal();
+                    }
+                  }}
+                  isClicked={isEditClicked}
+                />
                 <TrashAltIcon
                   isClicked={isTrashClicked}
                   onClick={() => {
@@ -202,8 +205,10 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & Review> = ({
                       toggleSmallModal();
                     }
                   }}
-              />
-            </EditDeleteContainer>
+                />
+              </>
+            )}
+          </EditDeleteContainer>
           </Footer>
           <SmallModal
               isModalVisible={isSmallModalVisible}

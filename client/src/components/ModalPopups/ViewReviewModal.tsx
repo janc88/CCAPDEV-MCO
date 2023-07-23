@@ -110,6 +110,7 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & Review> = ({
   };
 
   const { user } = useUserContext();
+  const isCurrentUser = user && user.username === reviewProps.user.username;
 
 
   if (!isModalVisible) {
@@ -179,29 +180,33 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & Review> = ({
               <Helpful>Helpful ({thumbsUpCount - thumbsDownCount})</Helpful>
             </HelpfulContainer>
             <EditDeleteContainer>
-            <EditIcon
-              onClick={() => {
-                if (user) {
-                  handleEditClick();
-                } // If logged in
-                else {
-                  toggleSmallModal();
-                }
-              }}
-              isClicked={isEditClicked}
-            />
-              <TrashAltIcon
-                isClicked={isTrashClicked}
-                onClick={() => {
-                  if (user) {
-                    toggleDeleteModal();
-                  } // If logged in
-                  else {
-                    toggleSmallModal();
-                  }
-                }}
-              />
-            </EditDeleteContainer>
+            {isCurrentUser && (
+              <>
+                <EditIcon
+                  onClick={() => {
+                    if (user) {
+                      handleEditClick();
+                    } // If logged in
+                    else {
+                      toggleSmallModal();
+                    }
+                  }}
+                  isClicked={isEditClicked}
+                />
+                <TrashAltIcon
+                  isClicked={isTrashClicked}
+                  onClick={() => {
+                    if (user) {
+                      toggleDeleteModal();
+                    } // If logged in
+                    else {
+                      toggleSmallModal();
+                    }
+                  }}
+                />
+              </>
+            )}
+          </EditDeleteContainer>
           </Footer>
           <SmallModal
             isModalVisible={isSmallModalVisible}
