@@ -217,6 +217,7 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & Review> = ({
          <DeleteModal
               isModalVisible={isDeleteModalVisible}
               onBackdropClick={toggleDeleteModal}
+              reviewId={reviewProps.id}
             />
         </CardContainer>
 

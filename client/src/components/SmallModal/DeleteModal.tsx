@@ -14,11 +14,13 @@ import React from "react";
 interface BaseModalWrapperProps {
   isModalVisible: boolean;
   onBackdropClick: () => void;
+  reviewId: string;
 }
 
 const BaseModalWrapper: React.FC<BaseModalWrapperProps> = ({
   onBackdropClick,
   isModalVisible,
+  reviewId,
 }) => {
   //const location = useLocation();
   const navigate = useNavigate();
@@ -31,8 +33,26 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps> = ({
     navigate(0);  
 };
 
-  const saveModal = () => {
-    navigate(0);
+const saveModal = async () => {
+  const idToDelete = reviewId;
+
+  try {
+    const response = await fetch(`http://localhost:8080/api/reviews/${idToDelete}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (response.ok) {
+      navigate(0);
+      console.log("Review deleted");
+    } else {
+      throw new Error('Failed to delete review');
+    }
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 
