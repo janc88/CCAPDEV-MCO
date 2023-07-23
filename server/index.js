@@ -7,6 +7,7 @@ import userRouter from "./routes/user.routes.js";
 import reviewRouter from "./routes/review.routes.js";
 import restaurantRouter from "./routes/restaurant.routes.js";
 import imageRouter from "./routes/image.routes.js";
+import RestoStars from "./scripts/RestoStars.js";
 
 dotenv.config();
 
@@ -15,7 +16,9 @@ app.use(cors());
 app.use(express.json({ limit: "50mb" }));
 
 app.get("/", (req, res) => {
-  res.send({ message: "hello world" });
+  RestoStars().then(() =>
+  res.send({ message: "hello world" })
+  )
 });
 
 app.use("/api/users", userRouter);

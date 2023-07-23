@@ -14,6 +14,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { CenterContainer, PageContainer, Card, Title, Divider, Send } from "../styles/LoginPage.styled";
 import { useSingleRestaurant } from "../../contexts/RestoHook";
 
+import { User } from "../../contexts/UserContext";
 
 const NotFound: React.FC<{ id: string }> = ({ id }) => {
 	const navigate = useNavigate();
@@ -32,7 +33,9 @@ const NotFound: React.FC<{ id: string }> = ({ id }) => {
 	);
 };
 
-const RestaurantPage: React.FC = () => {
+const OwnerPage: React.FC<{owner: User}> = ({
+	owner
+}) => {
   const { id } = useParams<{ id: string }>();
   const { restaurant: resto, isFetched } = useSingleRestaurant(id || '');
 
@@ -69,4 +72,4 @@ const RestaurantPage: React.FC = () => {
   );
 };
 
-export default RestaurantPage;
+export default OwnerPage;
