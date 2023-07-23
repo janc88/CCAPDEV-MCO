@@ -9,7 +9,7 @@ import UserInfoCard from "../../components/UserInfoCard/UserInfoCard";
 import ProfileReviewsCard from "../../components/ReviewsCard/ProfileReviewsCard";
 import { useParams } from "react-router-dom";
 import { User, useUserContext } from "../../contexts/UserContext";
-import { useReviewActions, Review } from "../../contexts/ReviewHook";
+import { useReviews, Review } from "../../contexts/ReviewHook";
 
 
 const ProfilePage: React.FC = () => {
@@ -22,10 +22,7 @@ const ProfilePage: React.FC = () => {
   const [ reviews, setReviews ] = useState<Review[] | null>(null);
   const [ loading, setLoading ] = useState(true);
   
-  const { fetchUserReviews } = useReviewActions({
-    restoId: '',
-    userId: user?.id ?? '',
-  });
+  const { fetchUserReviews } = useReviews();
 
 	useEffect(() => {
 		const doStuff = async () => {
