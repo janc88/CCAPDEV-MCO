@@ -28,12 +28,7 @@ export const useUser = (): userHook => {
 			return null;
 
 		const data = await response.json();
-		return {
-			id: data.id,
-			username: data.username,
-			avatar: data.avatar,
-			description: data.description,
-		};
+		return data
 	}, []);
 
 	return {

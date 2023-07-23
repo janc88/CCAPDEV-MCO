@@ -24,10 +24,11 @@ const UserSchema = new mongoose.Schema({
 
 UserSchema.methods.userInfo = function () {
 	return {
-	  id: this._id,
-	  username: this.username,
-	  description: this.description,
-	  avatar: 'http://localhost:8080/api/images/' + this.avatar,
+		id: this._id,
+		username: this.username,
+		description: this.description,
+		avatar: 'http://localhost:8080/api/images/' + this.avatar,
+		ownedRestaurant: this.ownedRestaurant || null
 	};
 };
 

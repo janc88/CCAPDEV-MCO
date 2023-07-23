@@ -15,6 +15,7 @@ export interface Review {
 	voteType?: "up" | "down" | "none";
 	ownerResponse: string;
 	imgs: string[];
+	lastEdited: Date | null;
 }
 
 interface UseReviewsType {
@@ -47,6 +48,7 @@ export const useReviews = (): UseReviewsType => {
 		const fetchedReviews = data.map((review) => ({
 			...review,
 			datePosted: new Date(review.datePosted),
+			lastEdited: review.lastEdited && new Date(review.lastEdited),
 		}));
 		console.log(fetchedReviews);
 		return fetchedReviews;
@@ -63,6 +65,7 @@ export const useReviews = (): UseReviewsType => {
 		const fetchedReviews = data.map((review) => ({
 			...review,
 			datePosted: new Date(review.datePosted),
+			lastEdited: review.lastEdited && new Date(review.lastEdited),
 		}));
 		console.log(fetchedReviews);
 		return fetchedReviews;

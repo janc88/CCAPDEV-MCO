@@ -34,7 +34,6 @@ const ReviewSchema = new mongoose.Schema({
   }],
   ownerResponse: { type: String, required: false },
   imgs: [{ type: String, required: false }],
-  isEdited: { type: Boolean, required: true, default: false },
   lastEdited: { type: Date, required: false }
 });
 
@@ -46,19 +45,18 @@ ReviewSchema.methods.publicView = async function () {
 	const user = await User.findById(this.user);
 	const resto = await Restaurant.findById(this.restaurant);
 	return {
-	  id: this._id,
-	  title: this.title,
-	  body: this.body,
-	  datePosted: this.datePosted,
-	  user: user.userInfo(),
-	  restaurant: resto.publicView(),
-	  stars: this.stars,
-	  votes: this.votes,
-	  ownerResponse: this.ownerResponse,
-	  imgs: this.imgs.map((img) => 'http://localhost:8080/api/images/' + img),
-	  isEdited: this.isEdited,
-	  lastEdited: this.lastEdited,
-	};
+		id: this._id,
+		title: this.title,
+		body: this.body,
+		datePosted: this.datePosted,
+		user: user.userInfo(),
+		restaurant: resto.publicView(),
+		stars: this.stars,
+		votes: this.votes,
+		ownerResponse: this.ownerResponse,
+		imgs: this.imgs.map((img) => 'http://localhost:8080/api/images/' + img),
+		lastEdited: this.lastEdited || null
+	  };
 };
 
 ReviewSchema.methods.userView = async function (user) {

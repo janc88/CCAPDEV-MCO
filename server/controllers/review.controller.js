@@ -167,6 +167,7 @@ const updateReview = async (req, res) => {
 			foundReview.stars = stars;
 			foundResto.starCount[stars - 1]++;
 		}
+		foundReview.lastEdited = new Date();
 
 		await foundResto.save({session});
 		await foundReview.save({session});

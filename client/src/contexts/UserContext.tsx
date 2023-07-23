@@ -7,6 +7,7 @@ export interface User {
 	username: string;
 	description: string;
 	avatar: string;
+	ownedRestoId: string | null;
 }
 
 interface UserContextType extends userHook {
@@ -79,12 +80,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 		const data = await response.json();
 		if (!response.ok)
 			throw new Error("Error updating user");
-		setUser({
-			id: data.id,
-			username: data.username,
-			description: data.description,
-			avatar: data.avatar,
-		});
+		setUser(data);
 	}, [user, setUser]);
 
 
@@ -99,14 +95,8 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 		if (!response.ok)
 			return null;
 		const data = await response.json();
-		const newUser = {
-			id: data.id,
-			username: data.username,
-			description: data.description,
-			avatar: data.avatar,
-		}
-		setUser(newUser);
-		return newUser;
+		setUser(data);
+		return data;
 	}, [setUser]);
 
 	const signup = useCallback(async (user: User, password: string, profilePicture: File) => {
