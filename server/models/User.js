@@ -15,6 +15,11 @@ const UserSchema = new mongoose.Schema({
       ref: "Review",
     },
   ],
+  ownedRestaurant: {
+	type: mongoose.Schema.Types.ObjectId,
+	ref: "Restaurant",
+	required: false
+  }
 });
 
 UserSchema.methods.userInfo = function () {

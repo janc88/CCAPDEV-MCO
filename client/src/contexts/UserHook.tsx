@@ -20,7 +20,7 @@ export const useUser = (): userHook => {
 		return data.isTaken;
 	}, []);
 
-	const fetchUserDetails = useCallback(async (id: string) => {
+	const fetchUserDetails = useCallback(async (id: string): Promise<User|null> => {
 		const response = await fetch(`http://localhost:8080/api/users/${id}`, {
 			method: "GET"
 		});
@@ -30,9 +30,9 @@ export const useUser = (): userHook => {
 		const data = await response.json();
 		return {
 			id: data.id,
-			userName: data.username,
-			profilePicture: data.avatar,
-			accountDesc: data.description,
+			username: data.username,
+			avatar: data.avatar,
+			description: data.description,
 		};
 	}, []);
 

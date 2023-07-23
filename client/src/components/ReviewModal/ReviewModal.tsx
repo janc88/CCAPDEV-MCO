@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Modal from "../Modal/Modal";
 import {
   DesktopModalContainer,
@@ -24,7 +24,6 @@ import {
   UserName,
   RelativeTime,
   HelpfulContainer,
-  OwnersResponse,
   ThumbsUpIcon,
   ThumbsDownIcon,
   Helpful,

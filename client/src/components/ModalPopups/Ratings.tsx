@@ -116,7 +116,7 @@ const Rating: React.FC<RatingProps> = ({
     return color;
   };
 
-  const stars = [];
+  const stars: React.ReactNode[] = [];
 
   for (let i = 0; i < count; i++) {
     let star: React.ReactElement;

@@ -8,6 +8,7 @@ import {
 import { Divider, SideText, Send } from "../../pages/styles/LoginPage.styled";
 import { useNavigate } from "react-router-dom";
 import { FlexRight } from "../../styles/Flex.styled";
+import React from "react";
 
 interface BaseModalWrapperProps {
   isModalVisible: boolean;

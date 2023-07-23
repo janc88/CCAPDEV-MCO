@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { Image } from "./styles/Input.styled";
+import React from "react";
 
 interface ImageInputProps {
 	id: string;

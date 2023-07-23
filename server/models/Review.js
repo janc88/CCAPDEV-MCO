@@ -34,6 +34,8 @@ const ReviewSchema = new mongoose.Schema({
   }],
   ownerResponse: { type: String, required: false },
   imgs: [{ type: String, required: false }],
+  isEdited: { type: Boolean, required: true, default: false },
+  lastEdited: { type: Date, required: false }
 });
 
 ReviewSchema.virtual('votes').get(function () {
@@ -54,6 +56,8 @@ ReviewSchema.methods.publicView = async function () {
 	  votes: this.votes,
 	  ownerResponse: this.ownerResponse,
 	  imgs: this.imgs.map((img) => 'http://localhost:8080/api/images/' + img),
+	  isEdited: this.isEdited,
+	  lastEdited: this.lastEdited,
 	};
 };
 
