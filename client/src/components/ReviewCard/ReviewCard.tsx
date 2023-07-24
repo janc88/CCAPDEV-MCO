@@ -22,7 +22,7 @@ import {
   RestoNameContainer,
   RestoName,
   OwnerResponseForm,
-  LastEditContainer
+  LastEditContainer,
 } from "./ReviewCard.styled";
 import StarRating from "../StarRating/StarRating";
 import { Button } from "../../styles/Button.styled";
@@ -42,11 +42,15 @@ interface ReviewCardProps extends Review {
 const ReviewCard: React.FC<ReviewCardProps> = (review) => {
   const [thumbsUpCount, setThumbsUpCount] = useState(review.votes);
   const [thumbsDownCount, setThumbsDownCount] = useState(0);
-  const [isThumbsUpClicked, setIsThumbsUpClicked] = useState(review.voteType === "up");
-  const [isThumbsDownClicked, setIsThumbsDownClicked] = useState(review.voteType === "down");
+  const [isThumbsUpClicked, setIsThumbsUpClicked] = useState(
+    review.voteType === "up"
+  );
+  const [isThumbsDownClicked, setIsThumbsDownClicked] = useState(
+    review.voteType === "down"
+  );
 
   const [showResponseForm, setShowResponseForm] = useState(false);
-  const [ownerResponse, setOwnerResponse] = useState<string>('');
+  const [ownerResponse, setOwnerResponse] = useState<string>("");
 
   const loadedImage = review.imgs[0];
   const profilePic = review.user.avatar;
@@ -54,10 +58,10 @@ const ReviewCard: React.FC<ReviewCardProps> = (review) => {
   const [isSmallModalVisible, setIsSmallModalVisible] = useState(false);
 
   const { user } = useUserContext();
-  const { replyToReview } = useOwnerActions(user?.id || '');
+  const { replyToReview } = useOwnerActions(user?.id || "");
   const { voteReview } = useReviewActions({
-	restoId: '', 
-    userId: user?.id || ''
+    restoId: "",
+    userId: user?.id || "",
   });
 
   const getTimeDifference = (specificDate: Date): string => {
@@ -95,19 +99,19 @@ const ReviewCard: React.FC<ReviewCardProps> = (review) => {
       // Deselect thumbs-up
       setIsThumbsUpClicked(false);
       setThumbsUpCount((prevCount) => prevCount - 1);
-	  voteReview(review.id, "none");
+      voteReview(review.id, "none");
     } else if (isThumbsDownClicked) {
       // Change from thumbs-down to thumbs-up
       setIsThumbsUpClicked(true);
       setIsThumbsDownClicked(false);
       setThumbsUpCount((prevCount) => prevCount + 1);
       setThumbsDownCount((prevCount) => prevCount - 1);
-	  voteReview(review.id, "up");
+      voteReview(review.id, "up");
     } else {
       // Select thumbs-up
       setIsThumbsUpClicked(true);
       setThumbsUpCount((prevCount) => prevCount + 1);
-	  voteReview(review.id, "up");
+      voteReview(review.id, "up");
     }
   };
 
@@ -116,19 +120,19 @@ const ReviewCard: React.FC<ReviewCardProps> = (review) => {
       // Deselect thumbs-down
       setIsThumbsDownClicked(false);
       setThumbsDownCount((prevCount) => prevCount - 1);
-	  voteReview(review.id, "none");
+      voteReview(review.id, "none");
     } else if (isThumbsUpClicked) {
       // Change from thumbs-up to thumbs-down
       setIsThumbsUpClicked(false);
       setIsThumbsDownClicked(true);
       setThumbsUpCount((prevCount) => prevCount - 1);
       setThumbsDownCount((prevCount) => prevCount + 1);
-	  voteReview(review.id, "down");
+      voteReview(review.id, "down");
     } else {
       // Select thumbs-down
       setIsThumbsDownClicked(true);
       setThumbsDownCount((prevCount) => prevCount + 1);
-	  voteReview(review.id, "down");
+      voteReview(review.id, "down");
     }
   };
 
@@ -158,12 +162,12 @@ const ReviewCard: React.FC<ReviewCardProps> = (review) => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    
+
     await replyToReview(review.id, ownerResponse);
-	//TODO: temporary hack
-	window.location.reload();
+    //TODO: temporary hack
+    window.location.reload();
     setShowResponseForm(false);
-    setOwnerResponse('');
+    setOwnerResponse("");
   };
 
   return (
@@ -231,13 +235,11 @@ const ReviewCard: React.FC<ReviewCardProps> = (review) => {
             </HelpfulContainer>
           )}
           <div className="openRev">
-            {!user?.ownedRestoId ? (
+            {!user?.ownedRestoId ? review.ownerResponse && (
               <Button onClick={toggleModal} bgcolor="white" tcolor="black">
                 <OwnersResponse>View Owner's Response</OwnersResponse>
               </Button>
-            ) : review.ownerResponse ? (
-				null
-			) : !showResponseForm ? (
+            ) : review.ownerResponse ? null : !showResponseForm ? (
               <Button
                 onClick={handleButtonClick}
                 bgcolor="white"
@@ -253,7 +255,9 @@ const ReviewCard: React.FC<ReviewCardProps> = (review) => {
                   onChange={handleInputChange}
                   placeholder="Type your response here"
                 />
-                <Button type="submit" bgcolor="#FF794F" tcolor="white">Submit Response</Button>
+                <Button type="submit" bgcolor="#FF794F" tcolor="white">
+                  Submit Response
+                </Button>
               </form>
             )}
 
