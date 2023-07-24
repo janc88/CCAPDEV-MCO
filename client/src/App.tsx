@@ -11,6 +11,7 @@ import SearchPage from "./pages/SearchPage/SearchPage";
 import { UserProvider, useUserContext } from "./contexts/UserContext";
 import EditReviewPage from "./pages/EditReviewPage/EditReviewPage";
 import EditPasswordPage from "./pages/EditPasswordPage/EditPasswordPage";
+import NotAllowedPage from "./pages/NotAllowedPage/NotAllowedPage";
 
 const Router: React.FC = () => {
   const { user } = useUserContext();
@@ -37,6 +38,7 @@ const Router: React.FC = () => {
   return (
     <Routes>
       {user?.ownedRestoId ? ownerRoutes : userRoutes}
+      <Route path="*" element={<NotAllowedPage/>} />
     </Routes>
   );
 };
