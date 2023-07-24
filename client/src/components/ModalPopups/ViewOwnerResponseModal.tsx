@@ -59,6 +59,7 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & Review> = ({
   const [isTrashClicked, setIsTrashClicked] = useState(false);
   const [isSmallModalVisible, setIsSmallModalVisible] = useState(false);
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
+  console.log('reviewProps', reviewProps)
   
   const navigate = useNavigate();
 
@@ -227,8 +228,8 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & Review> = ({
         <Response>
           <HeaderResponse>
             <RestoAvatar src={
-				reviewProps.ownerResponse?.owner.avatar || profilePic} />
-            {reviewProps.ownerResponse?.owner.username || reviewProps.restaurant.name}
+				reviewProps.ownerResponse?.owner?.avatar || profilePic} />
+            {reviewProps.ownerResponse?.owner?.username || reviewProps.restaurant.name}
           </HeaderResponse>
           {reviewProps.ownerResponse?.body}
         </Response>
