@@ -136,7 +136,7 @@ const updateReview = async (req, res) => {
 	try {
 		const { id } = req.params;
 		const { title, body, stars, userId } = req.body;
-		const images = req.files;
+		const images = req.files || [];
 
 		const foundReview = await Review.findById(id);
 		if (!foundReview)
@@ -155,7 +155,6 @@ const updateReview = async (req, res) => {
 			const imgs = (await Promise.all(
 				images.map((image) => Image.uploadImage(image, session))
 			)).map(image => image._id);
-			Promise.all(foundReview.imgs.map((img) => img.deleteOne()));
 			foundReview.imgs = imgs;
 		}
 
