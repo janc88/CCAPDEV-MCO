@@ -27,14 +27,14 @@ const ProfilePage: React.FC = () => {
 	useEffect(() => {
 		const doStuff = async () => {
 			if (!userId) {
-				const reviews = await fetchUserReviews({ userId: loggedInUser?.id ?? ''});
+				const reviews = await fetchUserReviews(loggedInUser?.id ?? '', { userId: loggedInUser?.id ?? ''});
 
 				setReviews(reviews);
 				setUser(loggedInUser);
 				setIsMyProfile(true)
 				setLoading(false)
 			} else {
-				const reviews = await fetchUserReviews({ userId });
+				const reviews = await fetchUserReviews(loggedInUser?.id ?? '', { userId });
 				const user = await fetchUserDetails(userId);
 				setReviews(reviews);
 				setUser(user);
