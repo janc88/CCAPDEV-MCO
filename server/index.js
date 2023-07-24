@@ -7,6 +7,7 @@ import userRouter from "./routes/user.routes.js";
 import reviewRouter from "./routes/review.routes.js";
 import restaurantRouter from "./routes/restaurant.routes.js";
 import imageRouter from "./routes/image.routes.js";
+import ownerRouter from "./routes/owner.routes.js";
 
 import FixReferences from "./scripts/FixReferences.js";
 
@@ -25,6 +26,7 @@ app.use("/api/users", userRouter);
 app.use("/api/reviews", reviewRouter);
 app.use("/api/restaurants", restaurantRouter);
 app.use("/api/images", imageRouter);
+app.use("/api/owners", ownerRouter);
 
 const connectDB = (url) => {
   mongoose.set("strictQuery", true);
