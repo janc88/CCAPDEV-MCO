@@ -15,6 +15,7 @@ import { LeftContainer, RightContainer } from "./SearchPage.styled";
 import RestoCard from "../../components/RestoCard/RestoCard";
 import { Restaurant, useRestaurants } from "../../contexts/RestoHook";
 import { useParams, useLocation } from "react-router-dom";
+import { AnimatePresence } from "framer-motion";
 
 function SearchPage() {
   const location = useLocation();
@@ -97,10 +98,15 @@ function SearchPage() {
             {loading ? (
               <LoadingComponent />
             ) : searchMatches.length > 0 ? (
-              <GridContainer>
+              <GridContainer
+                layout
+        
+              >
+                <AnimatePresence>
                 {searchMatches.map((resto) => (
                   <RestoCard key={resto.id} {...resto} />
                 ))}
+                </AnimatePresence>
               </GridContainer>
             ) : (
               <NotFoundComponent />

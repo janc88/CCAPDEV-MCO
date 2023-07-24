@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { FlexCol } from "../../styles/Flex.styled";
+import {motion} from 'framer-motion'
 
 export const SearchPageContainer = styled.div`
   background-color: #FBFBFB;
@@ -57,7 +58,7 @@ export const RightContainer = styled(FlexCol)`
     margin: 2rem 1rem;
 `;
 
-export const GridContainer = styled.div`
+export const GridContainer = styled(motion.div)`
 	/* padding: 0 30px;
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
