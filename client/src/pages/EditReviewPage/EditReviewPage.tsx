@@ -31,6 +31,8 @@ export const EditReviewPage = () => {
   const [images, setImages] = useState<string[]>(state.imgs);
   const [imageFiles, setImageFiles] = useState<File[]>([]);
   const [rating, setRating] = React.useState<number>(state.stars);
+  const [updatedTitle, setUpdatedTitle] = useState<string>(state.title);
+  const [updatedBody, setUpdatedBody] = useState<string>(state.body);
 
   const handleImageUpload = (event: ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
@@ -47,8 +49,33 @@ export const EditReviewPage = () => {
     navigate(-1);  
   };
 
-  const saveModal = () => {
-    navigate(-1);
+  const saveModal = async () => {
+    try {
+      const reviewId = state.id;
+      const userId = state.user;
+
+      const formData = new FormData();
+      formData.append("title", updatedTitle);
+      formData.append("body", updatedBody);
+      formData.append("stars", rating.toString());
+
+      for (const img of imageFiles)
+        formData.append('images', img);
+
+      const response = await fetch(`http://localhost:8080/api/reviews/${reviewId}`, {
+        method: 'PATCH',
+        body: formData
+      });
+
+      if (response.ok) {
+        navigate(-1);
+        console.log("Review updated");
+      } else {
+        throw new Error('Failed to update review');
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
   
 
@@ -73,9 +100,10 @@ export const EditReviewPage = () => {
           <EditIcon></EditIcon>
         </Subheader>
 
-        <InputBox>
-          {state.title}
-        </InputBox>
+        <InputBox
+          value={updatedTitle}
+          onChange={(e) => setUpdatedTitle(e.target.value)}
+        />
 
         <RatingContainer>
             <Rating
@@ -92,9 +120,10 @@ export const EditReviewPage = () => {
           <EditIcon></EditIcon>
         </Subheader>
 
-        <TextArea>
-          {state.body}
-        </TextArea>
+        <TextArea
+          value={updatedBody}
+          onChange={(e) => setUpdatedBody(e.target.value)}
+        />
 
         <PhotoSubheader>
           Photos

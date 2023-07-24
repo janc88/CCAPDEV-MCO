@@ -135,29 +135,26 @@ const createReview = async (req, res) => {
 const updateReview = async (req, res) => {
 	try {
 		const { id } = req.params;
-		const { title, body, stars, userId } = req.body;
-		const images = req.files;
+		const { title, body, stars, images} = req.body;
 
 		const foundReview = await Review.findById(id);
 		if (!foundReview)
 			return res.status(404).json({ error: "Review not found" });
 
-		if (foundReview.user !== userId)
-			return res.status(403).json({ error: "User not authorized" });
-
 		const foundResto = await Restaurant.findById(foundReview.restaurant);
 		const foundUser = await User.findById(foundReview.user);
 		
-		const session = await mongoose.startSession();
+		const session = await mongoose.startSession();	
 		session.startTransaction();
 		
-		if (images !== undefined) {
-			const imgs = (await Promise.all(
-				images.map((image) => Image.uploadImage(image, session))
-			)).map(image => image._id);
-			Promise.all(foundReview.imgs.map((img) => img.deleteOne()));
-			foundReview.imgs = imgs;
-		}
+		// if (images !== undefined) {
+		// 	const imgs = (await Promise.all(
+		// 		images.map((image) => Image.uploadImage(image, session))
+		// 	)).map(image => image._id);
+		// 	Promise.all(foundReview.imgs.map((img) => img.deleteOne()));
+		// 	foundReview.imgs = imgs;
+		// }
+		
 		if (title !== undefined) foundReview.title = title;
 		if (body !== undefined) foundReview.body = body;
 		if (stars !== undefined) {
