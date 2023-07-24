@@ -27,6 +27,7 @@ function Filters() {
             <Menu dropdownType="price"/>
             <br/><br/>
             <Button
+              disabled
               bgcolor="#FF794F"
               tcolor="white"
               onClick={() => navigate("/restaurants")}
