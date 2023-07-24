@@ -30,35 +30,45 @@ export const FiltersContainer = styled.div`
 export const Label = styled.label`
   display: flex;
   align-items: center;
-  margin: 0.2rem 0;
+  margin: 0.4rem 0;
   font-size: large;
   cursor: pointer;
 `;
 
-export const Input = styled.input`
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  width: 16px;
-  height: 16px;
-  border: 2px solid #FF794F;
+interface InputProps {
+  isChecked?: boolean;
+}
+
+export const RadioBox = styled.div`
+  height: 1.125rem;
+  width: 1.125rem;
+  border: 1px solid  #FF794F;
   border-radius: 50%;
-  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  margin-right: 8px;
+  margin-right: 0.4rem;
+  transition: background 0.15s, border-color 0.15s;
+  padding: 2px;
 
-  &:checked {
-    background-color: #FF794F; /* Add the background color for the checked state */
-  }
-
-  &:checked::before {
-    content: '';
-    position: absolute;
-    top: 2px;
-    left: 2px;
-    width: 10px;
-    height: 10px;
+  &::after {
+    content: "";
+    width: 100%;
+    height: 100%;
+    display: block;
+    background: #FF794F;
     border-radius: 50%;
-    background-color: #333;
-  } 
+    cursor: pointer;
+    transform: scale(0);
+  }
+`;
+
+export const Input = styled.input<InputProps>`
+  display: none;
+  &:checked + ${RadioBox} {
+      &::after {
+        transform: scale(1);
+      }
+  }
 `;

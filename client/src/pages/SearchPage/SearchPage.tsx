@@ -45,6 +45,12 @@ function SearchPage() {
         return Math.floor(item.averageRating) === parseInt(starFilter, 10);
       });
     }
+    console.log(query, starFilter)
+    if (query !== "all" && starFilter === -1) {
+      return items.filter((item) => {
+        return item.name.toLowerCase().includes(lowerCaseQuery);
+      });
+    }
 
     if (!query || !items || !Array.isArray(items)) {
       return "none";
@@ -59,11 +65,14 @@ function SearchPage() {
     });
   };
 
+
+
   useEffect(() => {
     fetchFeaturedRestaurants().then((restos) => {
       setFeaturedRestaurants(restos);
       setSearchMatches(findMatches(query, featuredRestaurants, starFilter));
     });
+    console.log(starFilter)
   }, [
     featuredRestaurants,
     fetchFeaturedRestaurants,
