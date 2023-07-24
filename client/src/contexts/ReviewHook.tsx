@@ -22,7 +22,7 @@ export interface Review {
 }
 
 interface UseReviewsType {
-	fetchReviews: (resto: {restoId: string}) => Promise<Review[] | null>;
+	fetchReviews: (resto: {restoId: string, userId: string}) => Promise<Review[] | null>;
 	fetchUserReviews: (user: {userId: string}) => Promise<Review[] | null>;
 }
 
@@ -40,9 +40,15 @@ interface ReviewActionsType extends UseReviewsType {
 }
 
 export const useReviews = (): UseReviewsType => {
-	const fetchReviews = useCallback(async ({restoId}) => {
+	const fetchReviews = useCallback(async ({restoId, userId}) => {
 		const response = await fetch(`http://localhost:8080/api/reviews/resto/${restoId}`, {
-			method: "GET"
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({
+				userId: userId
+			})
 		});
 		if (!response.ok)
 			return null;
@@ -59,7 +65,13 @@ export const useReviews = (): UseReviewsType => {
 
 	const fetchUserReviews = useCallback(async ({userId}) => {
 		const response = await fetch(`http://localhost:8080/api/reviews/user/${userId}`, {
-			method: "GET"
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({
+				userId: userId
+			})
 		});
 		if (!response.ok)
 			return null;
@@ -126,8 +138,20 @@ export const useReviewActions = ({
 		throw new Error("Not implemented");
 	}, []);
 	const voteReview = useCallback(async (id: string, type: "up" | "down" | "none") => {
-		throw new Error("Not implemented");
-	}, []);
+		const response = await fetch(`http://localhost:8080/api/reviews/vote/${id}`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({
+				voteType: type,
+				userId: userId
+			})
+		});
+		const data = await response.json();
+		if (!response.ok)
+			alert(JSON.stringify(data));
+	}, [userId]);
 
 	return {
 		...methods,

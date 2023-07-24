@@ -16,11 +16,13 @@ const upload = multer();
 
 router.route("/resto/:id").get(getReviewsByRestoId);
 router.route("/user/:id").get(getReviewsByUserId);
+router.route("/resto/:id").post(getReviewsByRestoId);
+router.route("/user/:id").post(getReviewsByUserId);
 router.route("/:id").get(getReviewDetails);
 router.route("/").post(upload.array('imgs'), createReview);
 router.route("/:id").patch(upload.array('imgs'), updateReview);
 router.route("/:reviewId").delete(deleteReview);
-router.route("/vote/:id").patch(voteReview);
+router.route("/vote/:id").post(voteReview);
 
 
 export default router;

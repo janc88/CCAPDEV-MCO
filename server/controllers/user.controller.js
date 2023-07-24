@@ -34,9 +34,9 @@ const isUsernameTaken = async (req, res) => {
 
 const createUser = async (req, res) => {
   try {
-    const { username, _description, password } = req.body;
+    const { username, description, password } = req.body;
 	const avatar = req.file || await getDefaultAvatar();
-	const description = _description || defaults.user.description;
+	const desc = description || defaults.user.description;
 	const userExists = await User.findOne({ username });
 	if (userExists) {
 		return res.status(409).json({ error: "Username already taken" });
@@ -49,7 +49,7 @@ const createUser = async (req, res) => {
 	
     const newUser = new User({
 		username,
-		description,
+		description: desc,
 		password,
 		avatar: newImage._id,
 	});

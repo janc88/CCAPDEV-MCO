@@ -1,8 +1,5 @@
 import Image from "../models/Image.js";
 
-const createImage = async (req, res) => {
-	
-}
 const getImage = async (req, res) => {
 	const imageId = req.params.id;
 	try {
@@ -16,11 +13,7 @@ const getImage = async (req, res) => {
 	  res.status(500).json({ error: 'Error retrieving image' });
 	}
   };
-  
-const deleteImage = async (req, res) => {
-	
-}
 
 export {
-	createImage, getImage, deleteImage
+	getImage
 };

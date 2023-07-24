@@ -32,16 +32,19 @@ const ReviewSchema = new mongoose.Schema({
 	  ref: 'User',
 	  required: false
   }],
-  ownerResponse: { 
-	user: {
-		type: mongoose.Schema.Types.ObjectId,
-		ref: 'User',
-		required: false
-	},
-	body: {
-		type: String,
-		required: false
-	}
+  ownerResponse: {
+    type: {
+      user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true,
+      },
+      body: {
+        type: String,
+        required: true,
+      },
+    },
+    required: false,
   },
   imgs: [{ type: String, required: false }],
   lastEdited: { type: Date, required: false }
@@ -53,9 +56,13 @@ ReviewSchema.virtual('votes').get(function () {
 
 ReviewSchema.methods.publicView = async function () {
 	const user = await User.findById(this.user);
-	const ownerResponse = this.ownerResponse;
-	if (ownerResponse && ownerResponse.user) {
-		ownerResponse.user = await User.findById(ownerResponse.user);
+	let response = null;
+	if (this.ownerResponse) {
+		const owner = await User.findById(this.ownerResponse.user);
+		response = {
+			owner: await owner.userInfo(),
+			body: this.ownerResponse.body
+		}
 	}
 	const resto = await Restaurant.findById(this.restaurant);
 	return {
@@ -67,7 +74,7 @@ ReviewSchema.methods.publicView = async function () {
 		restaurant: await resto.publicView(),
 		stars: this.stars,
 		votes: this.votes,
-		ownerResponse: ownerResponse,
+		ownerResponse: response,
 		imgs: this.imgs.map((img) => 'http://localhost:8080/api/images/' + img),
 		lastEdited: this.lastEdited || null
 	  };
@@ -75,9 +82,12 @@ ReviewSchema.methods.publicView = async function () {
 
 ReviewSchema.methods.userView = async function (user) {
 	const obj = await this.publicView();
+	user = new mongoose.Types.ObjectId(user);
+
 	const voteType = 
-		this.upvotes.includes(user) ? 'upvote' : 
-		this.downvotes.includes(user) ? 'downvote' : 'none';
+	this.upvotes.some((upvote) => upvote.equals(user)) ? 'up' : 
+	this.downvotes.some((downvote) => downvote.equals(user)) ? 'down' : 'none';
+	
 	obj.voteType = voteType;
 	return obj;
 };
