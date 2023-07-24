@@ -8,6 +8,8 @@ export interface Restaurant {
 	coverImg: string;
 	imgs: string[];
 	starCount: number[];
+	totalRatings: number;
+	averageRating: number;
 }
 
 interface RestaurantsType {

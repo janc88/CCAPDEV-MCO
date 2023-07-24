@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   RatingsCount,
   RestoCardContainer,
@@ -13,32 +13,9 @@ import { Restaurant } from "../../contexts/RestoHook";
 
 
 const RestoCard: React.FC<Restaurant> = (resto) => {
-  const [backgroundImage, setBackgroundImage] = useState<string>("");
-  const [averageStars, setAverageStars] = useState<number>();
-  const [numRatings, setNumRatings] = useState<number>();
-
-  const computeAverageRating = (starcount: number[]) => {
-    const totalRatings = starcount.reduce((acc, count, index) => acc + count * (index + 1), 0);
-    const totalStars = starcount.reduce((acc, count, index) => acc + count, 0);
-    const averageRating = totalRatings / totalStars;
-    return Math.round(averageRating * 10) / 10;
-  };
-
-  const getTotalRatings = (starcount: number[]) => {
-    const totalRatings = starcount.reduce((acc, count) => acc + count, 0);
-    return totalRatings;
-  };
-
-  
-  useEffect(() => {
-    setBackgroundImage(resto.coverImg)
-
-    const averageStars = computeAverageRating(resto.starCount);
-    setAverageStars(averageStars);
-
-    const numRatings = getTotalRatings(resto.starCount);
-    setNumRatings(numRatings);
-  }, [resto.coverImg, resto.starCount]);
+  const backgroundImage = resto.coverImg;
+  const averageStars = resto.averageRating;
+  const numRatings = resto.totalRatings;
 
   return (
     <RestoCardContainer to={`/restaurants/${resto.id}`}>

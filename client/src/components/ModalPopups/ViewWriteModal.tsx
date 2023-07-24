@@ -36,11 +36,11 @@ interface StarRatingProps {
   rating: number;
   size: string;
 }
-const BaseModalWrapper: React.FC<BaseModalWrapperProps & Review & { restaurantId: string }> = ({
+const BaseModalWrapper: React.FC<BaseModalWrapperProps /*& Review*/ & { restaurantId: string }> = ({
   onBackdropClick,
   isModalVisible,
   restaurantId,
-  ...reviewProps
+  //...reviewProps
 }) => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -49,12 +49,12 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & Review & { restaurantId
 
   
   const [rating, setRating] = React.useState(0);
-  const loadedImage = reviewProps.imgs[0];
+  //const loadedImage = reviewProps.imgs[0];
   const [starRating, setStarRating] = useState(0);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
 
-  const image = reviewProps.imgs[0];
+  //const image = reviewProps.imgs[0];
   const { user } = useUserContext();
   const { createReview } = useReviewActions({ restoId: restaurantId, userId: user?.id || '' });
 

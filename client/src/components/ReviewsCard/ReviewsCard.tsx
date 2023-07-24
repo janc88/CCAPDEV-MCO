@@ -10,19 +10,20 @@ import ViewWriteModal from "../ModalPopups/ViewWriteModal";
 import { SearchBar } from "./Input";
 import SmallModal from "../SmallModal/SmallModal";
 import { useUserContext } from "../../contexts/UserContext";
-import { useParams } from "react-router-dom";
 import { 
   Review,
   useReviews,
 } from "../../contexts/ReviewHook";
   
 interface ReviewsCardProps {
-  reviewList: Review[];
+  //reviewList: Review[];
+  restoId: string;
   showOverLay?: boolean; //show overlay of restoname in the review image
 }
 
 const ReviewsCard: React.FC<ReviewsCardProps> = ({
-  reviewList,
+  //reviewList,
+  restoId,
   showOverLay = false,
 }) => {
   const [showWriteModal, setshowWriteModal] = useState(false);
@@ -41,16 +42,15 @@ const ReviewsCard: React.FC<ReviewsCardProps> = ({
   };
 
   const { user } = useUserContext();
-  const { id } = useParams<{ id: string }>();
   
   const { fetchReviews } = useReviews();
   const [fetchedReviews, setReviews] = useState<Review[]>([]);
 
   useEffect(() => {
-    fetchReviews({ restoId: id ?? '' }).then((reviews) => {
+    fetchReviews({ restoId }).then((reviews) => {
       setReviews(reviews ?? []);
     });
-  }, [fetchReviews, id]);
+  }, [fetchReviews, restoId]);
 
   return (
     <RestoReviewsContainer isUserReview={showOverLay}>
@@ -93,8 +93,7 @@ const ReviewsCard: React.FC<ReviewsCardProps> = ({
       <ViewWriteModal
         isModalVisible={showWriteModal}
         onBackdropClick={toggleWriteModal}
-        restaurantId={id || ""}
-        {...reviewList[1]} //temporary only
+        restaurantId={restoId}
       />
     </RestoReviewsContainer>
   );

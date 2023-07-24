@@ -14,7 +14,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { CenterContainer, PageContainer, Card, Title, Divider, Send } from "../styles/LoginPage.styled";
 import { useSingleRestaurant } from "../../contexts/RestoHook";
 
-import { restoList } from "../../data/data";
 
 
 const NotFound: React.FC<{ id: string }> = ({ id }) => {
@@ -66,15 +65,13 @@ const RestaurantPage: React.FC = () => {
 			)} />
       </LeftContainer>
       <MiddleContainer>
-		{/*TODO fix linter error*/}
-        <ReviewsCard reviewList={restoList[0].reviews} />
+        <ReviewsCard restoId={id} />
       </MiddleContainer>
       <RightContainer>
-		{/*TODO fix linter error*/}
         <SummaryCard
-          numrating={resto.allReviews?.length || 0}
-          rating={0.5}
-          ratings={[]}
+          ratings={resto.starCount}
+		  totalRatings={resto.totalRatings}
+		  avgRating={resto.averageRating}
         />
       </RightContainer>
     </RestaurantPageContainer>

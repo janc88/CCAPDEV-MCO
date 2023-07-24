@@ -31,6 +31,10 @@ const RestaurantSchema = new mongoose.Schema({
 });
 
 RestaurantSchema.methods.publicView = function () {
+	const count = this.starCount.reduce((acc, cur) => acc + cur, 0);
+	const avg = this.starCount.reduce(
+		(acc, cur, idx) => acc + cur * (idx + 1),
+	0) / count;
 	return {
 		id: this._id,
 		name: this.name,
@@ -39,6 +43,8 @@ RestaurantSchema.methods.publicView = function () {
 		coverImg: 'http://localhost:8080/api/images/' + this.coverImg,
 		imgs: this.imgs.map((img) => 'http://localhost:8080/api/images/' + img),
 		starCount: this.starCount,
+		totalRatings: count,
+		averageRating: avg.toFixed(2),
 	};
 };
 

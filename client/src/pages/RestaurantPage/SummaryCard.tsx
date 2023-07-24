@@ -13,23 +13,16 @@ import { StarIcon } from "../../components/StarRating/Star.styled";
 
 interface SummaryCardProps {
   ratings: number[];
-  numrating: number;
-  rating: number;
+  totalRatings: number;
+  avgRating: number;
 }
 
-const SummaryCard: React.FC<SummaryCardProps> = ({ratings, numrating, rating}) => {
+const SummaryCard: React.FC<SummaryCardProps> = ({ratings, totalRatings, avgRating}) => {
   const renderBars = () => {
     const bars: ReactNode[] = [];
 
     for (let i = 5; i >= 1; i--) {
-      const totalCount = ratings.length;
-      const occurrences = ratings.reduce((count, num) => {
-        if (num === i) {
-          return count + 1;
-        }
-        return count;
-      }, 0);
-      const ratio = (occurrences / totalCount) * 100;
+      const ratio = (ratings[i-1] / totalRatings) * 100;
 
       bars.push(
         <BarContainer>
@@ -45,10 +38,10 @@ const SummaryCard: React.FC<SummaryCardProps> = ({ratings, numrating, rating}) =
   return (
     <SummaryCardContainer>
       <Header>Summary</Header>
-      <NumRating>{numrating} reviews</NumRating>
+      <NumRating>{totalRatings} reviews</NumRating>
       <RatingContainer>
         <StarIcon size="lg" fillPercentage={100} />
-        <Rating>{rating}</Rating>
+        <Rating>{avgRating}</Rating>
       </RatingContainer>
       <RatingGroup>{renderBars()}</RatingGroup>
     </SummaryCardContainer>
