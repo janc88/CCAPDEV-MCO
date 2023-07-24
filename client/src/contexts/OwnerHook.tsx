@@ -9,7 +9,7 @@ export const useOwnerActions = (
 	ownerId: string,
 ): OwnerActionsType => {
 	const replyToReview = async (reviewId: string, reply: string): Promise<Review | null> => {
-		const response = await fetch(`/api/owner/${reviewId}/reply`, {
+		const response = await fetch(`http://localhost:8080/api/owners/reply/${reviewId}`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -19,8 +19,9 @@ export const useOwnerActions = (
 				userId: ownerId,
 			}),
 		});
+		const data = await response.json();
 		if (response.status === 200) {
-			return await response.json();
+			return data;
 		}
 		return null;
 	};

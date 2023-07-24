@@ -19,7 +19,7 @@ export const replyToReview = async (req, res) => {
 	if (foundUser.ownedRestaurant.toString() !== foundReview.restaurant.toString())
 		return res.status(401).json({ message: "Not an owner" });
 	
-	foundReview.ownerReply = {
+	foundReview.ownerResponse = {
 		user: userId,
 		body,
 	};

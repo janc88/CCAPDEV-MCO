@@ -32,6 +32,7 @@ import { useUserContext } from "../../contexts/UserContext";
 import { Review } from "../../contexts/ReviewHook";
 import default_img from "../../../src/imgs/banana.svg";
 import { Link } from "react-router-dom";
+import { useOwnerActions } from "../../contexts/OwnerHook";
 
 interface ReviewCardProps extends Review {
   showOverlay?: boolean;
@@ -50,6 +51,9 @@ const ReviewCard: React.FC<ReviewCardProps> = (review) => {
   const profilePic = review.user.avatar;
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isSmallModalVisible, setIsSmallModalVisible] = useState(false);
+
+  const { user } = useUserContext();
+  const { replyToReview } = useOwnerActions(user?.id || '');
 
   const getTimeDifference = (specificDate: Date): string => {
     const currentDate: Date = new Date();
@@ -141,17 +145,15 @@ const ReviewCard: React.FC<ReviewCardProps> = (review) => {
     setOwnerResponse(event.target.value);
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     
-    // TODO: Update ownerResponse of review in backend
-
-    console.log('Response:', ownerResponse);
+    await replyToReview(review.id, ownerResponse);
+	//TODO: temporary hack
+	window.location.reload();
     setShowResponseForm(false);
     setOwnerResponse('');
   };
-
-  const { user } = useUserContext();
 
   return (
     <ReviewCardContainer>
@@ -213,12 +215,13 @@ const ReviewCard: React.FC<ReviewCardProps> = (review) => {
             </HelpfulContainer>
           )}
           <div className="openRev">
-            {/* TODO: also check if review already has response */}
             {!user?.ownedRestoId ? (
               <Button onClick={toggleModal} bgcolor="white" tcolor="black">
                 <OwnersResponse>View Owner's Response</OwnersResponse>
               </Button>
-            ) : !showResponseForm ? (
+            ) : review.ownerResponse ? (
+				null
+			) : !showResponseForm ? (
               <Button
                 onClick={handleButtonClick}
                 bgcolor="white"
