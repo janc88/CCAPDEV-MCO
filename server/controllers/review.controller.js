@@ -221,11 +221,11 @@ const voteReview = async (req, res) => {
 
 const deleteReview = async (req, res) => {
 	try {
-		const { restoId } = req.params;
+		const { reviewId } = req.params;
 
 		const { userId } = req.body;
 
-		const foundReview = await Review.findById(id);
+		const foundReview = await Review.findById(reviewId);
 
 		if (!foundReview)
 			return res.status(404).json({ error: "Review not found" });
