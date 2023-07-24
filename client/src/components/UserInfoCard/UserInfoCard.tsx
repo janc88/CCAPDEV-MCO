@@ -46,15 +46,20 @@ const UserInfoCard: React.FC<UserInfoCardProps> = ({
   return (
     <UserInfoCardContainer>
       <ProfilePicContainer>
-        <ProfilePic src={user.avatar || ""} />
-        {isMyProfile &&
-        <SettingsLink to="/edit-profile">
-          <SettingIcon />
-        </SettingsLink>
-        } 
+        {isEditProfile ? (
+			<ImageInput
+				id="avatar"
+				px={288}
+				defaultSrc={user.avatar}/>
+		) : (<>
+			<ProfilePic src={user.avatar} />
+			<SettingsLink to="/edit-profile">
+              <SettingIcon />
+            </SettingsLink>
+		</>)}
       </ProfilePicContainer>
       <UserName>{user?.username}</UserName>
-      <ShortText maxLines={3} text={user?.description || ""} />
+      <ShortText maxLines={3} text={user.description} />
       {!isEditProfile && isMyProfile && (
         <LogOutButton bgcolor="white" tcolor="black" onClick={handleLogout}>
           Log Out
