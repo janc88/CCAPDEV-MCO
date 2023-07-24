@@ -30,7 +30,7 @@ const RestaurantSchema = new mongoose.Schema({
   }]
 });
 
-RestaurantSchema.methods.publicView = function () {
+RestaurantSchema.methods.publicView = async function () {
 	const count = this.starCount.reduce((acc, cur) => acc + cur, 0);
 	const avg = this.starCount.reduce(
 		(acc, cur, idx) => acc + cur * (idx + 1),

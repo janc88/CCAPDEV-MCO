@@ -8,13 +8,16 @@ import reviewRouter from "./routes/review.routes.js";
 import restaurantRouter from "./routes/restaurant.routes.js";
 import imageRouter from "./routes/image.routes.js";
 
+import FixReferences from "./scripts/FixReferences.js";
+
 dotenv.config();
 
 const app = express();
 app.use(cors());
 app.use(express.json({ limit: "50mb" }));
 
-app.get("/", (req, res) => {
+app.get("/", async (req, res) => {
+  await FixReferences();
   res.send({ message: "hello world" });
 });
 

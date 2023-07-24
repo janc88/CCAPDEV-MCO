@@ -26,7 +26,7 @@ const getRestaurantDetails = async (req, res) => {
 		return res.status(404).json({ error: "Restaurant not found" });
 	}
 
-	res.status(200).json(restaurant.publicView());
+	res.status(200).json(await restaurant.publicView());
   } catch (error) {
 	res.status(500).json({ error: error.message });
   }
@@ -65,7 +65,7 @@ const createRestaurant = async (req, res) => {
 	await session.commitTransaction();
 	session.endSession();
 
-	res.status(201).json(newRestaurant.publicView());
+	res.status(201).json(await newRestaurant.publicView());
   } catch (error) {
 	res.status(500).json({ error: error.message });
   }
