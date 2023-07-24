@@ -142,10 +142,11 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & Review> = ({
 
         <Response>
           <HeaderResponse>
-            <RestoAvatar src={profilePic} />
-            {reviewProps.restaurant.name}
+            <RestoAvatar src={
+				reviewProps.ownerResponse?.owner.avatar || profilePic} />
+            {reviewProps.ownerResponse?.owner.username || reviewProps.restaurant.name}
           </HeaderResponse>
-          {reviewProps.ownerResponse}
+          {reviewProps.ownerResponse?.body}
         </Response>
       </DesktopModalContainer>
     </Modal>

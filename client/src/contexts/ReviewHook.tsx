@@ -13,7 +13,10 @@ export interface Review {
 	stars: number;
 	votes: number;
 	voteType?: "up" | "down" | "none";
-	ownerResponse: string;
+	ownerResponse?: {
+		owner: User;
+		body: string;
+	}
 	imgs: string[];
 	lastEdited: Date | null;
 }
