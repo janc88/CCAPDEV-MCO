@@ -10,6 +10,7 @@ import { Divider } from "../../pages/styles/LoginPage.styled";
 import { useNavigate } from "react-router-dom";
 import { CancelButton, SaveButton, SaveCancelButtonContainer } from "../ModalPopups/ModalPopup";
 import React from "react";
+import {useUserContext} from '../../contexts/UserContext';
 
 interface BaseModalWrapperProps {
   isModalVisible: boolean;
@@ -24,6 +25,7 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps> = ({
 }) => {
   //const location = useLocation();
   const navigate = useNavigate();
+  const { user } = useUserContext();
 
   if (!isModalVisible) {
     return null;
@@ -42,8 +44,8 @@ const saveModal = async () => {
       headers: {
         'Content-Type': 'application/json',
       },
+	  body: JSON.stringify({ userId: user?.id }),
     });
-
     if (response.ok) {
       navigate(0);
       console.log("Review deleted");
