@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components";
 import { ThumbsUp, ThumbsDown } from "@styled-icons/fa-solid";
+import { Link } from "react-router-dom";
 
 export const ReviewCardContainer = styled.div`
   border-radius: 0.7rem;
@@ -56,11 +57,13 @@ export const RestoNameContainer = styled.div<RestoNameContainerProps>`
     `}
 `;
 
-export const RestoName = styled.div`
+export const RestoName = styled(Link)`
   font-size: medium;
   color: white;
   padding: 0.5rem;
+  height: 1rem;
   overflow: hidden;
+  text-decoration: none;
 `;
 
 export const Header = styled.div`
