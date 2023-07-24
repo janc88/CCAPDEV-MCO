@@ -25,6 +25,7 @@ function SearchPage() {
   );
   const [searchMatches, setSearchMatches] = useState<Restaurant[]>([]);
   const [starFilter, setStarFilter] = useState<number>(-1);
+  const [loading, setLoading] = useState(true);
 
   const handleFilterChange = (selectedStars: number) => {
     setStarFilter(selectedStars);
@@ -32,7 +33,7 @@ function SearchPage() {
 
   const handleReset = () => {
     setStarFilter(-1);
-  }
+  };
 
   const findMatches = (query, items, starFilter) => {
     const lowerCaseQuery = query.toLowerCase();
@@ -46,7 +47,7 @@ function SearchPage() {
         return Math.floor(item.averageRating) === parseInt(starFilter, 10);
       });
     }
-    console.log(query, starFilter)
+    console.log(query, starFilter);
     if (query !== "all" && starFilter === -1) {
       return items.filter((item) => {
         return item.name.toLowerCase().includes(lowerCaseQuery);
@@ -54,7 +55,7 @@ function SearchPage() {
     }
 
     if (!query || !items || !Array.isArray(items)) {
-      return "none";
+      return [];
     }
 
     return items.filter((item) => {
@@ -66,24 +67,19 @@ function SearchPage() {
     });
   };
 
-
-
   useEffect(() => {
     fetchFeaturedRestaurants().then((restos) => {
       setFeaturedRestaurants(restos);
-      setSearchMatches(findMatches(query, featuredRestaurants, starFilter));
+      setLoading(false);
     });
-    console.log(starFilter)
-  }, [
-    featuredRestaurants,
-    fetchFeaturedRestaurants,
-    query,
-    searchMatches,
-    starFilter,
-  ]);
+  }, [featuredRestaurants]);
 
   useEffect(() => {
-   setStarFilter(-1);
+    setSearchMatches(findMatches(query, featuredRestaurants, starFilter));
+  }, [query, featuredRestaurants, starFilter]);
+
+  useEffect(() => {
+    setStarFilter(-1);
   }, [location.pathname]);
 
   return (
@@ -94,15 +90,21 @@ function SearchPage() {
 
         <MainContainer>
           <LeftContainer>
-            <Filters onChange={handleFilterChange} onReset={handleReset}/>
+            <Filters onChange={handleFilterChange} onReset={handleReset} />
           </LeftContainer>
 
           <RightContainer>
-            <GridContainer>
-              {searchMatches.map((resto) => (
-                <RestoCard key={resto.id} {...resto} />
-              ))}
-            </GridContainer>
+            {loading ? (
+              <LoadingComponent />
+            ) : searchMatches.length > 0 ? (
+              <GridContainer>
+                {searchMatches.map((resto) => (
+                  <RestoCard key={resto.id} {...resto} />
+                ))}
+              </GridContainer>
+            ) : (
+              <NotFoundComponent />
+            )}
           </RightContainer>
         </MainContainer>
         <EndText>End of Search Results</EndText>
@@ -112,5 +114,17 @@ function SearchPage() {
     </>
   );
 }
+
+const NotFoundComponent = () => {
+  return (
+    <h2 style={{ marginLeft: "6rem", fontWeight: "150" }}>
+      Sorry, we could't find any restaurants that matches your search/filter.
+    </h2>
+  );
+};
+
+const LoadingComponent = () => {
+  return <h2 style={{ marginLeft: "6rem", fontWeight: "150" }}>Loading...</h2>;
+};
 
 export default SearchPage;
