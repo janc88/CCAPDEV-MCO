@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { startTransition, useEffect, useState } from "react";
 import Footer from "../../components/Footer/Footer";
 
 import {
@@ -23,25 +23,54 @@ function SearchPage() {
     []
   );
   const [searchMatches, setSearchMatches] = useState<Restaurant[]>([]);
+  const [starFilter, setStarFilter] = useState<number>(-1);
 
-  const findMatches = (query, items) => {
-    if (query === "all") return items;
+  const handleFilterChange = (selectedStars: number) => {
+    setStarFilter(selectedStars);
+  };
+
+  const handleReset = () => {
+    setStarFilter(-1);
+  }
+
+  const findMatches = (query, items, starFilter) => {
+    const lowerCaseQuery = query.toLowerCase();
+
+    if (query === "all" && starFilter === -1) {
+      return items;
+    }
+
+    if (query === "all" && starFilter !== -1) {
+      return items.filter((item) => {
+        return Math.floor(item.averageRating) === parseInt(starFilter, 10);
+      });
+    }
 
     if (!query || !items || !Array.isArray(items)) {
       return "none";
     }
-    const lowerCaseQuery = query.toLowerCase();
-    return items.filter((item) =>
-      item.name.toLowerCase().includes(lowerCaseQuery)
-    );
+
+    return items.filter((item) => {
+      const nameMatch = item.name.toLowerCase().includes(lowerCaseQuery);
+      const starMatch =
+        Math.floor(item.averageRating) == parseInt(starFilter, 10);
+
+      return nameMatch && starMatch;
+    });
   };
 
   useEffect(() => {
     fetchFeaturedRestaurants().then((restos) => {
       setFeaturedRestaurants(restos);
-      setSearchMatches(findMatches(query, featuredRestaurants));
+      setSearchMatches(findMatches(query, featuredRestaurants, starFilter));
     });
-  }, [featuredRestaurants, fetchFeaturedRestaurants, query, searchMatches]);
+  }, [
+    featuredRestaurants,
+    fetchFeaturedRestaurants,
+    query,
+    searchMatches,
+    starFilter,
+  ]);
 
   return (
     <>
@@ -51,7 +80,7 @@ function SearchPage() {
 
         <MainContainer>
           <LeftContainer>
-            <Filters />
+            <Filters onChange={handleFilterChange} onReset={handleReset}/>
           </LeftContainer>
 
           <RightContainer>
