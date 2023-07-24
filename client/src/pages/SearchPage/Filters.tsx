@@ -44,7 +44,6 @@ const Filters: React.FC<FilterOptionsProps> = ({ onChange, onReset }) => {
               type="radio"
               name="stars"
               value={1}
-              isChecked={selectedOption === 1}
               onChange={handleInputChange}
             />
             <RadioBox></RadioBox>
@@ -55,7 +54,6 @@ const Filters: React.FC<FilterOptionsProps> = ({ onChange, onReset }) => {
               type="radio"
               name="stars"
               value={2}
-              isChecked={selectedOption === 2}
               onChange={handleInputChange}
             />
             <RadioBox></RadioBox>
@@ -66,7 +64,6 @@ const Filters: React.FC<FilterOptionsProps> = ({ onChange, onReset }) => {
               type="radio"
               name="stars"
               value={3}
-              isChecked={selectedOption === 3}
               onChange={handleInputChange}
             />
             <RadioBox></RadioBox>
@@ -77,7 +74,6 @@ const Filters: React.FC<FilterOptionsProps> = ({ onChange, onReset }) => {
               type="radio"
               name="stars"
               value={4}
-              isChecked={selectedOption === 4}
               onChange={handleInputChange}
             />
             <RadioBox></RadioBox>
@@ -88,7 +84,6 @@ const Filters: React.FC<FilterOptionsProps> = ({ onChange, onReset }) => {
               type="radio"
               name="stars"
               value={5}
-              isChecked={selectedOption === 5}
               onChange={handleInputChange}
             />
             <RadioBox></RadioBox>
@@ -99,7 +94,6 @@ const Filters: React.FC<FilterOptionsProps> = ({ onChange, onReset }) => {
               type="radio"
               name="stars"
               value={-1}
-              isChecked={selectedOption === -1}
               onChange={handleInputChange}
             />
             <RadioBox></RadioBox>

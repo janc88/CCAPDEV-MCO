@@ -14,9 +14,10 @@ import Filters from "./Filters";
 import { LeftContainer, RightContainer } from "./SearchPage.styled";
 import RestoCard from "../../components/RestoCard/RestoCard";
 import { Restaurant, useRestaurants } from "../../contexts/RestoHook";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 
 function SearchPage() {
+  const location = useLocation();
   const { query } = useParams<{ query: string }>();
   const { fetchFeaturedRestaurants } = useRestaurants();
   const [featuredRestaurants, setFeaturedRestaurants] = useState<Restaurant[]>(
@@ -80,6 +81,10 @@ function SearchPage() {
     searchMatches,
     starFilter,
   ]);
+
+  useEffect(() => {
+   setStarFilter(-1);
+  }, [location.pathname]);
 
   return (
     <>
