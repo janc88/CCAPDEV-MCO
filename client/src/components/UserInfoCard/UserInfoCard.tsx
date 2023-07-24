@@ -47,16 +47,17 @@ const UserInfoCard: React.FC<UserInfoCardProps> = ({
     <UserInfoCardContainer>
       <ProfilePicContainer>
         {isEditProfile ? (
-			<ImageInput
-				id="avatar"
-				px={288}
-				defaultSrc={user.avatar}/>
-		) : (<>
-			<ProfilePic src={user.avatar} />
-			<SettingsLink to="/edit-profile">
-              <SettingIcon />
-            </SettingsLink>
-		</>)}
+          <ImageInput id="avatar" px={288} defaultSrc={user.avatar} />
+        ) : (
+          <>
+            <ProfilePic src={user.avatar} />
+            {isMyProfile && (
+              <SettingsLink to="/edit-profile">
+                <SettingIcon />
+              </SettingsLink>
+            )}
+          </>
+        )}
       </ProfilePicContainer>
       <UserName>{user?.username}</UserName>
       <ShortText maxLines={3} text={user.description} />
