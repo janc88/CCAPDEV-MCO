@@ -59,7 +59,6 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & Review> = ({
   const [isTrashClicked, setIsTrashClicked] = useState(false);
   const [isSmallModalVisible, setIsSmallModalVisible] = useState(false);
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
-  console.log('reviewProps', reviewProps)
   
   const navigate = useNavigate();
 

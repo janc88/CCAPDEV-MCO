@@ -58,11 +58,11 @@ ReviewSchema.methods.publicView = async function () {
 	const user = await User.findById(this.user);
 	let response = null;
 	if (this.ownerResponse) {
-		response = {};
 		const owner = await User.findById(this.ownerResponse.user);
-		response.owner = await owner.userInfo();
-		response.body = this.ownerResponse.body;
-		console.log(response);
+		response = {
+			owner: await owner.userInfo(),
+			body: this.ownerResponse.body
+		}
 	}
 	const resto = await Restaurant.findById(this.restaurant);
 	return {
