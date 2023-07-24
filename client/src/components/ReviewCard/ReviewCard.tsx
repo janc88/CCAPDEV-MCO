@@ -30,6 +30,7 @@ import SmallModal from "../SmallModal/SmallModal";
 import { useUserContext } from "../../contexts/UserContext";
 import { Review } from "../../contexts/ReviewHook";
 import default_img from '../../../src/imgs/banana.svg'
+import { Link } from "react-router-dom";
 
 
 interface ReviewCardProps extends Review {
@@ -138,7 +139,9 @@ const ReviewCard: React.FC<ReviewCardProps> = (review) => {
           <LeftContainer>
             <ReviewTitle>{review.title}</ReviewTitle>
             <UserContainer>
-              <ProfilePic src={profilePic} />
+              <Link to={`/profile/${review.user.id}`}>
+                <ProfilePic src={profilePic} />
+              </Link>
               <UserName>{review.user.username}</UserName>
             </UserContainer>
           </LeftContainer>
