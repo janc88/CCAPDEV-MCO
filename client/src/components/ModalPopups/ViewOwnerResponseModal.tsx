@@ -29,6 +29,7 @@ import {
   ThumbsUpIcon,
   ThumbsDownIcon,
   Helpful,
+  LastEditContainer,
 } from "../ReviewCard/ReviewCard.styled";
 import StarRating from "../StarRating/StarRating";
 import SmallModal from "../SmallModal/SmallModal";
@@ -179,6 +180,12 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & Review> = ({
               isClicked={isThumbsDownClicked}
             />
               <Helpful>Helpful ({thumbsUpCount - thumbsDownCount})</Helpful>
+
+              {reviewProps.lastEdited && (
+                <LastEditContainer>
+                  Edited ({new Date(reviewProps.lastEdited).toLocaleString()})
+                </LastEditContainer>
+              )}
             </HelpfulContainer>
 
             <EditDeleteContainer>
