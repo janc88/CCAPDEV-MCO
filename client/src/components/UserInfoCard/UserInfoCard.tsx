@@ -8,12 +8,11 @@ import {
   UserInfoCardContainer,
   UserName,
 } from "./UserInfoCard.styled";
-import { ImageInput } from "../../components/Input/Input"
+import { ImageInput } from "../../components/Input/Input";
 import ShortText from "./ShortText";
 import { useUserContext, User } from "../../contexts/UserContext";
 import { useNavigate } from "react-router-dom";
 import SimplePopup from "../SmallModal/SimplePopup";
-
 
 interface UserInfoCardProps {
   isEditProfile?: boolean;
@@ -29,36 +28,33 @@ const UserInfoCard: React.FC<UserInfoCardProps> = ({
   const { logout } = useUserContext();
   const navigate = useNavigate();
   const handleLogout = () => {
-	logout();
-	navigate('/home')
-  }
-  if (user === null) return (
-	<UserInfoCardContainer>
-		<SimplePopup 
-			title="User not found"
-			onConfirm={()=>navigate('/home')}
-			onCancel={()=>navigate('/home')}
-			content="Return to home page"/>
-	</UserInfoCardContainer>
-  );
+    logout();
+    navigate("/home");
+  };
+  if (user === null)
+    return (
+      <UserInfoCardContainer>
+        <SimplePopup
+          title="User not found"
+          onConfirm={() => navigate("/home")}
+          onCancel={() => navigate("/home")}
+          content="Return to home page"
+        />
+      </UserInfoCardContainer>
+    );
 
   return (
     <UserInfoCardContainer>
       <ProfilePicContainer>
-        {isEditProfile ? (
-		  <ImageInput
-		  	id="avatar"
-			px={288}
-			defaultSrc={user.avatar || ''}/>
-		) : (<>
-		  <ProfilePic src={user.avatar || ''}/>
-          <SettingsLink to='/edit-profile'>
-            <SettingIcon />
-          </SettingsLink>
-        </>)}
+        <ProfilePic src={user.avatar || ""} />
+        {isMyProfile &&
+        <SettingsLink to="/edit-profile">
+          <SettingIcon />
+        </SettingsLink>
+        } 
       </ProfilePicContainer>
       <UserName>{user?.username}</UserName>
-	  <ShortText maxLines={3} text={user?.description || ''}/>
+      <ShortText maxLines={3} text={user?.description || ""} />
       {!isEditProfile && isMyProfile && (
         <LogOutButton bgcolor="white" tcolor="black" onClick={handleLogout}>
           Log Out
