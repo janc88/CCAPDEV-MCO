@@ -72,7 +72,7 @@ const getReviewsByUserId = async (req, res) => {
 		if (!user)
 			return res.status(404).json({ error: "User not found" });
 		
-		sendAllReviews(req, res, user.allReviews, user);
+		sendAllReviews(req, res, user.allReviews);
 	} catch (error) {
 		console.error(error);
 		res.status(500).json({ error: error.message });
@@ -189,24 +189,20 @@ const voteReview = async (req, res) => {
 		const foundReview = await Review.findById(id);
 		if (!foundReview)
 			return res.status(404).json({ error: "Review not found" });
-		if (userId !== foundReview.user)
-			return res.status(403).json({ error: "User not authorized" });
 		
 		const foundUser = await User.findById(foundReview.user);
 		
 		const session = await mongoose.startSession();
 		session.startTransaction();
 		
-		if (foundReview.upvotes.includes(userId))
-			foundReview.upvotes.pull(userId);
-		else if (foundReview.downvotes.includes(userId))
-			foundReview.downvotes.pull(userId);
+		foundReview.upvotes.pull(userId);
+		foundReview.downvotes.pull(userId);
 		
-		if (voteType === 'upvote')
+		if (voteType === 'up')
 			foundReview.upvotes.push(userId);
-		else if (voteType === 'downvote')
+		else if (voteType === 'down')
 			foundReview.downvotes.push(userId);
-		
+
 		await foundReview.save({session});
 		await session.commitTransaction();
 		await session.endSession();

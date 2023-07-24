@@ -48,7 +48,7 @@ const ReviewsCard: React.FC<ReviewsCardProps> = ({
   const [fetchedReviews, setReviews] = useState<Review[]>([]);
 
   useEffect(() => {
-    fetchReviews({ restoId }).then((reviews) => {
+    fetchReviews({ restoId, userId: user?.id || '' }).then((reviews) => {
       setReviews(reviews ?? []);
     });
   }, [fetchReviews, restoId]);

@@ -82,9 +82,12 @@ ReviewSchema.methods.publicView = async function () {
 
 ReviewSchema.methods.userView = async function (user) {
 	const obj = await this.publicView();
+	user = new mongoose.Types.ObjectId(user);
+
 	const voteType = 
-		this.upvotes.includes(user) ? 'upvote' : 
-		this.downvotes.includes(user) ? 'downvote' : 'none';
+	this.upvotes.some((upvote) => upvote.equals(user)) ? 'up' : 
+	this.downvotes.some((downvote) => downvote.equals(user)) ? 'down' : 'none';
+	
 	obj.voteType = voteType;
 	return obj;
 };
