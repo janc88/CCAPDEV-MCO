@@ -21,7 +21,8 @@ import {
   Helpful,
   RestoNameContainer,
   RestoName,
-  OwnerResponseForm
+  OwnerResponseForm,
+  LastEditContainer
 } from "./ReviewCard.styled";
 import StarRating from "../StarRating/StarRating";
 import { Button } from "../../styles/Button.styled";
@@ -212,6 +213,11 @@ const ReviewCard: React.FC<ReviewCardProps> = (review) => {
                 isClicked={isThumbsDownClicked}
               />
               <Helpful>Helpful ({thumbsUpCount - thumbsDownCount})</Helpful>
+              {review.lastEdited && (
+                <LastEditContainer>
+                  Edited ({new Date(review.lastEdited).toLocaleString()})
+                </LastEditContainer>
+              )}
             </HelpfulContainer>
           )}
           <div className="openRev">
