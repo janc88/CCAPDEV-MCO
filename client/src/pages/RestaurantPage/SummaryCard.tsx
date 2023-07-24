@@ -35,13 +35,18 @@ const SummaryCard: React.FC<SummaryCardProps> = ({ratings, totalRatings, avgRati
     return bars;
   };
 
+  function round(value, precision) {
+    var multiplier = Math.pow(10, precision || 0);
+    return Math.round(value * multiplier) / multiplier;
+  }
+
   return (
     <SummaryCardContainer>
       <Header>Summary</Header>
       <NumRating>{totalRatings} reviews</NumRating>
       <RatingContainer>
         <StarIcon size="lg" fillPercentage={100} />
-        <Rating>{avgRating}</Rating>
+        <Rating>{round(avgRating,1)}</Rating>
       </RatingContainer>
       <RatingGroup>{renderBars()}</RatingGroup>
     </SummaryCardContainer>
