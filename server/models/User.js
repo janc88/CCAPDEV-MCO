@@ -28,7 +28,7 @@ UserSchema.methods.userInfo = function () {
 		username: this.username,
 		description: this.description,
 		avatar: 'http://localhost:8080/api/images/' + this.avatar,
-		ownedRestaurant: this.ownedRestaurant || null
+		ownedRestoId: this.ownedRestaurant || null
 	};
 };
 
