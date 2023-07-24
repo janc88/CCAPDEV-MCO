@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Header,
   RestoReviewsContainer,
@@ -7,20 +7,29 @@ import {
 import ReviewCard from "../ReviewCard/ReviewCard";
 import { SearchBar } from "./Input";
 import SmallModal from "../SmallModal/SmallModal";
-import { Review } from "../../contexts/ReviewHook";
+import { Review, useReviews } from "../../contexts/ReviewHook";
+import { useUserContext } from "../../contexts/UserContext";
 
 interface ReviewsCardProps {
-  reviewList: Review[];
+  userID: string;
   showOverLay?: boolean; //show overlay of restoname in the review image
 }
 
 const ProfileReviewsCard: React.FC<ReviewsCardProps> = ({
-  reviewList,
+  userID,
   showOverLay = false,
 }) => {
   const [showWriteModal, setshowWriteModal] = useState(false);
   const [reviewFilter, setReviewFilter] = useState('');
   const [isSmallModalVisible, setIsSmallModalVisible] = useState(false);
+  const [reviewList, setReviewList] = useState<Review[]>([]);
+  const { user } = useUserContext();
+  const {fetchUserReviews} = useReviews();
+  useEffect(() => {
+	fetchUserReviews(user?.id || '', { userId: userID }).then((reviews) => {
+		setReviewList(reviews ?? []);
+	});
+  }, [fetchUserReviews, user, userID]);
 
   const toggleWriteModal = () => {
     setshowWriteModal((prevshowWriteModal) => !prevshowWriteModal);

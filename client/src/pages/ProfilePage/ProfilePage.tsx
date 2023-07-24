@@ -7,9 +7,26 @@ import {
 } from "./ProfilePage.styled";
 import UserInfoCard from "../../components/UserInfoCard/UserInfoCard";
 import ProfileReviewsCard from "../../components/ReviewsCard/ProfileReviewsCard";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { User, useUserContext } from "../../contexts/UserContext";
-import { useReviews, Review } from "../../contexts/ReviewHook";
+import { CenterContainer, PageContainer, Card, Title, Divider, Send } from "../styles/LoginPage.styled";
+
+const NotFound: React.FC<{ id: string }> = ({ id }) => {
+	const navigate = useNavigate();
+	return (
+		<PageContainer>
+			<CenterContainer>
+				<Card>
+					<Title>User {id} not found</Title>
+					<Divider />
+					<Send onClick={() => navigate('/home')}>
+						Return to home
+					</Send>
+				</Card>
+			</CenterContainer>
+		</PageContainer>
+	);
+};
 
 
 const ProfilePage: React.FC = () => {
@@ -19,36 +36,29 @@ const ProfilePage: React.FC = () => {
 
   const [ isMyProfile, setIsMyProfile ] = useState(false);
   const [ user, setUser ] = useState<User | null>(null);
-  const [ reviews, setReviews ] = useState<Review[] | null>(null);
   const [ loading, setLoading ] = useState(true);
-  
-  const { fetchUserReviews } = useReviews();
 
 	useEffect(() => {
 		const doStuff = async () => {
 			if (!userId) {
-				const reviews = await fetchUserReviews(loggedInUser?.id ?? '', { userId: loggedInUser?.id ?? ''});
-
-				setReviews(reviews);
 				setUser(loggedInUser);
 				setIsMyProfile(true)
 				setLoading(false)
 			} else {
-				const reviews = await fetchUserReviews(loggedInUser?.id ?? '', { userId });
 				const user = await fetchUserDetails(userId);
-				setReviews(reviews);
 				setUser(user);
 				setIsMyProfile(false);
 				setLoading(false);
 			}
 		}
 		doStuff();
-	}, [fetchUserReviews, fetchUserDetails, loggedInUser, userId])
+	}, [fetchUserDetails, loggedInUser, userId])
 
   if (loading) return (
   	<ProfilePageContainer>Loading...</ProfilePageContainer>
   );
-  
+  if (!user) return (<NotFound id={userId || ''} />)
+
   
   return (
     <ProfilePageContainer>
@@ -58,7 +68,7 @@ const ProfilePage: React.FC = () => {
 			isMyProfile={isMyProfile}/>
       </LeftContainer>
       <RightContainer>
-        <ProfileReviewsCard reviewList={reviews ?? []} showOverLay />
+        <ProfileReviewsCard showOverLay userID={user.id} />
       </RightContainer>
       <EmptyContainer></EmptyContainer>
     </ProfilePageContainer>

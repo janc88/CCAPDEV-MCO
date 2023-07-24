@@ -34,6 +34,7 @@ export const RestoImage = styled.img`
   height: 50%;
   border-radius: 1rem;
   margin: 0.6rem 0;
+  object-fit: cover;
 `;
 
 export const RestoAddress = styled.h5`
