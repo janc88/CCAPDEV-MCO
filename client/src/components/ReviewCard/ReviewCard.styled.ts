@@ -158,7 +158,7 @@ export const LastEditContainer = styled.div`
   display: flex;
   font-size: 1rem;
   font-weight: 500;
-  margin-left: 0.25rem;
+  margin-left: 1rem;
 `;
 
 export const OwnersResponse = styled.h5`
