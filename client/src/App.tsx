@@ -16,6 +16,8 @@ const Router: React.FC = () => {
   const { user } = useUserContext();
   const userRoutes = (
     <>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/home" element={<HomePage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/signup" element={<SignupPage />} />
       <Route path="/search-restaurants/:query" element={<SearchPage />} />
@@ -34,8 +36,6 @@ const Router: React.FC = () => {
   );
   return (
     <Routes>
-      <Route path="/" element={<HomePage />} />
-      <Route path="/home" element={<HomePage />} />
       {user?.ownedRestoId ? ownerRoutes : userRoutes}
     </Routes>
   );
