@@ -21,6 +21,7 @@ import {
   Helpful,
   RestoNameContainer,
   RestoName,
+  OwnerResponseForm
 } from "./ReviewCard.styled";
 import StarRating from "../StarRating/StarRating";
 import { Button } from "../../styles/Button.styled";
@@ -29,9 +30,8 @@ import ViewReviewModal from "../ModalPopups/ViewReviewModal";
 import SmallModal from "../SmallModal/SmallModal";
 import { useUserContext } from "../../contexts/UserContext";
 import { Review } from "../../contexts/ReviewHook";
-import default_img from '../../../src/imgs/banana.svg'
+import default_img from "../../../src/imgs/banana.svg";
 import { Link } from "react-router-dom";
-
 
 interface ReviewCardProps extends Review {
   showOverlay?: boolean;
@@ -42,6 +42,9 @@ const ReviewCard: React.FC<ReviewCardProps> = (review) => {
   const [thumbsDownCount, setThumbsDownCount] = useState(0);
   const [isThumbsUpClicked, setIsThumbsUpClicked] = useState(false);
   const [isThumbsDownClicked, setIsThumbsDownClicked] = useState(false);
+
+  const [showResponseForm, setShowResponseForm] = useState(false);
+  const [ownerResponse, setOwnerResponse] = useState<string>('');
 
   const loadedImage = review.imgs[0];
   const profilePic = review.user.avatar;
@@ -130,6 +133,24 @@ const ReviewCard: React.FC<ReviewCardProps> = (review) => {
     setIsSmallModalVisible((wasModalVisible) => !wasModalVisible);
   };
 
+  const handleButtonClick = () => {
+    setShowResponseForm(true);
+  };
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setOwnerResponse(event.target.value);
+  };
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    
+    // TODO: Update ownerResponse of review in backend
+
+    console.log('Response:', ownerResponse);
+    setShowResponseForm(false);
+    setOwnerResponse('');
+  };
+
   const { user } = useUserContext();
 
   return (
@@ -163,36 +184,59 @@ const ReviewCard: React.FC<ReviewCardProps> = (review) => {
         />
 
         <Footer>
-          <HelpfulContainer>
-            <ThumbsUpIcon
-              onClick={() => {
-                if (user) {
-                  handleThumbsUpClick();
-                } // If logged in
-                else {
-                  toggleSmallModal();
-                }
-              }}
-              isClicked={isThumbsUpClicked}
-            />
-            /
-            <ThumbsDownIcon
-              onClick={() => {
-                if (user) {
-                  handleThumbsDownClick();
-                } // If logged in
-                else {
-                  toggleSmallModal();
-                }
-              }}
-              isClicked={isThumbsDownClicked}
-            />
-            <Helpful>Helpful ({thumbsUpCount - thumbsDownCount})</Helpful>
-          </HelpfulContainer>
+          {!user?.ownedRestoId && (
+            <HelpfulContainer>
+              <ThumbsUpIcon
+                onClick={() => {
+                  if (user) {
+                    handleThumbsUpClick();
+                  } // If logged in
+                  else {
+                    toggleSmallModal();
+                  }
+                }}
+                isClicked={isThumbsUpClicked}
+              />
+              /
+              <ThumbsDownIcon
+                onClick={() => {
+                  if (user) {
+                    handleThumbsDownClick();
+                  } // If logged in
+                  else {
+                    toggleSmallModal();
+                  }
+                }}
+                isClicked={isThumbsDownClicked}
+              />
+              <Helpful>Helpful ({thumbsUpCount - thumbsDownCount})</Helpful>
+            </HelpfulContainer>
+          )}
           <div className="openRev">
-            <Button onClick={toggleModal} bgcolor="white" tcolor="black">
-              <OwnersResponse>View Owner's Response</OwnersResponse>
-            </Button>
+            {/* TODO: also check if review already has response */}
+            {!user?.ownedRestoId ? (
+              <Button onClick={toggleModal} bgcolor="white" tcolor="black">
+                <OwnersResponse>View Owner's Response</OwnersResponse>
+              </Button>
+            ) : !showResponseForm ? (
+              <Button
+                onClick={handleButtonClick}
+                bgcolor="white"
+                tcolor="black"
+              >
+                <OwnersResponse>Respond to Review</OwnersResponse>
+              </Button>
+            ) : (
+              <form onSubmit={handleSubmit}>
+                <OwnerResponseForm
+                  type="text"
+                  value={ownerResponse}
+                  onChange={handleInputChange}
+                  placeholder="Type your response here"
+                />
+                <Button type="submit" bgcolor="#FF794F" tcolor="white">Submit Response</Button>
+              </form>
+            )}
 
             <BaseModalWrapper
               {...review}
@@ -208,9 +252,9 @@ const ReviewCard: React.FC<ReviewCardProps> = (review) => {
           </div>
         </Footer>
       </ReviewContentContainer>
-      <ReviewImgContainer>  
+      <ReviewImgContainer>
         <ReviewImg src={loadedImage || default_img} />
-        <RestoNameContainer showOverlay={review.showOverlay}> 
+        <RestoNameContainer showOverlay={review.showOverlay}>
           <RestoName>{review.restaurant.name}</RestoName>
         </RestoNameContainer>
       </ReviewImgContainer>

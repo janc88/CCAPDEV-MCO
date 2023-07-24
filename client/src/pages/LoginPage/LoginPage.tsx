@@ -41,9 +41,12 @@ function LoginPage() {
           message: 'Invalid password'
         });
         return;
-      } else {
+      } else if (user.ownedRestoId){
+        navigate(`/owner/${user.ownedRestoId}`);
+      }else{
         navigate("/home");
-	  }
+      }
+          
   });
 
   return (

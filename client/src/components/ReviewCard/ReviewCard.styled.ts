@@ -171,3 +171,19 @@ export const Footer = styled.div`
 export const ClickableContainer = styled.div`
   cursor: pointer;
 `;
+
+export const OwnerResponseForm = styled.input`
+  width: 25rem;
+  border-radius: 2rem;
+  border: 1px black solid;
+  padding: 0.5rem;
+  padding-left: 1rem;
+  margin-right: 1rem;
+  font-size: medium;
+
+  ::-webkit-input-placeholder {
+    font-weight: 200;
+    opacity: 80%;
+  }
+
+`;

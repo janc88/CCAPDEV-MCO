@@ -19,6 +19,7 @@ interface ReviewsCardProps {
   //reviewList: Review[];
   restoId: string;
   showOverLay?: boolean; //show overlay of restoname in the review image
+
 }
 
 const ReviewsCard: React.FC<ReviewsCardProps> = ({
@@ -52,6 +53,7 @@ const ReviewsCard: React.FC<ReviewsCardProps> = ({
     });
   }, [fetchReviews, restoId]);
 
+
   return (
     <RestoReviewsContainer isUserReview={showOverLay}>
       <Header>
@@ -77,18 +79,21 @@ const ReviewsCard: React.FC<ReviewsCardProps> = ({
         onBackdropClick={toggleSmallModal}
       />
 
-      <WriteReview 
-        onClick={() => {
-          if (user) {
-            toggleWriteModal();
-          } // If logged in
-          else {
-            toggleSmallModal();
-          }
-        }}
-      >
-        Write a Review...
-      </WriteReview>
+          
+      {!user?.ownedRestoId &&
+        <WriteReview 
+          onClick={() => {
+            if (user) {
+              toggleWriteModal();
+            } // If logged in
+            else {
+              toggleSmallModal();
+            }
+          }}
+        >
+          Write a Review...
+        </WriteReview>
+      }
 
       <ViewWriteModal
         isModalVisible={showWriteModal}

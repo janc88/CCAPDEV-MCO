@@ -59,6 +59,7 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & Review> = ({
   const navigate = useNavigate();
 
 
+
   const handleThumbsUpClick = () => {
     if (isThumbsUpClicked) {
       // Deselect thumbs-up
@@ -153,6 +154,7 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & Review> = ({
           </ReviewCardContainer>
 
           <Footer>
+            {!user?.ownedRestoId &&
             <HelpfulContainer>
               <ThumbsUpIcon
                 onClick={() => {
@@ -179,6 +181,7 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & Review> = ({
               />
               <Helpful>Helpful ({thumbsUpCount - thumbsDownCount})</Helpful>
             </HelpfulContainer>
+            }
             <EditDeleteContainer>
             {isCurrentUser && (
               <>
