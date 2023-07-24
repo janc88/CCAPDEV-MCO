@@ -33,9 +33,9 @@ function UserCard() {
     setIsOpen(false);
   };
   const handleLogOut = () => {
-	logout();
-	handleInsideClick();
-  }
+    logout();
+    handleInsideClick();
+  };
 
   useEffect(() => {
     const handleMouseDown = (event: MouseEvent) => handleClickOutside(event);
@@ -65,15 +65,25 @@ function UserCard() {
               opacity: { duration: 0.8 },
             }}
           >
-            <UserLink to="/profile" onClick={handleInsideClick}>
-              <UserOption>View My Profile</UserOption>
-            </UserLink>
+            {!user?.ownedRestoId ? (
+              <UserLink to="/profile" onClick={handleInsideClick}>
+                <UserOption>View My Profile</UserOption>
+              </UserLink>
+            ) : (
+              <UserLink
+                to={`/owner/${user.ownedRestoId}`}
+                onClick={handleInsideClick}
+              >
+                <UserOption>View My Profile</UserOption>
+              </UserLink>
+            )}
+
             <UserLink to="/edit-profile" onClick={handleInsideClick}>
               <UserOption>Edit My Profile</UserOption>
             </UserLink>
-			<UserLink to="/change-password" onClick={handleInsideClick}>
-			  <UserOption>Change Password</UserOption>
-			</UserLink>
+            <UserLink to="/change-password" onClick={handleInsideClick}>
+              <UserOption>Change Password</UserOption>
+            </UserLink>
             <UserLink to="/" onClick={handleLogOut}>
               <UserOption>Logout</UserOption>
             </UserLink>
