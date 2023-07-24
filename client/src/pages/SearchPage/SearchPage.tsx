@@ -118,7 +118,7 @@ function SearchPage() {
 const NotFoundComponent = () => {
   return (
     <h2 style={{ marginLeft: "6rem", fontWeight: "150" }}>
-      Sorry, we could't find any restaurants that matches your search/filter.
+      Sorry, we could't find any restaurants that match your search/filter.
     </h2>
   );
 };
