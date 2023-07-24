@@ -58,10 +58,15 @@ export const RightContainer = styled(FlexCol)`
 `;
 
 export const GridContainer = styled.div`
-	padding: 0 30px;
+	/* padding: 0 30px;
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
 	grid-gap: 30px;
-	justify-items: center;
+	justify-items: start; */
+  padding: 0 30px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(370px, 1fr));
+  grid-gap: 20px;
+  align-items: stretch;
 `;
 
