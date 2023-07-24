@@ -235,11 +235,17 @@ const ReviewCard: React.FC<ReviewCardProps> = (review) => {
             </HelpfulContainer>
           )}
           <div className="openRev">
-            {!user?.ownedRestoId ? review.ownerResponse && (
+            {!user?.ownedRestoId ? (
+              review.ownerResponse && (
+                <Button onClick={toggleModal} bgcolor="white" tcolor="black">
+                  <OwnersResponse>View Owner's Response</OwnersResponse>
+                </Button>
+              )
+            ) : review.ownerResponse ? (
               <Button onClick={toggleModal} bgcolor="white" tcolor="black">
-                <OwnersResponse>View Owner's Response</OwnersResponse>
+                <OwnersResponse>View Your Response</OwnersResponse>
               </Button>
-            ) : review.ownerResponse ? null : !showResponseForm ? (
+            ) : !showResponseForm ? (
               <Button
                 onClick={handleButtonClick}
                 bgcolor="white"
@@ -278,7 +284,9 @@ const ReviewCard: React.FC<ReviewCardProps> = (review) => {
       <ReviewImgContainer>
         <ReviewImg src={loadedImage || default_img} />
         <RestoNameContainer showOverlay={review.showOverlay}>
-          <RestoName to={`/restaurants/${review.restaurant.id}`}>{review.restaurant.name}</RestoName>
+          <RestoName to={`/restaurants/${review.restaurant.id}`}>
+            {review.restaurant.name}
+          </RestoName>
         </RestoNameContainer>
       </ReviewImgContainer>
     </ReviewCardContainer>
