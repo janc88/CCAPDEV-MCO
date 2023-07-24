@@ -26,6 +26,7 @@ import {
   ThumbsUpIcon,
   ThumbsDownIcon,
   Helpful,
+  LastEditContainer,
 } from "../ReviewCard/ReviewCard.styled";
 import StarRating from "../StarRating/StarRating";
 import SmallModal from "../SmallModal/SmallModal";
@@ -57,8 +58,6 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & Review> = ({
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
 
   const navigate = useNavigate();
-
-
 
   const handleThumbsUpClick = () => {
     if (isThumbsUpClicked) {
@@ -100,7 +99,6 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & Review> = ({
     setIsEditClicked(true);
     navigate("/edit-review", { state: reviewProps });;
   };
-  
 
   const toggleSmallModal = () => {
     setIsSmallModalVisible((wasModalVisible) => !wasModalVisible);
@@ -112,7 +110,6 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & Review> = ({
 
   const { user } = useUserContext();
   const isCurrentUser = user && user.username === reviewProps.user.username;
-
 
   if (!isModalVisible) {
     return null;
@@ -145,9 +142,7 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & Review> = ({
             <ReviewImgsContainer>
               {loadedImages.map((imageSrc, index) => (
                 <ImageReview
-                  // key={images[index].id}
                   src={imageSrc}
-                  // alt={images[index].alt}
                 />
               ))}
             </ReviewImgsContainer>
@@ -180,6 +175,13 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & Review> = ({
                 isClicked={isThumbsDownClicked}
               />
               <Helpful>Helpful ({thumbsUpCount - thumbsDownCount})</Helpful>
+              
+              {reviewProps.lastEdited && (
+                <LastEditContainer>
+                  Edited ({new Date(reviewProps.lastEdited).toLocaleString()})
+                </LastEditContainer>
+              )}
+              
             </HelpfulContainer>
             }
             <EditDeleteContainer>

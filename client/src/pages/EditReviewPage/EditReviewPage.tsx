@@ -1,6 +1,8 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { PageContainer } from "../styles/LoginPage.styled";
+import {
+  PageContainer,
+} from "../styles/LoginPage.styled";
 import {
   EditIcon,
   EditReviewContainer,
@@ -16,20 +18,8 @@ import {
   RatingContainer,
   PhotoSubheader,
 } from "./EditReviewPage.styled";
-import {
-  CancelButton,
-  SaveButton,
-} from "../EditProfilePage/EditProfilePage.styled";
-import {
-  FileContainer,
-  ImageGrid,
-  ImageIcon,
-  ImgCardContainer,
-  ImgContainer,
-  RatingText,
-  Uploadtext,
-  WriteRating,
-} from "../../components/ModalPopups/ModalPopup";
+import { CancelButton, SaveButton } from "../EditProfilePage/EditProfilePage.styled";
+import { FileContainer, ImageGrid, ImageIcon, ImgCardContainer, ImgContainer, RatingText, Uploadtext, WriteRating } from "../../components/ModalPopups/ModalPopup";
 import ImageWithCloseButton from "../../components/ModalPopups/ImageClose";
 import Rating from "../../components/ModalPopups/Ratings";
 
@@ -56,7 +46,7 @@ export const EditReviewPage = () => {
   };
 
   const cancelModal = () => {
-    navigate(-1);
+    navigate(-1);  
   };
 
   const saveModal = async () => {
@@ -69,26 +59,25 @@ export const EditReviewPage = () => {
       formData.append("body", updatedBody);
       formData.append("stars", rating.toString());
 
-      for (const img of imageFiles) formData.append("imgs", img);
+      for (const img of imageFiles)
+        formData.append('imgs', img);
 
-      const response = await fetch(
-        `http://localhost:8080/api/reviews/${reviewId}`,
-        {
-          method: "PATCH",
-          body: formData,
-        }
-      );
+      const response = await fetch(`http://localhost:8080/api/reviews/${reviewId}`, {
+        method: 'PATCH',
+        body: formData
+      });
 
       if (response.ok) {
         navigate(-1);
         console.log("Review updated");
       } else {
-        throw new Error("Failed to update review");
+        throw new Error('Failed to update review');
       }
     } catch (error) {
       console.error(error);
     }
   };
+  
 
   useEffect(() => {
     const newImages = imageFiles.map((file) => URL.createObjectURL(file));
@@ -102,7 +91,9 @@ export const EditReviewPage = () => {
   return (
     <PageContainer>
       <EditReviewContainer>
-        <HeaderReview>Edit A Review</HeaderReview>
+        <HeaderReview>
+          Edit A Review
+        </HeaderReview>
 
         <Subheader>
           Title
@@ -115,15 +106,15 @@ export const EditReviewPage = () => {
         />
 
         <RatingContainer>
-          <Rating
-            count={5}
-            value={rating}
-            edit={true}
-            onChange={(value) => setRating(value)}
-          />
-          <RatingText>Your rating</RatingText>
-        </RatingContainer>
-
+            <Rating
+              count={5}
+              value={rating}
+              edit={true}
+              onChange={(value) => setRating(value)}
+            />
+            <RatingText>Your rating</RatingText>
+          </RatingContainer>
+          
         <Subheader>
           Body
           <EditIcon></EditIcon>

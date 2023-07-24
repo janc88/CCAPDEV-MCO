@@ -154,6 +154,13 @@ export const ThumbsDownIcon = styled(ThumbsDown)<{ isClicked: boolean }>`
   }
 `;
 
+export const LastEditContainer = styled.div`
+  display: flex;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-left: 0.25rem;
+`;
+
 export const OwnersResponse = styled.h5`
   margin: 0;
   color: #ff794f;
