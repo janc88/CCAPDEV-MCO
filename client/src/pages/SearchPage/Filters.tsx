@@ -30,6 +30,7 @@ const Filters: React.FC<FilterOptionsProps> = ({ onChange, onReset }) => {
       const inputElement = radio as HTMLInputElement;
       inputElement.checked = false;
     });
+    setSelectedOption(-1)
   }, [location.pathname]);
 
   return (
