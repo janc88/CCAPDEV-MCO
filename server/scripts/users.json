@@ -1,0 +1,421 @@
+// this is all the users before hashing their passwords
+
+[
+  {
+    _id: new ObjectId("64a66294bf029ba70af26311"),
+    username: 'josh',
+    description: 'I am josh',
+    password: '12345678',
+    avatar: new ObjectId("64a924c49b3cb655bb37a503"),
+    __v: 5,
+    allReviews: [
+      new ObjectId("64b4b3513736ed2c3d14d5d3"),
+      new ObjectId("64bce4cd1783bbc10fd4cffe"),
+      new ObjectId("64be4840ffc12d0905558982"),
+      new ObjectId("64be6ac0b726d8a8645ad298")
+    ]
+  },
+  {
+    _id: new ObjectId("64a6653a1666b36fb18a58f3"),
+    username: 'kerwin',
+    description: 'hi my name is kerwin',
+    password: '12345678',
+    avatar: new ObjectId("64a96aec4b6eb090015ba0c8"),
+    __v: 1,
+    allReviews: [
+      new ObjectId("64b4b3513736ed2c3d14d5dc"),
+      new ObjectId("64be563805f978073333e624")
+    ]
+  },
+  {
+    _id: new ObjectId("64a6661df52153d96e4ac2f5"),
+    username: 'newuser',
+    description: 'Check out my profile pic!',
+    password: 'securepassword',
+    avatar: new ObjectId("64a96515acfff482891a5e47"),
+    __v: 0,
+    allReviews: []
+  },
+  {
+    _id: new ObjectId("64a66bbf6c08799efc187cd7"),
+    username: 'newuser1234',
+    description: 'my name is new user1234',
+    password: '12345678',
+    avatar: new ObjectId("68656c6c6f20776f726c6421"),
+    __v: 0,
+    allReviews: [ new ObjectId("64b4b3513736ed2c3d14d5e4") ]
+  },
+  {
+    _id: new ObjectId("64a67d2fe0dba23a724e5de7"),
+    username: 'newuser123',
+    description: 'my name is newuser123',
+    password: '12345678',
+    avatar: new ObjectId("68656c6c6f20776f726c6421"),
+    __v: 0,
+    allReviews: [
+      new ObjectId("64b4b3503736ed2c3d14d5bf"),
+      new ObjectId("64b4b3523736ed2c3d14d5fd")
+    ]
+  },
+  {
+    _id: new ObjectId("64a6a896af771885d748c785"),
+    username: 'USERNAME',
+    description: '',
+    password: 'USERNAME',
+    avatar: new ObjectId("68656c6c6f20776f726c6421"),
+    __v: 0,
+    allReviews: []
+  },
+  {
+    _id: new ObjectId("64a6a920af771885d748c78c"),
+    username: 'USERNAME1',
+    description: '',
+    password: 'USERNAME1',
+    avatar: new ObjectId("68656c6c6f20776f726c6421"),
+    __v: 0,
+    allReviews: []
+  },
+  {
+    _id: new ObjectId("64a6a948af771885d748c790"),
+    username: 'AAAAAAAA',
+    description: '',
+    password: 'AAAAAAAA',
+    avatar: new ObjectId("68656c6c6f20776f726c6421"),
+    __v: 0,
+    allReviews: []
+  },
+  {
+    _id: new ObjectId("64a6a979af771885d748c794"),
+    username: 'USERNAME12',
+    description: '',
+    password: 'USERNAME12',
+    avatar: new ObjectId("68656c6c6f20776f726c6421"),
+    __v: 0,
+    allReviews: []
+  },
+  {
+    _id: new ObjectId("64a7ac2b76d711f6a9c2c240"),
+    username: 'testuser',
+    description: '',
+    password: 'password1234',
+    avatar: new ObjectId("68656c6c6f20776f726c6421"),
+    __v: 0,
+    allReviews: []
+  },
+  {
+    _id: new ObjectId("64a7c00781a3be5b9f93e71e"),
+    username: '12345678',
+    description: '12345678\r\n',
+    password: '12345678',
+    avatar: new ObjectId("64be4bec065b351a3c317d93"),
+    __v: 22,
+    allReviews: [
+      new ObjectId("64bce3d8da3f4110b2af22da"),
+      new ObjectId("64bddb7df8c710b068aaaa07"),
+      new ObjectId("64bddb7ef8c710b068aaaa0d"),
+      new ObjectId("64bddb80f8c710b068aaaa24"),
+      new ObjectId("64bddb82f8c710b068aaaa3a"),
+      new ObjectId("64bddb89f8c710b068aaaa59"),
+      new ObjectId("64bddc36f8c710b068aaaaaa"),
+      new ObjectId("64be4a9a065b351a3c317be7"),
+      new ObjectId("64be4a9b065b351a3c317bec"),
+      new ObjectId("64be4a9c065b351a3c317c06"),
+      new ObjectId("64be4b43065b351a3c317cdb"),
+      new ObjectId("64be4e74065b351a3c317ee9")
+    ]
+  },
+  {
+    _id: new ObjectId("64a7c16734445cd0c5284bdc"),
+    username: 'Hello World',
+    description: 'Hello World',
+    password: 'Hello World',
+    avatar: new ObjectId("64a7c16734445cd0c5284bda"),
+    __v: 0,
+    allReviews: [ new ObjectId("64b4b3503736ed2c3d14d5c2") ]
+  },
+  {
+    _id: new ObjectId("64a7c27d34445cd0c5284be7"),
+    username: 'RestoRant',
+    description: 'RestoRant',
+    password: 'RestoRant',
+    avatar: new ObjectId("64a7c27c34445cd0c5284be5"),
+    __v: 0,
+    allReviews: []
+  },
+  {
+    _id: new ObjectId("64a7c40fc99b8dd0319c86c7"),
+    username: 'testuser12345',
+    description: 'new user with image',
+    password: '12345678',
+    avatar: new ObjectId("64a7c40fc99b8dd0319c86c5"),
+    __v: 0,
+    allReviews: []
+  },
+  {
+    _id: new ObjectId("64a7ca86a532bc09de204d14"),
+    username: 'banana',
+    description: 'banana',
+    password: 'bananana',
+    avatar: new ObjectId("64a7ca85a532bc09de204d12"),
+    __v: 0,
+    allReviews: [
+      new ObjectId("64b4b3523736ed2c3d14d5f3"),
+      new ObjectId("64b4b3523736ed2c3d14d600"),
+      new ObjectId("64b4b3513736ed2c3d14d5d9")
+    ]
+  },
+  {
+    _id: new ObjectId("64a7efb8ed92370732b56734"),
+    username: 'Sign Up',
+    description: 'My password is Sign Upp but i changed it :))',
+    password: 'Sign UpSign Up',
+    avatar: new ObjectId("64a7efb6ed92370732b56732"),
+    __v: 0,
+    allReviews: [ new ObjectId("64b4b3503736ed2c3d14d5c7") ]
+  },
+  {
+    _id: new ObjectId("64a8c9982711deb098cfc3e1"),
+    username: 'temp user',
+    description: 'temp user\r\nhello world!',
+    password: 'temp user',
+    avatar: new ObjectId("64a8ce6479855070cc965638"),
+    __v: 0,
+    allReviews: [
+      new ObjectId("64b4b3513736ed2c3d14d5cf"),
+      new ObjectId("64b4b3523736ed2c3d14d607")
+    ]
+  },
+  {
+    _id: new ObjectId("64a8deca3b21cd41ae8e47a7"),
+    username: 'default test',
+    description: '\r\ndefault test\r\nEdit Profile\r\nDescription (Max of 100 characters)',
+    password: 'default test',
+    avatar: new ObjectId("64a8e0abfbbcaa1328c1d88a"),
+    __v: 0,
+    allReviews: [ new ObjectId("64b4b3503736ed2c3d14d5bd") ]
+  },
+  {
+    _id: new ObjectId("64a939c09b3cb655bb37a52e"),
+    username: 'newusersignup',
+    description: 'This user is rather lazy and has yet to place a description.',
+    password: '123456789',
+    avatar: new ObjectId("64a939c09b3cb655bb37a52c"),
+    __v: 0,
+    allReviews: [
+      new ObjectId("64b4b3513736ed2c3d14d5cb"),
+      new ObjectId("64b4b3523736ed2c3d14d5ed")
+    ]
+  },
+  {
+    _id: new ObjectId("64a93d21e94105f9083c67c0"),
+    username: 'DLSU MCDO',
+    description: 'Never gonna give you up\r\nNever gonna let you down',
+    password: 'DLSU MCDO',
+    avatar: new ObjectId("64a93d21e94105f9083c67be"),
+    __v: 0,
+    allReviews: []
+  },
+  {
+    _id: new ObjectId("64a950c7da225fc538bb8366"),
+    username: 'test bug',
+    description: 'This user is rather lazy and has yet to place a description.',
+    password: 'test bug',
+    avatar: new ObjectId("64a950f6da225fc538bb837a"),
+    __v: 0,
+    allReviews: []
+  },
+  {
+    _id: new ObjectId("64a96b34885e2d73b7d1d3d5"),
+    username: "Kerwin's Donuts",
+    description: 'This user is rather lazy and has yet to place a description.',
+    password: "Kerwin's Donuts",
+    avatar: new ObjectId("64a96b33885e2d73b7d1d3d3"),
+    __v: 0,
+    allReviews: []
+  },
+  {
+    _id: new ObjectId("64aac636eec36cb4e1c38f86"),
+    username: 'BrOdin',
+    description: 'bro',
+    password: '12345678',
+    avatar: new ObjectId("64bc1d468f1f92471247d79e"),
+    allReviews: [
+      new ObjectId("64b4b3513736ed2c3d14d5d1"),
+      new ObjectId("64b4b3513736ed2c3d14d5cd"),
+      new ObjectId("64bc1693498b7c1deed89fea"),
+      new ObjectId("64bc17045d86507589589fc3"),
+      new ObjectId("64bc22234812dc1870ffd8b7"),
+      new ObjectId("64bc22524812dc1870ffd92f"),
+      new ObjectId("64bc226f4812dc1870ffd97e"),
+      new ObjectId("64be36d0d0231c656a891794")
+    ],
+    __v: 6
+  },
+  {
+    _id: new ObjectId("64aac72deec36cb4e1c38f96"),
+    username: 'nidorb',
+    description: 'no',
+    password: '12341234',
+    avatar: new ObjectId("64b3bca157144d174a68644d"),
+    allReviews: [
+      new ObjectId("64b4b3503736ed2c3d14d5c9"),
+      new ObjectId("64be03e056b3bdf68a1748dd")
+    ],
+    __v: 17
+  },
+  {
+    _id: new ObjectId("64aac790eec36cb4e1c38fa1"),
+    username: 'nidoorb',
+    description: 'This user is rather lazy and has yet to place a description.',
+    password: '12345678',
+    avatar: new ObjectId("64aac790eec36cb4e1c38f9f"),
+    allReviews: [],
+    __v: 0
+  },
+  {
+    _id: new ObjectId("64b2c32dd440d8245869d193"),
+    username: 'iamnew',
+    description: 'This user is rather lazy and has yet to place a description.',
+    password: 'iamnew123',
+    avatar: new ObjectId("64bb73e799b0c39a3e3da654"),
+    allReviews: [
+      new ObjectId("64bbb2d70d411438313c72fe"),
+      new ObjectId("64bc0dce78d556c25f80ff71"),
+      new ObjectId("64bc0de778d556c25f80ff9d"),
+      new ObjectId("64bc0f14edfe51ac4d83b6ee"),
+      new ObjectId("64bc0fa897adbcf026e00e36"),
+      new ObjectId("64bc1014a12efef7e710df2f"),
+      new ObjectId("64bc10f2be516157dc0add2d"),
+      new ObjectId("64bc120c498b7c1deed89e64")
+    ],
+    __v: 7
+  },
+  {
+    _id: new ObjectId("64b2e0ff34965cdd6630b373"),
+    username: '      ',
+    description: 'This user is rather lazy and has yet to place a description.',
+    password: '                        ',
+    avatar: new ObjectId("64b2e0fe34965cdd6630b371"),
+    allReviews: [ new ObjectId("64b4b3523736ed2c3d14d5f6") ],
+    __v: 0
+  },
+  {
+    _id: new ObjectId("64b3ebde7f2d1b64b8cf047b"),
+    username: 'broods',
+    description: 'This user is rather lazy and has yet to place a description.',
+    password: '12345678',
+    avatar: new ObjectId("64b3ebdd7f2d1b64b8cf0474"),
+    allReviews: [ new ObjectId("64b4b3523736ed2c3d14d5eb") ],
+    __v: 0
+  },
+  {
+    _id: new ObjectId("64b531caeb733e216868174f"),
+    username: 'Test changes',
+    description: 'This user is rather lazy and has yet to place a description.',
+    password: 'Test changes',
+    avatar: new ObjectId("64b531c9eb733e216868174c"),
+    allReviews: [],
+    __v: 0
+  },
+  {
+    _id: new ObjectId("64bdf64dc9bf462389e43d00"),
+    username: "Zark's Burger owner",
+    description: "Zark's Burger is a popular burger joint that has gained a cult following for its massive and delicious burgers. With generous portions and quality ingredients, Zark's Burger takes burger indulgence to a whole new level. From their signature towering burgers to their mouthwatering specialty creations, Zark's Burger guarantees a satisfying and unforgettable burger experience. If you're a burger lover looking for a burger that's big on taste and satisfaction, Zark's Burger is the place to be.",
+    password: '12345678',
+    avatar: new ObjectId("64bdf64bc9bf462389e43cf9"),
+    allReviews: [],
+    ownedRestaurant: new ObjectId("64ad24f4b134cc61072c4d0f"),
+    __v: 0
+  },
+  {
+    _id: new ObjectId("64bdf64ec9bf462389e43d04"),
+    username: 'Jollibee owner',
+    description: 'Jollibee is a beloved fast-food chain in the Philippines that has captured the hearts of Filipinos with its iconic menu and cheerful ambiance. Known for its signature Chickenjoy, Jollibee offers a wide range of delicious and affordable meals that cater to various tastes and preferences. From crispy fried chicken to flavorful spaghetti and their famous Peach Mango Pie, Jollibee brings joy and satisfaction to families and friends gathering together for a hearty meal.',
+    password: '12345678',
+    avatar: new ObjectId("64bdf64bc9bf462389e43cf7"),
+    allReviews: [ new ObjectId("64bdf7b6d7262c6fd2dded85") ],
+    ownedRestaurant: new ObjectId("64ad24f4b134cc61072c4d10"),
+    __v: 1
+  },
+  {
+    _id: new ObjectId("64bdf64ec9bf462389e43d07"),
+    username: 'Tapa King owner',
+    description: "Tapa King is a renowned Filipino restaurant known for its delectable and flavorful tapa dishes. With a wide variety of mouthwatering options, Tapa King offers a satisfying and authentic Filipino dining experience. Whether you're craving for classic tapa, spicy tapa, or tapa with garlic rice, Tapa King has got you covered. Visit Tapa King and indulge in the rich and savory flavors of their signature tapa creations.",
+    password: '12345678',
+    avatar: new ObjectId("64bdf64bc9bf462389e43cfb"),
+    allReviews: [],
+    ownedRestaurant: new ObjectId("64ad24f4b134cc61072c4d0e"),
+    __v: 0
+  },
+  {
+    _id: new ObjectId("64bdf64ec9bf462389e43d09"),
+    username: 'Tinuhog ni Benny owner',
+    description: 'Tinuhog ni Benny is a hidden gem that specializes in grilled Filipino dishes. Located in a cozy setting, Tinuhog ni Benny offers a unique dining experience with its mouthwatering grilled specialties. From skewered meats and seafood to grilled vegetables, their menu is filled with smoky and flavorful delights. The combination of perfectly grilled ingredients, traditional Filipino flavors, and warm hospitality makes Tinuhog ni Benny a go-to place for a satisfying and enjoyable meal.',
+    password: '12345678',
+    avatar: new ObjectId("64bdf64dc9bf462389e43cfe"),
+    allReviews: [],
+    ownedRestaurant: new ObjectId("64ad24f4b134cc61072c4d11"),
+    __v: 0
+  },
+  {
+    _id: new ObjectId("64bdf661c9bf462389e43d0e"),
+    username: "McDonald's owner",
+    description: 'A popular fast food chain known for its burgers, fries, and milkshakes.',
+    password: '12345678',
+    avatar: new ObjectId("64bdf660c9bf462389e43d0b"),
+    allReviews: [],
+    ownedRestaurant: new ObjectId("64ad24f4b134cc61072c4d0d"),
+    __v: 0
+  },
+  {
+    _id: new ObjectId("64bdf665c9bf462389e43d13"),
+    username: '24 Chicken owner',
+    description: '24 Chicken is a go-to destination for chicken lovers looking for a unique twist on their favorite dish. Specializing in Korean-style fried chicken, 24 Chicken offers a range of crispy and tender chicken options. From original fried chicken to flavors like soy garlic and spicy, their chicken is cooked to perfection and served with a variety of delicious dipping sauces. With a casual and inviting atmosphere, 24 Chicken is the perfect spot to satisfy your chicken cravings.',
+    password: '12345678',
+    avatar: new ObjectId("64bdf663c9bf462389e43d10"),
+    allReviews: [],
+    ownedRestaurant: new ObjectId("64ad24f4b134cc61072c4d13"),
+    __v: 0
+  },
+  {
+    _id: new ObjectId("64bdf672c9bf462389e43d18"),
+    username: 'BonChon owner',
+    description: 'Bonchon is a popular Korean fried chicken restaurant that has gained worldwide acclaim. Known for its crispy and flavorful chicken, Bonchon offers a delightful fusion of Korean and American cuisine. Their signature fried chicken is coated with a choice of soy garlic or spicy glaze, creating a perfect balance of sweet and savory. With a menu featuring other Korean favorites like bibimbap and bulgogi, Bonchon is a must-visit for those seeking authentic Korean flavors and a satisfying dining experience.',
+    password: '12345678',
+    avatar: new ObjectId("64bdf671c9bf462389e43d15"),
+    allReviews: [],
+    ownedRestaurant: new ObjectId("64ad24f4b134cc61072c4d12"),
+    __v: 0
+  },
+  {
+    _id: new ObjectId("64be3071d0231c656a89114c"),
+    username: 'Kerwin Tang',
+    description: 'being awesome 😎',
+    password: 'iamawesome',
+    avatar: new ObjectId("64be3071d0231c656a89114a"),
+    allReviews: [],
+    __v: 0,
+    ownedRestaurant: new ObjectId("64be32009979ab873f699998")
+  },
+  {
+    _id: new ObjectId("64be4ef5065b351a3c317f4f"),
+    username: 'BANANA-BANANA',
+    description: 'BANANA-BANANABANANA-BANANABANANA-BANANABANANA-BANANABANANA-BANANABANANA-BANANABANANA-BANANABANANA-BANANABANANA',
+    password: 'BANANA-BANANA',
+    avatar: new ObjectId("64be4fbe065b351a3c3180ba"),
+    allReviews: [
+      new ObjectId("64be6c2fabe2f2901709e9b9"),
+      new ObjectId("64be6c31abe2f2901709e9bd")
+    ],
+    __v: 7
+  },
+  {
+    _id: new ObjectId("64be72c5b726d8a8645ad676"),
+    username: 'newestuser',
+    description: 'I love food!',
+    password: '12345678',
+    avatar: new ObjectId("64be72beb726d8a8645ad674"),
+    allReviews: [ new ObjectId("64be7328b726d8a8645ad7a1") ],
+    __v: 1
+  },
+]

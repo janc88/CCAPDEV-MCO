@@ -1,6 +1,7 @@
 import React, { ReactNode, createContext, useState, useEffect, useCallback, useContext } from 'react';
 import { useUser, userHook } from './UserHook';
 import Cookies from 'js-cookie';
+import crypto from 'crypto-js';
 
 export interface User {
 	id: string;
@@ -53,8 +54,12 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 		if (user === null)
 			throw new Error("User does not exist!");
 		const formData = new FormData();
-		formData.append('old_password', old_password);
-		formData.append('new_password', new_password);
+		const hashedOldPassword = crypto.SHA256(old_password).toString();
+		const hashedNewPassword = crypto.SHA256(new_password).toString();
+
+		
+		formData.append('old_password', hashedOldPassword);
+		formData.append('new_password', hashedNewPassword);
 
 		const response = await fetch(`http://localhost:8080/api/users/update/${user.username}`, {
 			method: "PATCH",
@@ -85,12 +90,13 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 
 
 	const login = useCallback(async (username: string, password: string) => {
+		const hashedPassword = crypto.SHA256(password).toString();
 		const response = await fetch(`http://localhost:8080/api/users/login`, {
 			method: "POST",
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify({ username, password })
+			body: JSON.stringify({ username, hashedPassword })
 		});
 		if (!response.ok)
 			return null;
@@ -101,10 +107,11 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 
 	const signup = useCallback(async (user: User, password: string, profilePicture: File) => {
 		const formData = new FormData();
+		const hashedPassword = crypto.SHA256(password).toString();
 		formData.append('username', user.username);
 		formData.append('description', user.description);
 		formData.append('avatar', profilePicture);
-		formData.append('password', password);
+		formData.append('password', hashedPassword);
 
 		const response = await fetch("http://localhost:8080/api/users/", {
 			method: "POST",

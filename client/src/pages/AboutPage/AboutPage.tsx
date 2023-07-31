@@ -30,6 +30,7 @@ function AboutPage() {
                 <ListElement>React Router DOM</ListElement>
                 <ListElement>React Scripts</ListElement>
                 <ListElement>React Tooltip</ListElement>
+                <ListElement>CryptoJS</ListElement>
             </List>
         </Container>
     </MainContainer>
