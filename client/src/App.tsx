@@ -12,6 +12,7 @@ import { UserProvider, useUserContext } from "./contexts/UserContext";
 import EditReviewPage from "./pages/EditReviewPage/EditReviewPage";
 import EditPasswordPage from "./pages/EditPasswordPage/EditPasswordPage";
 import NotAllowedPage from "./pages/NotAllowedPage/NotAllowedPage";
+import AboutPage from "./pages/AboutPage/AboutPage";
 
 const Router: React.FC = () => {
   const { user } = useUserContext();
@@ -20,6 +21,7 @@ const Router: React.FC = () => {
       <Route path="/" element={<HomePage />} />
       <Route path="/home" element={<HomePage />} />
       <Route path="/login" element={<LoginPage />} />
+      <Route path="/about" element={<AboutPage />} />
       <Route path="/signup" element={<SignupPage />} />
       <Route path="/search-restaurants/:query" element={<SearchPage />} />
       <Route path="/restaurants/:id" element={<RestaurantPage />} />
