@@ -56,7 +56,7 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps /*& Review*/ & { restaura
 
   //const image = reviewProps.imgs[0];
   const { user } = useUserContext();
-  const { createReview } = useReviewActions({ restoId: restaurantId, userId: user?.id || '' });
+  const { createReview } = useReviewActions({ restoId: restaurantId });
 
 
   const handleImageUpload = (event: ChangeEvent<HTMLInputElement>) => {

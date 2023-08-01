@@ -3,7 +3,8 @@ import Review from '../models/Review.js';
 
 export const replyToReview = async (req, res) => {
 	const { id } = req.params;
-	const { userId, body } = req.body;
+	const { body } = req.body;
+	const { userId } = req.session;
 
 	const foundReview = await Review.findById(id);
 	if (!foundReview) 
@@ -11,12 +12,9 @@ export const replyToReview = async (req, res) => {
 	if (foundReview.ownerReply)
 		return res.status(400).json({ message: "Reply already exists" });
 
-	const foundUser = await User.findById(userId);
-	if (!foundUser)
+	if (!(await User.findById(userId)))
 		return res.status(404).json({ message: "User not found" });
-	if (!foundUser.ownedRestaurant)
-		return res.status(401).json({ message: "Not an owner" });
-	if (foundUser.ownedRestaurant.toString() !== foundReview.restaurant.toString())
+	if (userId !== foundReview.restaurant.toString())
 		return res.status(401).json({ message: "Not an owner" });
 	
 	foundReview.ownerResponse = {

@@ -59,10 +59,7 @@ const ReviewCard: React.FC<ReviewCardProps> = (review) => {
 
   const { user } = useUserContext();
   const { replyToReview } = useOwnerActions(user?.id || "");
-  const { voteReview } = useReviewActions({
-    restoId: "",
-    userId: user?.id || "",
-  });
+  const { voteReview } = useReviewActions();
 
   const getTimeDifference = (specificDate: Date): string => {
     const currentDate: Date = new Date();

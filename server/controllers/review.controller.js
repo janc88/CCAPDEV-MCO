@@ -5,12 +5,14 @@ import Restaurant from "../models/Restaurant.js";
 import Image from "../models/Image.js";
 
 const sendReview = async (req, res, review, user) => {
-	let { userId } = req.body;
+	let userId;
 	
 	if (user) {
 		userId = user._id;
-	} else if (userId && !(await User.findById(userId))) {
-		return res.status(404).json({ error: "User not found" });
+	} else {
+		userId = req.session.userId;
+		if (!(await User.findById(userId)))
+			return res.status(404).json({ error: "User not found" });
 	}
 
 	if (userId)
@@ -19,12 +21,14 @@ const sendReview = async (req, res, review, user) => {
 		res.status(200).json(review.publicView());
 };
 const sendAllReviews = async (req, res, reviews, user) => {
-	let { userId } = req.body;
-
+	let userId;
+	
 	if (user) {
 		userId = user._id;
-	} else if (userId && !(await User.findById(userId))) {
-		return res.status(404).json({ error: "User not found" });
+	} else {
+		userId = req.session.userId;
+		if (!(await User.findById(userId)))
+			return res.status(404).json({ error: "User not found" });
 	}
 	
 	if (userId)
@@ -81,11 +85,12 @@ const getReviewsByUserId = async (req, res) => {
 
 const createReview = async (req, res) => {
   try {
-    const { title, body, stars, user, restaurant } = req.body;
+    const { title, body, stars, restaurant } = req.body;
+	const { userId } = req.session;
 	const images = req.files || [];
 	const date = new Date();
 	
-	const foundUser = await User.findById(user);
+	const foundUser = await User.findById(userId);
 	if (!foundUser) 
 		return res.status(404).json({ error: "User not found" });
 
@@ -106,7 +111,7 @@ const createReview = async (req, res) => {
       title,
       body,
       datePosted: date,
-      user,
+      user: userId,
       restaurant,
       stars,
 	  upvotes: [],
@@ -135,7 +140,8 @@ const createReview = async (req, res) => {
 const updateReview = async (req, res) => {
 	try {
 		const { id } = req.params;
-		const { title, body, stars, userId } = req.body;
+		const { title, body, stars } = req.body;
+		const { userId } = req.session;
 		const images = req.files || [];
 
 		const foundReview = await Review.findById(id);
@@ -184,13 +190,16 @@ const updateReview = async (req, res) => {
 const voteReview = async (req, res) => {
 	try {
 		const { id } = req.params;
-		const { userId, voteType } = req.body;
+		const { voteType } = req.body;
+		const { userId } = req.session;
+
+		const foundUser = await User.findById(userId);
+		if (!foundUser)
+			return res.status(404).json({ error: "User not found" });
 
 		const foundReview = await Review.findById(id);
 		if (!foundReview)
 			return res.status(404).json({ error: "Review not found" });
-		
-		const foundUser = await User.findById(foundReview.user);
 		
 		const session = await mongoose.startSession();
 		session.startTransaction();
@@ -219,7 +228,7 @@ const deleteReview = async (req, res) => {
 	try {
 		const { reviewId } = req.params;
 
-		const { userId } = req.body;
+		const { userId } = req.session;
 
 		const foundReview = await Review.findById(reviewId);
 

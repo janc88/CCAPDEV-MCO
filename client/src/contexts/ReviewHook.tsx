@@ -35,7 +35,7 @@ export interface ReviewData {
 interface ReviewActionsType extends UseReviewsType {
 	createReview: (data: ReviewData) => Promise<Review>;
 	editReview: (id: string, data: ReviewData) => Promise<Review>;
-	deleteReview: (id: string) => Promise<void>;
+	deleteReview: (id: string) => Promise<boolean>;
 	voteReview: (id: string, type: "up" | "down" | "none") => Promise<void>;
 }
 
@@ -92,13 +92,12 @@ export const useReviews = (): UseReviewsType => {
 	}
 }
 
-export const useReviewActions = ({
-	restoId, userId
-}: {
-	restoId: string,
-	userId: string,
-}): ReviewActionsType => {
 
+interface ReviewActionsProps {
+	restoId?: string;
+}
+export const useReviewActions = (data: ReviewActionsProps = {}): ReviewActionsType => {
+	const restoId = data?.restoId || "";
 	const methods = useReviews();
 
 	const createReview = useCallback(async ({
@@ -110,7 +109,6 @@ export const useReviewActions = ({
 		const formData = new FormData();
 		formData.append('title', title);
 		formData.append('body', body);
-		formData.append('user', userId);
 		formData.append('restaurant', restoId);
 		formData.append('stars', stars.toString());
 		for (const img of imgs)
@@ -118,13 +116,14 @@ export const useReviewActions = ({
 
 		const response = await fetch("http://localhost:8080/api/reviews/", {
 			method: "POST",
-			body: formData
+			body: formData,
+			credentials: 'include',
 		});
 		const data = await response.json();
 		if (!response.ok)
 			throw new Error("Error creating review");
 		return data;
-	}, [restoId, userId]);
+	}, [restoId]);
 
 	const editReview = useCallback(async (id: string, {
 		title, 
@@ -132,10 +131,32 @@ export const useReviewActions = ({
 		stars,
 		imgs,
 	}: ReviewData) => {
-		throw new Error("Not implemented");
+		const reviewId = id;
+	
+		const formData = new FormData();
+		formData.append("title", title);
+		formData.append("body", body);
+		formData.append("stars", stars.toString());
+		for (const img of imgs)
+			formData.append('imgs', img);
+	
+		const response = await fetch(`http://localhost:8080/api/reviews/${reviewId}`, {
+			method: 'PATCH',
+			body: formData,
+			credentials: 'include',
+		});
+		if (!response.ok)
+			throw new Error("Error editing review");
+		const data = await response.json();
+		return data
 	}, []);
 	const deleteReview = useCallback(async (id: string) => {
-		throw new Error("Not implemented");
+		const response = await fetch(`http://localhost:8080/api/reviews/${id}`, {
+			method: 'DELETE',
+			headers: { 'Content-Type': 'application/json' },
+			credentials: 'include',
+		});
+		return response.ok;
 	}, []);
 	const voteReview = useCallback(async (id: string, type: "up" | "down" | "none") => {
 		const response = await fetch(`http://localhost:8080/api/reviews/vote/${id}`, {
@@ -144,14 +165,14 @@ export const useReviewActions = ({
 				"Content-Type": "application/json"
 			},
 			body: JSON.stringify({
-				voteType: type,
-				userId: userId
-			})
+				voteType: type
+			}),
+			credentials: 'include',
 		});
 		const data = await response.json();
 		if (!response.ok)
 			alert(JSON.stringify(data));
-	}, [userId]);
+	}, []);
 
 	return {
 		...methods,

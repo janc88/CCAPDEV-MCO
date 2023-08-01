@@ -22,11 +22,13 @@ import { CancelButton, SaveButton } from "../EditProfilePage/EditProfilePage.sty
 import { FileContainer, ImageGrid, ImageIcon, ImgCardContainer, ImgContainer, RatingText, Uploadtext, WriteRating } from "../../components/ModalPopups/ModalPopup";
 import ImageWithCloseButton from "../../components/ModalPopups/ImageClose";
 import Rating from "../../components/ModalPopups/Ratings";
+import { useReviewActions } from "../../contexts/ReviewHook";
 
 export const EditReviewPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { state } = location;
+  const { editReview } = useReviewActions();
 
   const [images, setImages] = useState<string[]>(state.imgs);
   const [imageFiles, setImageFiles] = useState<File[]>([]);
@@ -50,32 +52,18 @@ export const EditReviewPage = () => {
   };
 
   const saveModal = async () => {
-    try {
-      const reviewId = state.id;
-      const userId = state.user;
-
-      const formData = new FormData();
-      formData.append("title", updatedTitle);
-      formData.append("body", updatedBody);
-      formData.append("stars", rating.toString());
-
-      for (const img of imageFiles)
-        formData.append('imgs', img);
-
-      const response = await fetch(`http://localhost:8080/api/reviews/${reviewId}`, {
-        method: 'PATCH',
-        body: formData
-      });
-
-      if (response.ok) {
-        navigate(-1);
-        console.log("Review updated");
-      } else {
-        throw new Error('Failed to update review');
-      }
-    } catch (error) {
-      console.error(error);
-    }
+	const review = await editReview(state.id, {
+		title: updatedTitle,
+		body: updatedBody,
+		stars: rating,
+		imgs: imageFiles
+	});
+	if (review) {
+		navigate(-1);
+		console.log("Review updated");
+	} else {
+		throw new Error('Failed to update review');
+	}
   };
   
 

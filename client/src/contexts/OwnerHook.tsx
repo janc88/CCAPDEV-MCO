@@ -16,8 +16,8 @@ export const useOwnerActions = (
 			},
 			body: JSON.stringify({ 
 				body: reply,
-				userId: ownerId,
 			}),
+			credentials: 'include',
 		});
 		const data = await response.json();
 		if (response.status === 200) {
