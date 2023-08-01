@@ -14,12 +14,13 @@ import ownerRouter from "./routes/owner.routes.js";
 import FixReferences from "./scripts/FixReferences.js";
 
 
-
-
 dotenv.config();
 
 const app = express();
-app.use(cors());
+app.use(cors({
+    origin: true,
+    credentials: true,
+}));
 app.use(express.json({ limit: "50mb" }));
 
 const store = new (MongoDBStore(session))({
@@ -27,7 +28,6 @@ const store = new (MongoDBStore(session))({
 	collectionName: 'sessions',
 	ttl: 30 * 24 * 60 * 60,
 });
-app.set('trust proxy', 1);
 app.use(
 	session({
 		secret: process.env.SESSION_SECRET,
@@ -35,7 +35,7 @@ app.use(
 		saveUninitialized: false,
 		cookie: {
 			maxAge: 30 * 24 * 60 * 60 * 1000,
-			sameSite: "none",
+			sameSite: "lax",
 		},
 		store: store,
 	})

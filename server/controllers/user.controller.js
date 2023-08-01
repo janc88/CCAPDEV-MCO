@@ -36,13 +36,19 @@ const isUsernameTaken = async (req, res) => {
 const createUser = async (req, res) => {
   try {
     const { username, description, password } = req.body;
-	const hashpword  = crypto.SHA256(password).toString()
-	const avatar = req.file || await getDefaultAvatar();
-	const desc = description || defaults.user.description;
+	if (!username || username.length < 8) {
+		return res.status(409).json({ error: "Username must be at least 8 characters long" });
+	} else if (!password || password.length < 8) {
+		return res.status(409).json({ error: "Password must be at least 8 characters long" });
+	}
 	const userExists = await User.findOne({ username });
 	if (userExists) {
 		return res.status(409).json({ error: "Username already taken" });
 	}
+
+	const hashpword = crypto.SHA256(password).toString();
+	const avatar = req.file || await getDefaultAvatar();
+	const desc = description || defaults.user.description;
 
 	const session = await mongoose.startSession();
 	session.startTransaction();
@@ -59,7 +65,7 @@ const createUser = async (req, res) => {
 	await session.commitTransaction();
 	session.endSession();
 
-	//req.session.userId = newUser._id.toString();
+	req.session.userId = newUser._id.toString();
     res.status(200).json(newUser.userInfo());
   } catch (error) {
 	console.error(error);
@@ -69,8 +75,8 @@ const createUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
 	try {
-		const { username } = req.params;
-		const user = await User.findOne({ username });
+		const { userId } = req.session;
+		const user = await User.findById(userId);
 		if (!user) {
 			return res.status(409).json({ error: "User does not exist!" });
 		}
@@ -80,28 +86,28 @@ const updateUser = async (req, res) => {
 		
 		const {description, old_password, new_password} = req.body;
 		const avatar = req.file;
-		const newData = {};
 
 		if (description !== undefined)
-			newData.description = description;
+			user.description = description;
 		if (new_password !== undefined) {
-			if (user.password !== crypto.SHA256(old_password).toString()) {
+			if (new_password.length < 8) {
+				return res.status(409).json({ error: "Password must be at least 8 characters long" });
+			} else if (user.password !== crypto.SHA256(old_password).toString()) {
 				return res.status(409).json({ error: "Wrong password!" });
 			}
-			newData.password = crypto.SHA256(new_password).toString();
+			user.password = crypto.SHA256(new_password).toString();
 		}
 		if (avatar !== undefined) {
 			await Image.deleteOne({ _id: user.avatar }, { session });
 			const newImage = await Image.uploadImage(avatar, session);
-			newData.avatar = newImage._id;
+			user.avatar = newImage._id;
 		}
-		await user.updateOne(newData, { session });
+		await user.save({ session });
 
 		await session.commitTransaction();
 		session.endSession();
 
-		const newUser = await User.findOne({ username })
-		res.status(200).json(newUser.userInfo());
+		res.status(200).json(user.userInfo());
 	} catch (error) {
 		console.error(error);
 		res.status(500).json({ error: error.message });
@@ -112,7 +118,7 @@ const getUserInfoByUserid = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const user = await User.findOne({ _id: id });
+    const user = await User.findById(id);
 
     if (!user) {
       return res.status(404).json({ error: "User not found" });
@@ -132,14 +138,11 @@ const loginUser = async (req, res) => {
 
 		if (!user) {
 			return res.status(404).json({ error: "User not found" });
-		}
-		
-		if (user.password !== hashedPassword) {
+		} else if (user.password !== hashedPassword) {
 			return res.status(401).json({ error: "Wrong password" });
 		}
-		console.log(req.session)
+
 		req.session.userId = user._id.toString();
-		console.log(req.session)
 		res.status(200).json(user.userInfo());
 	} catch (error) {
 		res.status(500).json({ error: error.message });
@@ -148,20 +151,25 @@ const loginUser = async (req, res) => {
 
 const getLoggedInUser = async (req, res) => {
 	try {
-	  console.log(req.session);
-	  if (req.session && req.session.userId) {
-		const user = await User.findOne({ _id: req.session.userId });
-		if (user)
-		  res.status(200).json(user.userInfo());
-		else
-		  res.status(404).json({ message: 'User not found' });
-	  } else {
-		res.status(200).json(null);
-	  }
+	  const { userId } = req.session;
+	  const user = await User.findById(userId);
+	  if (user)
+		res.status(200).json(user.userInfo());
+	  else
+		res.status(404).json({ message: 'User not found' });
 	} catch (error) {
 	  res.status(500).json({ error: error.message });
 	}
-  };
+};
+
+const logoutUser = async (req, res) => {
+	try {
+		req.session.destroy();
+		res.status(200).json({ message: "Logged out successfully" });
+	} catch (error) {
+		res.status(500).json({ error: error.message });
+	}
+}
   
 export { 
 	createUser, 
@@ -169,5 +177,6 @@ export {
 	isUsernameTaken, 
 	updateUser, 
 	loginUser,
-	getLoggedInUser
+	getLoggedInUser,
+	logoutUser
 };

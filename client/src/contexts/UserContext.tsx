@@ -1,6 +1,5 @@
 import React, { ReactNode, createContext, useState, useEffect, useCallback, useContext } from 'react';
 import { useUser, userHook } from './UserHook';
-import Cookies from 'js-cookie';
 
 export interface User {
 	id: string;
@@ -16,7 +15,7 @@ interface UserContextType extends userHook {
 	/**
 	 * clears user from cookies and state
 	 */
-	logout: () => void;
+	logout: () => Promise<void>;
 	/**
 	 * sets user in cookies and state
 	 * @returns User if valid, null otherwise
@@ -29,60 +28,60 @@ interface UserContextType extends userHook {
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
-	const [user, _setUser] = useState<User | null>(null);
+	const [user, setUser] = useState<User | null>(null);
 	const hook = useUser();
 
 	useEffect(() => {
-		const savedUser = Cookies.get('user');
-		if (savedUser) {
-			const parsedUser = JSON.parse(savedUser);
-			_setUser(parsedUser);
-		}
+		(async () => {
+			const response = await fetch("http://localhost:8080/api/users/me", {
+				method: "GET",
+				credentials: 'include'
+			});
+			if (response.ok)
+				setUser(await response.json());
+		})();
 	}, []);
-	const setUser = useCallback((user: User) => {
-		Cookies.set('user', JSON.stringify(user));
-		_setUser(user);
-	}, []);
-	const logout = useCallback(() => {
-		Cookies.remove('user');
-		_setUser(null);
+
+	const logout = useCallback(async () => {
+		const response = await fetch("http://localhost:8080/api/users/logout", {
+			method: "POST",
+			credentials: 'include'
+		});
+		await response.json();
+		if (!response.ok)
+			throw new Error("Error logging out");
+		setUser(null);
 	}, []);
 
 
 	const updatePassword = useCallback(async (old_password: string, new_password: string) => {
-		if (user === null)
-			throw new Error("User does not exist!");
-		const formData = new FormData();
-		
-		formData.append('old_password', old_password);
-		formData.append('new_password', new_password);
-
-		const response = await fetch(`http://localhost:8080/api/users/update/${user.username}`, {
+		const response = await fetch(`http://localhost:8080/api/users/update/`, {
 			method: "PATCH",
-			body: formData
+			headers: { 'Content-Type': 'application/json' },
+			credentials: 'include',
+			body: JSON.stringify({ old_password, new_password })
 		});
 		await response.json();
 		if (!response.ok)
 			throw new Error("Error updating password");
-	}, [user]);
+	}, []);
 
 	const updateUser = useCallback(async (description: string, avatar: File | null) => {
-		if (user === null)
-			throw new Error("User does not exist!");
 		const formData = new FormData();
 		formData.append('description', description);
 		if (avatar !== null)
 			formData.append('avatar', avatar);
 
-		const response = await fetch(`http://localhost:8080/api/users/update/${user.username}`, {
+		const response = await fetch(`http://localhost:8080/api/users/update/`, {
 			method: "PATCH",
+			credentials: 'include',
 			body: formData
 		});
 		const data = await response.json();
 		if (!response.ok)
 			throw new Error("Error updating user");
 		setUser(data);
-	}, [user, setUser]);
+	}, []);
 
 
 	const login = useCallback(async (username: string, password: string) => {
@@ -91,6 +90,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 			headers: {
 				'Content-Type': 'application/json'
 			},
+			credentials: 'include',
 			body: JSON.stringify({ username, password })
 		});
 		if (!response.ok)
@@ -109,7 +109,8 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 
 		const response = await fetch("http://localhost:8080/api/users/", {
 			method: "POST",
-			body: formData
+			body: formData,
+			credentials: 'include'
 		});
 		await response.json();
 		if (!response.ok)
