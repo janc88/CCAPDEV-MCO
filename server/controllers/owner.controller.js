@@ -12,9 +12,10 @@ export const replyToReview = async (req, res) => {
 	if (foundReview.ownerReply)
 		return res.status(400).json({ message: "Reply already exists" });
 
-	if (!(await User.findById(userId)))
+	const user = await User.findById(userId)
+	if (!user)
 		return res.status(404).json({ message: "User not found" });
-	if (userId !== foundReview.restaurant.toString())
+	if (!user.ownedRestaurant.equals(foundReview.restaurant))
 		return res.status(401).json({ message: "Not an owner" });
 	
 	foundReview.ownerResponse = {

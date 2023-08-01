@@ -152,6 +152,8 @@ export const useReviewActions = (data: ReviewActionsProps = {}): ReviewActionsTy
 			headers: { 'Content-Type': 'application/json' },
 			credentials: 'include',
 		});
+		if (!response.ok)
+			console.error(JSON.stringify(await response.json()));
 		return response.ok;
 	}, []);
 	const voteReview = useCallback(async (id: string, type: "up" | "down" | "none") => {
