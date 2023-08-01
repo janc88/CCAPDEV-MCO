@@ -5,8 +5,6 @@ const UserSchema = new mongoose.Schema({
 	type: String, 
 	required: true, 
 	unique: true,
-	//minlength: 8,	// there are some usernames that are shorter than 8 characters
-					// which will cause errors when trying to log in
   },
   description: { type: String },
   password: { type: String, required: true },
