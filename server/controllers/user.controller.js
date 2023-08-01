@@ -3,6 +3,7 @@ import User from "../models/User.js";
 import Image from "../models/Image.js"
 import defaults from "../defaults/defaults.json" assert { type: "json" };
 import fs from "fs";
+import crypto from "crypto-js"
 
 const getDefaultAvatar = async () => {
 	const avatar = defaults.user.avatar;
@@ -35,6 +36,7 @@ const isUsernameTaken = async (req, res) => {
 const createUser = async (req, res) => {
   try {
     const { username, description, password } = req.body;
+	const hashpword  = crypto.SHA256(password).toString()
 	const avatar = req.file || await getDefaultAvatar();
 	const desc = description || defaults.user.description;
 	const userExists = await User.findOne({ username });
@@ -50,7 +52,7 @@ const createUser = async (req, res) => {
     const newUser = new User({
 		username,
 		description: desc,
-		password,
+		password: hashpword,
 		avatar: newImage._id,
 	});
     await newUser.save({session});
@@ -82,10 +84,10 @@ const updateUser = async (req, res) => {
 		if (description !== undefined)
 			newData.description = description;
 		if (new_password !== undefined) {
-			if (user.password !== old_password) {
+			if (user.password !== crypto.SHA256(old_password).toString()) {
 				return res.status(409).json({ error: "Wrong password!" });
 			}
-			newData.password = new_password;
+			newData.password = crypto.SHA256(new_password).toString();
 		}
 		if (avatar !== undefined) {
 			await Image.deleteOne({ _id: user.avatar }, { session });
@@ -123,8 +125,9 @@ const getUserInfoByUserid = async (req, res) => {
 
 const loginUser = async (req, res) => {
 	try {
-		const { username, hashedPassword } = req.body;
+		const { username, password } = req.body;
 		const user = await User.findOne({ username });
+		const hashedPassword = crypto.SHA256(password).toString();
 
 		if (!user) {
 			return res.status(404).json({ error: "User not found" });
