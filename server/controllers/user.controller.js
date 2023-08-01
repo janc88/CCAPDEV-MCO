@@ -59,6 +59,7 @@ const createUser = async (req, res) => {
 	await session.commitTransaction();
 	session.endSession();
 
+	//req.session.userId = newUser._id.toString();
     res.status(200).json(newUser.userInfo());
   } catch (error) {
 	console.error(error);
@@ -136,10 +137,37 @@ const loginUser = async (req, res) => {
 		if (user.password !== hashedPassword) {
 			return res.status(401).json({ error: "Wrong password" });
 		}
-
+		console.log(req.session)
+		req.session.userId = user._id.toString();
+		console.log(req.session)
 		res.status(200).json(user.userInfo());
 	} catch (error) {
 		res.status(500).json({ error: error.message });
 	}
 };
-export { createUser, getUserInfoByUserid, isUsernameTaken, updateUser, loginUser };
+
+const getLoggedInUser = async (req, res) => {
+	try {
+	  console.log(req.session);
+	  if (req.session && req.session.userId) {
+		const user = await User.findOne({ _id: req.session.userId });
+		if (user)
+		  res.status(200).json(user.userInfo());
+		else
+		  res.status(404).json({ message: 'User not found' });
+	  } else {
+		res.status(200).json(null);
+	  }
+	} catch (error) {
+	  res.status(500).json({ error: error.message });
+	}
+  };
+  
+export { 
+	createUser, 
+	getUserInfoByUserid, 
+	isUsernameTaken, 
+	updateUser, 
+	loginUser,
+	getLoggedInUser
+};

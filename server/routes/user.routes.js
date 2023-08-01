@@ -5,7 +5,8 @@ import {
   getUserInfoByUserid,
   isUsernameTaken,
   updateUser,
-  loginUser
+  loginUser,
+  getLoggedInUser,
 } from "../controllers/user.controller.js";
 
 const router = express.Router();
@@ -14,8 +15,9 @@ const upload = multer();
 router.route('/taken/:username').get(isUsernameTaken);
 router.route('/').post(upload.single('avatar'), createUser);
 router.route('/update/:username').patch(upload.single('avatar'), updateUser);
-router.route('/:id').get(getUserInfoByUserid);
+router.route('/user/:id').get(getUserInfoByUserid);
 router.route('/login').post(loginUser);
+router.route('/me').get(getLoggedInUser);
 
 export default router;
 

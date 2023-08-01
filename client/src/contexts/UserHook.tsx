@@ -21,7 +21,7 @@ export const useUser = (): userHook => {
 	}, []);
 
 	const fetchUserDetails = useCallback(async (id: string): Promise<User|null> => {
-		const response = await fetch(`http://localhost:8080/api/users/${id}`, {
+		const response = await fetch(`http://localhost:8080/api/users/user/${id}`, {
 			method: "GET"
 		});
 		if (!response.ok)
