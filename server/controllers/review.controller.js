@@ -148,7 +148,7 @@ const updateReview = async (req, res) => {
 		if (!foundReview)
 			return res.status(404).json({ error: "Review not found" });
 
-		if (foundReview.user.equals(userId))
+		if (foundReview.user.toString() !== userId)
 			return res.status(403).json({ error: "User not authorized" });
 
 		const foundResto = await Restaurant.findById(foundReview.restaurant);
@@ -191,16 +191,16 @@ const voteReview = async (req, res) => {
 	try {
 		const { id } = req.params;
 		const { voteType } = req.body;
-		const { userId } = req.session;
+		let { userId } = req.session;
 
 		const foundUser = await User.findById(userId);
 		if (!foundUser)
 			return res.status(404).json({ error: "User not found" });
+		userId = foundUser._id;
 
 		const foundReview = await Review.findById(id);
 		if (!foundReview)
 			return res.status(404).json({ error: "Review not found" });
-		
 		const session = await mongoose.startSession();
 		session.startTransaction();
 		

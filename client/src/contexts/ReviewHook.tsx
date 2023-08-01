@@ -22,8 +22,8 @@ export interface Review {
 }
 
 interface UseReviewsType {
-	fetchReviews: (userId: string, resto: {restoId: string}) => Promise<Review[] | null>;
-	fetchUserReviews: (userId: string, user: {userId: string}) => Promise<Review[] | null>;
+	fetchReviews: (resto: {restoId: string}) => Promise<Review[] | null>;
+	fetchUserReviews: (user: {userId: string}) => Promise<Review[] | null>;
 }
 
 export interface ReviewData {
@@ -40,15 +40,13 @@ interface ReviewActionsType extends UseReviewsType {
 }
 
 export const useReviews = (): UseReviewsType => {
-	const fetchReviews = useCallback(async (userId, {restoId}) => {
+	const fetchReviews = useCallback(async ({restoId}) => {
 		const response = await fetch(`http://localhost:8080/api/reviews/resto/${restoId}`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json"
 			},
-			body: JSON.stringify({
-				userId: userId
-			})
+			credentials: "include"
 		});
 		if (!response.ok)
 			return null;
@@ -63,15 +61,13 @@ export const useReviews = (): UseReviewsType => {
 		return fetchedReviews;
 	}, []);
 
-	const fetchUserReviews = useCallback(async (reqUserId, {userId}) => {
+	const fetchUserReviews = useCallback(async ({userId}) => {
 		const response = await fetch(`http://localhost:8080/api/reviews/user/${userId}`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json"
 			},
-			body: JSON.stringify({
-				userId: reqUserId
-			})
+			credentials: "include"
 		});
 		if (!response.ok)
 			return null;
@@ -145,9 +141,9 @@ export const useReviewActions = (data: ReviewActionsProps = {}): ReviewActionsTy
 			body: formData,
 			credentials: 'include',
 		});
-		if (!response.ok)
-			throw new Error("Error editing review");
 		const data = await response.json();
+		if (!response.ok) 
+			throw new Error(JSON.stringify(data));
 		return data
 	}, []);
 	const deleteReview = useCallback(async (id: string) => {

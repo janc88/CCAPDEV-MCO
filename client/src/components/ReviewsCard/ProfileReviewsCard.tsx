@@ -26,7 +26,7 @@ const ProfileReviewsCard: React.FC<ReviewsCardProps> = ({
   const { user } = useUserContext();
   const {fetchUserReviews} = useReviews();
   useEffect(() => {
-	fetchUserReviews(user?.id || '', { userId: userID }).then((reviews) => {
+	fetchUserReviews({ userId: userID }).then((reviews) => {
 		setReviewList(reviews ?? []);
 	});
   }, [fetchUserReviews, user, userID]);
