@@ -9,7 +9,7 @@ export const useOwnerActions = (
 	ownerId: string,
 ): OwnerActionsType => {
 	const replyToReview = async (reviewId: string, reply: string): Promise<Review | null> => {
-		const response = await fetch(`http://localhost:8080/api/owners/reply/${reviewId}`, {
+		const response = await fetch(`${process.env.REACT_APP_API_URL}/api/owners/reply/${reviewId}`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',

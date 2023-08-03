@@ -75,7 +75,7 @@ ReviewSchema.methods.publicView = async function () {
 		stars: this.stars,
 		votes: this.votes,
 		ownerResponse: response,
-		imgs: this.imgs.map((img) => 'http://localhost:8080/api/images/' + img),
+		imgs: this.imgs.map((img) => `https://ccapdev-mco-backend.onrender.com/api/images/` + img),
 		lastEdited: this.lastEdited || null
 	  };
 };

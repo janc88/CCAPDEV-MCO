@@ -41,7 +41,7 @@ interface ReviewActionsType extends UseReviewsType {
 
 export const useReviews = (): UseReviewsType => {
 	const fetchReviews = useCallback(async ({restoId}) => {
-		const response = await fetch(`http://localhost:8080/api/reviews/resto/${restoId}`, {
+		const response = await fetch(`${process.env.REACT_APP_API_URL}/api/reviews/resto/${restoId}`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json"
@@ -62,7 +62,7 @@ export const useReviews = (): UseReviewsType => {
 	}, []);
 
 	const fetchUserReviews = useCallback(async ({userId}) => {
-		const response = await fetch(`http://localhost:8080/api/reviews/user/${userId}`, {
+		const response = await fetch(`${process.env.REACT_APP_API_URL}/api/reviews/user/${userId}`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json"
@@ -110,7 +110,7 @@ export const useReviewActions = (data: ReviewActionsProps = {}): ReviewActionsTy
 		for (const img of imgs)
 			formData.append('imgs', img);
 
-		const response = await fetch("http://localhost:8080/api/reviews/", {
+		const response = await fetch(`${process.env.REACT_APP_API_URL}/api/reviews/`, {
 			method: "POST",
 			body: formData,
 			credentials: 'include',
@@ -136,7 +136,7 @@ export const useReviewActions = (data: ReviewActionsProps = {}): ReviewActionsTy
 		for (const img of imgs)
 			formData.append('imgs', img);
 	
-		const response = await fetch(`http://localhost:8080/api/reviews/${reviewId}`, {
+		const response = await fetch(`${process.env.REACT_APP_API_URL}/api/reviews/${reviewId}`, {
 			method: 'PATCH',
 			body: formData,
 			credentials: 'include',
@@ -147,7 +147,7 @@ export const useReviewActions = (data: ReviewActionsProps = {}): ReviewActionsTy
 		return data
 	}, []);
 	const deleteReview = useCallback(async (id: string) => {
-		const response = await fetch(`http://localhost:8080/api/reviews/${id}`, {
+		const response = await fetch(`${process.env.REACT_APP_API_URL}/api/reviews/${id}`, {
 			method: 'DELETE',
 			headers: { 'Content-Type': 'application/json' },
 			credentials: 'include',
@@ -157,7 +157,7 @@ export const useReviewActions = (data: ReviewActionsProps = {}): ReviewActionsTy
 		return response.ok;
 	}, []);
 	const voteReview = useCallback(async (id: string, type: "up" | "down" | "none") => {
-		const response = await fetch(`http://localhost:8080/api/reviews/vote/${id}`, {
+		const response = await fetch(`${process.env.REACT_APP_API_URL}/api/reviews/vote/${id}`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json"

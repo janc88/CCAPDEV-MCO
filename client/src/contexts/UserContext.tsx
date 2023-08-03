@@ -33,7 +33,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 
 	useEffect(() => {
 		(async () => {
-			const response = await fetch("http://localhost:8080/api/users/me", {
+			const response = await fetch(`${process.env.REACT_APP_API_URL}/api/users/me`, {
 				method: "GET",
 				credentials: 'include'
 			});
@@ -43,7 +43,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 	}, []);
 
 	const logout = useCallback(async () => {
-		const response = await fetch("http://localhost:8080/api/users/logout", {
+		const response = await fetch(`${process.env.REACT_APP_API_URL}/api/users/logout`, {
 			method: "POST",
 			credentials: 'include'
 		});
@@ -55,7 +55,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 
 
 	const updatePassword = useCallback(async (old_password: string, new_password: string) => {
-		const response = await fetch(`http://localhost:8080/api/users/update/`, {
+		const response = await fetch(`${process.env.REACT_APP_API_URL}/api/users/update/`, {
 			method: "PATCH",
 			headers: { 'Content-Type': 'application/json' },
 			credentials: 'include',
@@ -72,7 +72,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 		if (avatar !== null)
 			formData.append('avatar', avatar);
 
-		const response = await fetch(`http://localhost:8080/api/users/update/`, {
+		const response = await fetch(`${process.env.REACT_APP_API_URL}/api/users/update/`, {
 			method: "PATCH",
 			credentials: 'include',
 			body: formData
@@ -85,7 +85,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 
 
 	const login = useCallback(async (username: string, password: string) => {
-		const response = await fetch(`http://localhost:8080/api/users/login`, {
+		const response = await fetch(`${process.env.REACT_APP_API_URL}/api/users/login`, {
 			method: "POST",
 			headers: {
 				'Content-Type': 'application/json'
@@ -107,7 +107,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 		formData.append('avatar', profilePicture);
 		formData.append('password', password);
 
-		const response = await fetch("http://localhost:8080/api/users/", {
+		const response = await fetch(`${process.env.REACT_APP_API_URL}/api/users/`, {
 			method: "POST",
 			body: formData,
 			credentials: 'include'

@@ -21,12 +21,13 @@ interface RestaurantsType {
  */
 export const useRestaurants = (): RestaurantsType => {
 	const fetchFeaturedRestaurants = useCallback(async () => {
-		const response = await fetch('http://localhost:8080/api/restaurants/featured');
+		const response = await fetch(`${process.env.REACT_APP_API_URL}/api/restaurants/featured`);
+		console.log(`${process.env.REACT_APP_API_URL}/api/restaurants/featured`)
 		return await response.json();
 	}, []);
 
 	const fetchRestaurant = useCallback(async (restaurantId: string): Promise<Restaurant | null> => {
-		const response = await fetch(`http://localhost:8080/api/restaurants/${restaurantId}`);
+		const response = await fetch(`${process.env.REACT_APP_API_URL}/api/restaurants/${restaurantId}`);
 		if (!response.ok)
 			return null;
 		return await response.json();;

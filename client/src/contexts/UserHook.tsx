@@ -9,7 +9,7 @@ export interface userHook {
 export const useUser = (): userHook => {
 	const usernameExists = useCallback(async (username: String) => {
 		console.log('checking username availability')
-		const response = await fetch(`http://localhost:8080/api/users/taken/${username}`, {
+		const response = await fetch(`${process.env.REACT_APP_API_URL}/api/users/taken/${username}`, {
 			method: "GET"
 		});
 		if (!response.ok) {
@@ -21,7 +21,7 @@ export const useUser = (): userHook => {
 	}, []);
 
 	const fetchUserDetails = useCallback(async (id: string): Promise<User|null> => {
-		const response = await fetch(`http://localhost:8080/api/users/user/${id}`, {
+		const response = await fetch(`${process.env.REACT_APP_API_URL}/api/users/user/${id}`, {
 			method: "GET"
 		});
 		if (!response.ok)

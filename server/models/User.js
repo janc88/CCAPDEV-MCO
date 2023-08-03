@@ -27,7 +27,7 @@ UserSchema.methods.userInfo = function () {
 		id: this._id,
 		username: this.username,
 		description: this.description,
-		avatar: 'http://localhost:8080/api/images/' + this.avatar,
+		avatar: `https://ccapdev-mco-backend.onrender.com/api/images/` + this.avatar,
 		ownedRestoId: this.ownedRestaurant || null
 	};
 };
