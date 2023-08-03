@@ -11,8 +11,6 @@ import restaurantRouter from "./routes/restaurant.routes.js";
 import imageRouter from "./routes/image.routes.js";
 import ownerRouter from "./routes/owner.routes.js";
 
-import FixReferences from "./scripts/FixReferences.js";
-
 
 dotenv.config();
 
@@ -35,14 +33,13 @@ app.use(
 		saveUninitialized: false,
 		cookie: {
 			maxAge: 30 * 24 * 60 * 60 * 1000,
-			sameSite: "lax",
+			sameSite: "none",
 		},
 		store: store,
 	})
 );
 
 app.get("/", async (req, res) => {
-	await FixReferences();
 	res.send({ message: "hello world" });
 });
 
