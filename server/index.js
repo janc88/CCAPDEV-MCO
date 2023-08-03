@@ -16,8 +16,8 @@ dotenv.config();
 
 const app = express();
 app.use(cors({
-    origin: true,
-    credentials: true,
+	origin: true,
+	credentials: true,
 }));
 app.use(express.json({ limit: "50mb" }));
 
@@ -34,6 +34,8 @@ app.use(
 		cookie: {
 			maxAge: 30 * 24 * 60 * 60 * 1000,
 			sameSite: "none",
+			secure: true,
+			domain: "ccapdev-mco-backend.onrender.com",
 		},
 		store: store,
 	})
