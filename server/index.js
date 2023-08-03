@@ -35,7 +35,7 @@ app.use(
 			maxAge: 30 * 24 * 60 * 60 * 1000,
 			sameSite: "none",
 			secure: true,
-			domain: "ccapdev-mco-backend.onrender.com",
+			domain: "restorant.onrender.com",
 		},
 		store: store,
 	})
