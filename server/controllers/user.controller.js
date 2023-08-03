@@ -1,7 +1,10 @@
 import mongoose from "mongoose";
 import User from "../models/User.js";
 import Image from "../models/Image.js"
-import defaults from "../defaults/defaults.json" assert { type: "json" };
+
+import { createRequire } from "module"; 
+const require = createRequire(import.meta.url); 
+const defaults = require("../defaults/defaults.json") 
 import fs from "fs";
 import crypto from "crypto-js"
 
