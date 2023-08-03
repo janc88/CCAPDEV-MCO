@@ -11,7 +11,7 @@ const sendReview = async (req, res, review, user) => {
 		userId = user._id;
 	} else {
 		userId = req.session.userId;
-		if (!(await User.findById(userId)))
+		if (userId && !(await User.findById(userId)))
 			return res.status(404).json({ error: "User not found" });
 	}
 
@@ -27,7 +27,7 @@ const sendAllReviews = async (req, res, reviews, user) => {
 		userId = user._id;
 	} else {
 		userId = req.session.userId;
-		if (!(await User.findById(userId)))
+		if (userId && !(await User.findById(userId)))
 			return res.status(404).json({ error: "User not found" });
 	}
 	
