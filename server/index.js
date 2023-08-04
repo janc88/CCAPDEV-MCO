@@ -33,18 +33,28 @@ app.use(
 		saveUninitialized: false,
 		cookie: {
 			maxAge: 30 * 24 * 60 * 60 * 1000,
-			// sameSite: "none",
-			// secure: true,
-			// domain: "restorant.onrender.com",
 		},
 		store: store,
 	})
 );
 
 app.get("/", async (req, res) => {
-	res.send({ message: "backend test 1" });
+	res.send({ 
+		message: "backend test 2",
+		env: {
+			SESSION_SECRET: process.env.SESSION_SECRET,
+			MONGODB_URL: process.env.MONGODB_URL,
+			PORT: process.env.PORT,
+			mode: process.env.NODE_ENV,
+		}
+	});
 });
 
+
+
+			// sameSite: "none",
+			// secure: true,
+			// domain: "restorant.onrender.com",
 app.use("/api/users", userRouter);
 app.use("/api/reviews", reviewRouter);
 app.use("/api/restaurants", restaurantRouter);
