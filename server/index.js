@@ -16,7 +16,7 @@ dotenv.config();
 
 const app = express();
 app.use(cors({
-	origin: "https://restorant.onrender.com",
+	origin: true,
 	credentials: true,
 }));
 app.use(express.json({ limit: "50mb" }));
@@ -42,7 +42,7 @@ app.use(
 
 app.get("/", async (req, res) => {
 	res.send({ 
-		message: "backend test 3",
+		message: "backend test 4",
 		env: {
 			SESSION_SECRET: process.env.SESSION_SECRET,
 			MONGODB_URL: process.env.MONGODB_URL,
