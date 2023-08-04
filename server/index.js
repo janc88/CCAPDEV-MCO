@@ -4,9 +4,6 @@ import cors from "cors";
 import mongoose from "mongoose";
 import session from "express-session";
 import MongoDBStore from "connect-mongodb-session"
-import bodyParser from "body-parser";
-import passport from "passport";
-import { Strategy as LocalStrategy } from "passport-local";
 
 import userRouter from "./routes/user.routes.js";
 import reviewRouter from "./routes/review.routes.js";
@@ -23,9 +20,6 @@ app.use(cors({
 	credentials: true,
 }));
 app.use(express.json({ limit: "50mb" }));
-app.use(express.urlencoded({ limit: "50mb", extended: true }));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
 
 const store = new (MongoDBStore(session))({
 	uri: process.env.MONGODB_URL,
@@ -39,8 +33,8 @@ app.use(
 		saveUninitialized: false,
 		cookie: {
 			maxAge: 30 * 24 * 60 * 60 * 1000,
-			// sameSite: "none",
-			// secure: true,
+			sameSite: "none",
+			secure: true,
 		},
 		store: store,
 	})
@@ -48,13 +42,15 @@ app.use(
 
 app.get("/", async (req, res) => {
 	res.send({ 
-		message: "backend test 6",
+		message: "backend test 5",
+		env: {
+			SESSION_SECRET: process.env.SESSION_SECRET,
+			MONGODB_URL: process.env.MONGODB_URL,
+			PORT: process.env.PORT,
+			mode: process.env.NODE_ENV,
+		}
 	});
 });
-
-app.use(passport.initialize());
-app.use(passport.session());
-
 app.use("/api/users", userRouter);
 // app.use("/api/reviews", reviewRouter);
 // app.use("/api/restaurants", restaurantRouter);
@@ -64,10 +60,7 @@ app.use("/api/users", userRouter);
 const connectDB = (url) => {
 	mongoose.set("strictQuery", true);
 	mongoose
-		.connect(url,  {
-			useNewUrlParser: true,
-			useUnifiedTopology: true,
-		})
+		.connect(url)
 		.then(() => console.log("MongoDB connected"))
 		.catch((error) => console.log(error));
 };
