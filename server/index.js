@@ -41,7 +41,7 @@ app.use(
 
 app.get("/", async (req, res) => {
 	res.send({ 
-		message: "backend test 2",
+		message: "backend test 3",
 		env: {
 			SESSION_SECRET: process.env.SESSION_SECRET,
 			MONGODB_URL: process.env.MONGODB_URL,
