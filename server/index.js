@@ -16,7 +16,7 @@ dotenv.config();
 
 const app = express();
 app.use(cors({
-	origin: true,
+	origin: "https://restorant.onrender.com",
 	credentials: true,
 }));
 app.use(express.json({ limit: "50mb" }));
@@ -24,7 +24,7 @@ app.use(express.json({ limit: "50mb" }));
 const store = new (MongoDBStore(session))({
 	uri: process.env.MONGODB_URL,
 	collectionName: 'sessions',
-	ttl: 30 * 24 * 60 * 60,
+	ttl: 30 * 24 * 60 * 60, // 30 days
 });
 app.use(
 	session({
@@ -33,16 +33,16 @@ app.use(
 		saveUninitialized: false,
 		cookie: {
 			maxAge: 30 * 24 * 60 * 60 * 1000,
-			sameSite: "none",
-			secure: true,
-			domain: "restorant.onrender.com",
+			// sameSite: "none",
+			// secure: true,
+			// domain: "restorant.onrender.com",
 		},
 		store: store,
 	})
 );
 
 app.get("/", async (req, res) => {
-	res.send({ message: "hello world" });
+	res.send({ message: "backend test 1" });
 });
 
 app.use("/api/users", userRouter);
