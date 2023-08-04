@@ -42,7 +42,7 @@ app.use(
 
 app.get("/", async (req, res) => {
 	res.send({ 
-		message: "backend test 4",
+		message: "backend test 5",
 		env: {
 			SESSION_SECRET: process.env.SESSION_SECRET,
 			MONGODB_URL: process.env.MONGODB_URL,
@@ -52,10 +52,10 @@ app.get("/", async (req, res) => {
 	});
 });
 app.use("/api/users", userRouter);
-app.use("/api/reviews", reviewRouter);
-app.use("/api/restaurants", restaurantRouter);
-app.use("/api/images", imageRouter);
-app.use("/api/owners", ownerRouter);
+// app.use("/api/reviews", reviewRouter);
+// app.use("/api/restaurants", restaurantRouter);
+// app.use("/api/images", imageRouter);
+// app.use("/api/owners", ownerRouter);
 
 const connectDB = (url) => {
 	mongoose.set("strictQuery", true);
