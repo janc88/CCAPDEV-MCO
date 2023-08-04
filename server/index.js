@@ -34,6 +34,7 @@ app.use(
 		cookie: {
 			maxAge: 30 * 24 * 60 * 60 * 1000,
 			sameSite: "none",
+			secure: true,
 		},
 		store: store,
 	})
@@ -50,12 +51,6 @@ app.get("/", async (req, res) => {
 		}
 	});
 });
-
-
-
-			// sameSite: "none",
-			// secure: true,
-			// domain: "restorant.onrender.com",
 app.use("/api/users", userRouter);
 app.use("/api/reviews", reviewRouter);
 app.use("/api/restaurants", restaurantRouter);
