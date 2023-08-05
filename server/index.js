@@ -2,14 +2,13 @@ import express from "express";
 import * as dotenv from "dotenv";
 import cors from "cors";
 import mongoose from "mongoose";
-import session from "express-session";
-import MongoDBStore from "connect-mongodb-session"
 
 import userRouter from "./routes/user.routes.js";
 import reviewRouter from "./routes/review.routes.js";
 import restaurantRouter from "./routes/restaurant.routes.js";
 import imageRouter from "./routes/image.routes.js";
 import ownerRouter from "./routes/owner.routes.js";
+import session from "./controllers/session.controller.js";
 
 
 dotenv.config();
@@ -21,35 +20,13 @@ app.use(cors({
 }));
 app.use(express.json({ limit: "50mb" }));
 
-const store = new (MongoDBStore(session))({
-	uri: process.env.MONGODB_URL,
-	collectionName: 'sessions',
-	expires: 1000 * 60 * 60 * 24 * 30, // 30 days
-	connectionOptions: {
-		useNewUrlParser: true,
-		useUnifiedTopology: true,
-	}
-});
-app.use(
-	session({
-		secret: process.env.SESSION_SECRET,
-		resave: false,
-		saveUninitialized: false,
-		cookie: {
-			maxAge: 30 * 24 * 60 * 60 * 1000,
-			sameSite: "none",
-			secure: true,
-		},
-		store: store,
-	})
-);
-
 app.get("/", async (req, res) => {
 	res.send({ 
 		message: "Hello World!",
 	});
 });
 
+app.use(session);
 app.use("/api/users", userRouter);
 app.use("/api/reviews", reviewRouter);
 app.use("/api/restaurants", restaurantRouter);

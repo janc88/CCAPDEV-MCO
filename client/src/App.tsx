@@ -13,6 +13,7 @@ import EditReviewPage from "./pages/EditReviewPage/EditReviewPage";
 import EditPasswordPage from "./pages/EditPasswordPage/EditPasswordPage";
 import NotAllowedPage from "./pages/NotAllowedPage/NotAllowedPage";
 import AboutPage from "./pages/AboutPage/AboutPage";
+import { SessionProvider } from "./contexts/SessionHook";
 
 const Router: React.FC = () => {
   const { user } = useUserContext();
@@ -47,10 +48,12 @@ const Router: React.FC = () => {
 
 function App() {
   return (
-    <UserProvider>
-      <Navbar />
-      <Router />
-    </UserProvider>
+	<SessionProvider>
+		<UserProvider>
+		<Navbar />
+		<Router />
+		</UserProvider>
+	</SessionProvider>
   );
 }
 
