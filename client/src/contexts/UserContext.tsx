@@ -37,7 +37,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 		(async () => {
 			const response = await fetch(`${process.env.REACT_APP_API_URL}/api/users/me`, {
 				method: "GET",
-				credentials: 'include'
+				credentials: 'include' 
 			});
 			if (response.ok)
 				setUser(await response.json());
