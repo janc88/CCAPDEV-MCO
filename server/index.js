@@ -42,7 +42,7 @@ app.use(
 
 app.get("/", async (req, res) => {
 	res.send({ 
-		message: "Hello World",
+		message: "backend test -1",
 	});
 });
 
