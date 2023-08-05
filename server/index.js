@@ -5,8 +5,6 @@ import mongoose from "mongoose";
 import session from "express-session";
 import MongoDBStore from "connect-mongodb-session"
 import User from "./models/User.js";
-// import https from 'https';
-// import fs from 'fs';
 
 const loginUser = async (req, res) => {
 	try {
@@ -43,7 +41,11 @@ app.use(express.json({ limit: "50mb" }));
 const store = new (MongoDBStore(session))({
 	uri: process.env.MONGODB_URL,
 	collectionName: 'sessions',
-	ttl: 30 * 24 * 60 * 60, // 30 days
+	expires: 1000 * 60 * 60 * 24 * 30, // 30 days
+	connectionOptions: {
+		useNewUrlParser: true,
+		useUnifiedTopology: true,
+	}
 });
 app.use(
 	session({
@@ -79,17 +81,9 @@ const connectDB = (url) => {
 		.catch((error) => console.log(error));
 };
 
-// const privateKey = fs.readFileSync('server.key', 'utf8');
-// const certificate = fs.readFileSync('server.cert', 'utf8');
-// const credentials = { key: privateKey, cert: certificate };
-// const httpsServer = https.createServer(credentials, app);
 const startServer = async () => {
 	try {
 		connectDB(process.env.MONGODB_URL);
-
-		// httpsServer.listen(process.env.PORT, () => {
-		// 	console.log(`HTTPS server is running on port ${process.env.PORT}`);
-		// });
 		app.listen(process.env.PORT, () => {
 			console.log(`HTTP server is running on port ${process.env.PORT}`);
 		});
