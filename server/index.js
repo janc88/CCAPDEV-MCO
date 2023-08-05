@@ -19,7 +19,8 @@ const loginUser = async (req, res) => {
 				req.session.userId = user._id.toString();
 				res.status(200).json({
 					user: user.userInfo(),
-					session: req.sessionID,
+					sessionID: req.sessionID,
+					session: req.session,
 				});
 			}
 		});
@@ -35,12 +36,14 @@ const getLoggedInUser = async (req, res) => {
 	  if (user)
 		res.status(200).json({
 			user: user.userInfo(),
-			session: req.sessionID,
+			sessionID: req.sessionID,
+			session: req.session,
 		});
 	  else
 		res.status(404).json({ 
 			message: 'User not found',
-			session: req.sessionID,
+			sessionID: req.sessionID,
+			session: req.session,
 		});
 	} catch (error) {
 	  res.status(500).json({ error: error.message });
