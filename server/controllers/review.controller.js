@@ -148,7 +148,7 @@ const updateReview = async (req, res) => {
 		if (!foundReview)
 			return res.status(404).json({ error: "Review not found" });
 
-		if (foundReview.user.toString() !== userId.toString())
+		if (!foundReview.user.equals(userId))
 			return res.status(403).json({ error: "User not authorized" });
 
 		const foundResto = await Restaurant.findById(foundReview.restaurant);
@@ -234,7 +234,7 @@ const deleteReview = async (req, res) => {
 
 		if (!foundReview)
 			return res.status(404).json({ error: "Review not found" });
-		if (foundReview.user.toString() !== userId)
+		if (!foundReview.user.equals(userId))
 			return res.status(403).json({ error: "User not authorized" });
 
 		const foundResto = await Restaurant.findById(foundReview.restaurant);
