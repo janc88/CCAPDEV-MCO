@@ -5,6 +5,13 @@ export const SmallModalContainer = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
+  animation: slide-in 0.2s;
+
+  @keyframes slide-in {
+    0% {transform: translateY(150px);}
+    50% {transform: translateY(-20px)}
+    100% {transform: translateY(0px);}
+  }
 `;
 
 export const DesktopSmallModalContainer = styled(SmallModalContainer)`

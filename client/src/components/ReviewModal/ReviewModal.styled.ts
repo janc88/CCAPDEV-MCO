@@ -30,6 +30,12 @@ export const Overlay = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  animation: fade-in 0.1s;
+
+  @keyframes fade-in {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
 `;
 
 export const CardContainer = styled.div`

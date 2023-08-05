@@ -8,6 +8,13 @@ const ModalContainer = styled.div`
   flex-direction: column;
   align-items: center;
   position: relative;
+  animation: slide-in 0.2s;
+
+  @keyframes slide-in {
+    0% {transform: translateY(150px);}
+    50% {transform: translateY(-20px)}
+    100% {transform: translateY(0px);}
+  }
 `;
 
 export const DesktopModalContainer = styled(ModalContainer)`
@@ -29,6 +36,12 @@ export const Overlay = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  animation: fade-in 0.1s;
+
+  @keyframes fade-in {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
 `;
 
 export const CardContainer = styled.div`
@@ -42,7 +55,7 @@ export const CardContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height:30rem;
+  height: 30rem;
   
 `;
 
