@@ -4,30 +4,13 @@ import cors from "cors";
 import mongoose from "mongoose";
 import session from "express-session";
 import MongoDBStore from "connect-mongodb-session"
-import User from "./models/User.js";
 
-const loginUser = async (req, res) => {
-	try {
-		const user = await User.findOne({ username: "12345678" });
-		req.session.userId = user._id.toString();
-		res.status(200).json(user.userInfo());
-	} catch (error) {
-		res.status(500).json({ error: error.message });
-	}
-};
+import userRouter from "./routes/user.routes.js";
+import reviewRouter from "./routes/review.routes.js";
+import restaurantRouter from "./routes/restaurant.routes.js";
+import imageRouter from "./routes/image.routes.js";
+import ownerRouter from "./routes/owner.routes.js";
 
-const getLoggedInUser = async (req, res) => {
-	try {
-	  const { userId } = req.session;
-	  const user = await User.findById(userId);
-	  if (user)
-		res.status(200).json(user.userInfo());
-	  else
-		res.status(404).json({ message: 'User not found' });
-	} catch (error) {
-	  res.status(500).json({ error: error.message });
-	}
-};
 
 dotenv.config();
 
@@ -63,12 +46,15 @@ app.use(
 
 app.get("/", async (req, res) => {
 	res.send({ 
-		message: "backend test 11",
+		message: "Hello World!",
 	});
 });
 
-app.post('/login', loginUser);
-app.get('/me', getLoggedInUser);
+app.use("/api/users", userRouter);
+app.use("/api/reviews", reviewRouter);
+app.use("/api/restaurants", restaurantRouter);
+app.use("/api/images", imageRouter);
+app.use("/api/owners", ownerRouter);
 
 const connectDB = (url) => {
 	mongoose.set("strictQuery", true);
@@ -84,9 +70,7 @@ const connectDB = (url) => {
 const startServer = async () => {
 	try {
 		connectDB(process.env.MONGODB_URL);
-		app.listen(process.env.PORT, () => {
-			console.log(`HTTP server is running on port ${process.env.PORT}`);
-		});
+		app.listen(process.env.PORT, () => console.log("Server started on port", + process.env.PORT));
 	} catch (error) {
 		console.log(error);
 	}
