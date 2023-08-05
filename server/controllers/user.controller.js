@@ -152,7 +152,7 @@ const loginUser = async (req, res) => {
 				res.status(500).json({ error: err.message });
 			} else {
 				req.session.userId = user._id.toString();
-				if (rememberMe === 'true')
+				if (rememberMe === true)
 					req.session.rememberMe = 'true';
 				res.status(200).json(user.userInfo());
 			}
