@@ -55,7 +55,7 @@ function Navbar() {
         </NavbarLink>
         <NavbarLink to="/about">
           <FontAwesomeIcon icon={faAddressCard} size="lg" fixedWidth />
-          <NavButton marginleft={7}>About Us</NavButton>
+          <NavButton marginleft={7}>About</NavButton>
         </NavbarLink>
         <NavbarLink to="/">
           <FontAwesomeIcon icon={faPhone} size="lg" fixedWidth />
