@@ -4,19 +4,11 @@ import cors from "cors";
 import mongoose from "mongoose";
 import session from "express-session";
 import MongoDBStore from "connect-mongodb-session"
+import User from "./models/user.js";
 
 const loginUser = async (req, res) => {
 	try {
-		const { username, password } = req.body;
-		const user = await User.findOne({ username });
-		const hashedPassword = crypto.SHA256(password).toString();
-
-		if (!user) {
-			return res.status(404).json({ error: "User not found" });
-		} else if (user.password !== hashedPassword) {
-			return res.status(401).json({ error: "Wrong password" });
-		}
-
+		const user = await User.findOne({ username: "12345678" });
 		req.session.userId = user._id.toString();
 		res.status(200).json(user.userInfo());
 	} catch (error) {
@@ -59,7 +51,7 @@ app.use(
 		cookie: {
 			maxAge: 30 * 24 * 60 * 60 * 1000,
 			sameSite: "none",
-			secure: true,
+			// secure: true,
 		},
 		store: store,
 	})
@@ -67,12 +59,12 @@ app.use(
 
 app.get("/", async (req, res) => {
 	res.send({ 
-		message: "backend test 8",
+		message: "backend test 9",
 	});
 });
 
-app.post('api/users/login', loginUser);
-app.get('api/users/me', getLoggedInUser);
+app.post('/login', loginUser);
+app.get('/me', getLoggedInUser);
 
 const connectDB = (url) => {
 	mongoose.set("strictQuery", true);
