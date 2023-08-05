@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "type": "module",
-  "main": "min-test.js",
+  "main": "index.js",
   "scripts": {
-    "start": "nodemon min-test.js"
+    "start": "nodemon index.js"
   },
   "keywords": [],
   "author": "",
