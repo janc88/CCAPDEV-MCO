@@ -1,6 +1,10 @@
 import styled from "styled-components";
+import bgImage from '../../imgs/food-bg.png'
 
 export const MainContainer = styled.div`
+    background-image: url(${bgImage});
+    background-size: cover;
+    background-position: center;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -13,6 +17,7 @@ export const Container = styled.div`
     overflow: hidden;
     margin: 2rem;
     width: 20rem;
+    background-color: white;
 `;
 
 export const List = styled.ul`
