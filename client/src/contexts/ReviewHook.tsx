@@ -1,6 +1,7 @@
 import { useCallback } from "react";
 import { User } from "./UserContext";
 import { Restaurant } from "./RestoHook";
+import { useSession } from "./SessionHook";
 
 
 export interface Review {
@@ -40,6 +41,7 @@ interface ReviewActionsType extends UseReviewsType {
 }
 
 export const useReviews = (): UseReviewsType => {
+	const { fetch } = useSession();
 	const fetchReviews = useCallback(async ({restoId}) => {
 		const response = await fetch(`${process.env.REACT_APP_API_URL}/api/reviews/resto/${restoId}`, {
 			method: "POST",
@@ -59,7 +61,7 @@ export const useReviews = (): UseReviewsType => {
 		}));
 		console.log(fetchedReviews);
 		return fetchedReviews;
-	}, []);
+	}, [fetch]);
 
 	const fetchUserReviews = useCallback(async ({userId}) => {
 		const response = await fetch(`${process.env.REACT_APP_API_URL}/api/reviews/user/${userId}`, {
@@ -80,7 +82,7 @@ export const useReviews = (): UseReviewsType => {
 		}));
 		console.log(fetchedReviews);
 		return fetchedReviews;
-	}, []);
+	}, [fetch]);
 
 	return {
 		fetchReviews,
@@ -95,6 +97,7 @@ interface ReviewActionsProps {
 export const useReviewActions = (data: ReviewActionsProps = {}): ReviewActionsType => {
 	const restoId = data?.restoId || "";
 	const methods = useReviews();
+	const { fetch } = useSession();
 
 	const createReview = useCallback(async ({
 		title, 
@@ -119,7 +122,7 @@ export const useReviewActions = (data: ReviewActionsProps = {}): ReviewActionsTy
 		if (!response.ok)
 			throw new Error("Error creating review");
 		return data;
-	}, [restoId]);
+	}, [restoId, fetch]);
 
 	const editReview = useCallback(async (id: string, {
 		title, 
@@ -145,7 +148,7 @@ export const useReviewActions = (data: ReviewActionsProps = {}): ReviewActionsTy
 		if (!response.ok) 
 			throw new Error(JSON.stringify(data));
 		return data
-	}, []);
+	}, [fetch]);
 	const deleteReview = useCallback(async (id: string) => {
 		const response = await fetch(`${process.env.REACT_APP_API_URL}/api/reviews/${id}`, {
 			method: 'DELETE',
@@ -155,7 +158,7 @@ export const useReviewActions = (data: ReviewActionsProps = {}): ReviewActionsTy
 		if (!response.ok)
 			console.error(JSON.stringify(await response.json()));
 		return response.ok;
-	}, []);
+	}, [fetch]);
 	const voteReview = useCallback(async (id: string, type: "up" | "down" | "none") => {
 		const response = await fetch(`${process.env.REACT_APP_API_URL}/api/reviews/vote/${id}`, {
 			method: "POST",
@@ -170,7 +173,7 @@ export const useReviewActions = (data: ReviewActionsProps = {}): ReviewActionsTy
 		const data = await response.json();
 		if (!response.ok)
 			alert(JSON.stringify(data));
-	}, []);
+	}, [fetch]);
 
 	return {
 		...methods,

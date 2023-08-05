@@ -1,5 +1,6 @@
 import React, { ReactNode, createContext, useState, useEffect, useCallback, useContext } from 'react';
 import { useUser, userHook } from './UserHook';
+import { useSession } from './SessionHook';
 
 export interface User {
 	id: string;
@@ -30,6 +31,7 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 export const UserProvider = ({ children }: { children: ReactNode }) => {
 	const [user, setUser] = useState<User | null>(null);
 	const hook = useUser();
+	const { fetch, setSessionId, removeSessionId } = useSession();
 
 	useEffect(() => {
 		(async () => {
@@ -40,7 +42,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 			if (response.ok)
 				setUser(await response.json());
 		})();
-	}, []);
+	}, [fetch]);
 
 	const logout = useCallback(async () => {
 		const response = await fetch(`${process.env.REACT_APP_API_URL}/api/users/logout`, {
@@ -51,7 +53,8 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 		if (!response.ok)
 			throw new Error("Error logging out");
 		setUser(null);
-	}, []);
+		removeSessionId();
+	}, [fetch, removeSessionId]);
 
 
 	const updatePassword = useCallback(async (old_password: string, new_password: string) => {
@@ -64,7 +67,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 		await response.json();
 		if (!response.ok)
 			throw new Error("Error updating password");
-	}, []);
+	}, [fetch]);
 
 	const updateUser = useCallback(async (description: string, avatar: File | null) => {
 		const formData = new FormData();
@@ -81,7 +84,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 		if (!response.ok)
 			throw new Error("Error updating user");
 		setUser(data);
-	}, []);
+	}, [fetch]);
 
 
 	const login = useCallback(async (username: string, password: string, rememberMe: boolean) => {
@@ -95,10 +98,11 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 		});
 		if (!response.ok)
 			return null;
-		const data = await response.json();
-		setUser(data);
-		return data;
-	}, [setUser]);
+		const { user, session } = await response.json();
+		setUser(user);
+		setSessionId(session.id, session.duration);
+		return user;
+	}, [fetch, setSessionId]);
 
 	const signup = useCallback(async (user: User, password: string, profilePicture: File, rememberMe: boolean) => {
 		const formData = new FormData();
@@ -117,7 +121,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 			throw new Error("Error creating user");
 
 		await login(user.username, password, rememberMe);
-	}, [login]);
+	}, [login, fetch]);
 
 	return (
 		<UserContext.Provider value={{

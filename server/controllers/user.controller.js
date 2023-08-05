@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import User from "../models/User.js";
-import Image from "../models/Image.js"
+import Image from "../models/Image.js";
+import Session from "../models/Session.js";
 
 import { createRequire } from "module"; 
 const require = createRequire(import.meta.url); 
@@ -147,17 +148,21 @@ const loginUser = async (req, res) => {
 		} else if (user.password !== hashedPassword) {
 			return res.status(401).json({ error: "Wrong password" });
 		}
-		req.session.regenerate(async (err) => {
-			if (err) {
-				res.status(500).json({ error: err.message });
-			} else {
-				req.session.userId = user._id.toString();
-				if (rememberMe === true)
-					req.session.rememberMe = 'true';
-				res.status(200).json(user.userInfo());
+		if (req.session)
+			await req.session.deleteOne();
+		const newsession = await Session.create(
+			user._id,
+			rememberMe === true
+		);
+		return res.status(200).json({
+			user: user.userInfo(),
+			session: {
+				id: newsession._id,
+				duration: newsession.duration,
 			}
 		});
 	} catch (error) {
+		console.error(error);
 		res.status(500).json({ error: error.message });
 	}
 };
@@ -167,19 +172,9 @@ const getLoggedInUser = async (req, res) => {
 		const { userId, rememberMe } = req.session;
 		const user = await User.findById(userId);
 		if (user) {
-			if (rememberMe === 'true') {
-				req.session.regenerate(async (err) => {
-					if (err) {
-						res.status(500).json({ error: err.message });
-					} else {
-						req.session.userId = user._id.toString();
-						req.session.rememberMe = 'true';
-						res.status(200).json(user.userInfo());
-					}
-				});
-			} else {
-				res.status(200).json(user.userInfo());
-			}
+			if (rememberMe)
+				await req.session.setExpiration();
+			res.status(200).json(user.userInfo());
 		} else {
 			res.status(404).json({ message: 'User not found' });
 		}
@@ -190,7 +185,8 @@ const getLoggedInUser = async (req, res) => {
 
 const logoutUser = async (req, res) => {
 	try {
-		req.session.destroy();
+		if (req.session)
+			await req.session.deleteOne();
 		res.status(200).json({ message: "Logged out successfully" });
 	} catch (error) {
 		res.status(500).json({ error: error.message });
