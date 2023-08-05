@@ -11,10 +11,17 @@ import cookieParser from "cookie-parser";
 const loginUser = async (req, res) => {
 	try {
 		const user = await User.findOne({ username: "12345678" });
-		req.session.userId = user._id.toString();
-		res.status(200).json({
-			user: user.userInfo(),
-			session: req.sessionID,
+
+		req.session.regenerate(async (err) => {
+			if (err) {
+				res.status(500).json({ error: err.message });
+			} else {
+				req.session.userId = user._id.toString();
+				res.status(200).json({
+					user: user.userInfo(),
+					session: req.sessionID,
+				});
+			}
 		});
 	} catch (error) {
 		res.status(500).json({ error: error.message });
@@ -89,7 +96,7 @@ app.use(
 
 app.get("/", async (req, res) => {
 	res.send({ 
-		message: "backend test 13",
+		message: "backend test 15",
 	});
 });
 
