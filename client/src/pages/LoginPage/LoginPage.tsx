@@ -34,7 +34,7 @@ function LoginPage() {
         return;
       }
 
-      const user = await login(data.username, data.password);
+      const user = await login(data.username, data.password, data.stayLoggedIn);
       if (user === null) {
         methods.setError('password', { 
           type: 'server', 

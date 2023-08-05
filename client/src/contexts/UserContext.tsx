@@ -11,7 +11,7 @@ export interface User {
 
 interface UserContextType extends userHook {
 	user: User | null;
-	signup: (user: User, password: string, profilePicture: File) => Promise<void>;
+	signup: (user: User, password: string, profilePicture: File, rememberMe: boolean) => Promise<void>;
 	/**
 	 * clears user from cookies and state
 	 */
@@ -20,7 +20,7 @@ interface UserContextType extends userHook {
 	 * sets user in cookies and state
 	 * @returns User if valid, null otherwise
 	 */
-	login: (username: string, password: string) => Promise<User | null>;
+	login: (username: string, password: string, rememberMe: boolean) => Promise<User | null>;
 	updateUser: (description: string, avatar: File | null) => Promise<void>;
 	updatePassword: (old_password: string, new_password: string) => Promise<void>;
 }
@@ -84,14 +84,14 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 	}, []);
 
 
-	const login = useCallback(async (username: string, password: string) => {
+	const login = useCallback(async (username: string, password: string, rememberMe: boolean) => {
 		const response = await fetch(`${process.env.REACT_APP_API_URL}/api/users/login`, {
 			method: "POST",
 			headers: {
 				'Content-Type': 'application/json'
 			},
 			credentials: 'include',
-			body: JSON.stringify({ username, password })
+			body: JSON.stringify({ username, password, rememberMe })
 		});
 		if (!response.ok)
 			return null;
@@ -100,7 +100,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 		return data;
 	}, [setUser]);
 
-	const signup = useCallback(async (user: User, password: string, profilePicture: File) => {
+	const signup = useCallback(async (user: User, password: string, profilePicture: File, rememberMe: boolean) => {
 		const formData = new FormData();
 		formData.append('username', user.username);
 		formData.append('description', user.description);
@@ -116,7 +116,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 		if (!response.ok)
 			throw new Error("Error creating user");
 
-		await login(user.username, password);
+		await login(user.username, password, rememberMe);
 	}, [login]);
 
 	return (

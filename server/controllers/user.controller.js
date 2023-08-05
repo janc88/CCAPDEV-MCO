@@ -68,7 +68,6 @@ const createUser = async (req, res) => {
 	await session.commitTransaction();
 	session.endSession();
 
-	req.session.userId = newUser._id.toString();
     res.status(200).json(newUser.userInfo());
   } catch (error) {
 	console.error(error);
@@ -135,7 +134,11 @@ const getUserInfoByUserid = async (req, res) => {
 
 const loginUser = async (req, res) => {
 	try {
-		const { username, password } = req.body;
+		const { 
+			username, 
+			password,
+			rememberMe
+		} = req.body;
 		const user = await User.findOne({ username });
 		const hashedPassword = crypto.SHA256(password).toString();
 
@@ -144,9 +147,16 @@ const loginUser = async (req, res) => {
 		} else if (user.password !== hashedPassword) {
 			return res.status(401).json({ error: "Wrong password" });
 		}
-
-		req.session.userId = user._id.toString();
-		res.status(200).json(user.userInfo());
+		req.session.regenerate(async (err) => {
+			if (err) {
+				res.status(500).json({ error: err.message });
+			} else {
+				req.session.userId = user._id.toString();
+				if (rememberMe === 'true')
+					req.session.rememberMe = 'true';
+				res.status(200).json(user.userInfo());
+			}
+		});
 	} catch (error) {
 		res.status(500).json({ error: error.message });
 	}
@@ -154,12 +164,25 @@ const loginUser = async (req, res) => {
 
 const getLoggedInUser = async (req, res) => {
 	try {
-	  const { userId } = req.session;
-	  const user = await User.findById(userId);
-	  if (user)
-		res.status(200).json(user.userInfo());
-	  else
-		res.status(404).json({ message: 'User not found' });
+		const { userId, rememberMe } = req.session;
+		const user = await User.findById(userId);
+		if (user) {
+			if (rememberMe === 'true') {
+				req.session.regenerate(async (err) => {
+					if (err) {
+						res.status(500).json({ error: err.message });
+					} else {
+						req.session.userId = user._id.toString();
+						req.session.rememberMe = 'true';
+						res.status(200).json(user.userInfo());
+					}
+				});
+			} else {
+				res.status(200).json(user.userInfo());
+			}
+		} else {
+			res.status(404).json({ message: 'User not found' });
+		}
 	} catch (error) {
 	  res.status(500).json({ error: error.message });
 	}

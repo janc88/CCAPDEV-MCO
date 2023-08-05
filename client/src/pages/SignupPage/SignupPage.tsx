@@ -27,12 +27,14 @@ function SignupPage() {
   const handleSubmit = async (formData: any) => {
     try {
       const user = {
-		id: '',
         username: formData.username,
         avatar: formData.profilepicture,
         description: formData.accountdesc,
+		//linter error
+		id: '',
+		ownedRestoId: '',
       };
-      signup(user, formData.password, formData.profilepicture);
+      signup(user, formData.password, formData.profilepicture, formData.stayLoggedIn);
       navigate("/home");
 	  } catch (error) {
 		  console.error("Error creating user:", error);
