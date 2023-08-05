@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import User from "../models/User.js";
 import Image from "../models/Image.js"
+import passport from "passport";
 
 import { createRequire } from "module"; 
 const require = createRequire(import.meta.url); 
@@ -132,60 +133,89 @@ const getUserInfoByUserid = async (req, res) => {
   }
 };
 
-const loginUser = async (req, res) => {
-	try {
-		const { 
-			username, 
-			password,
-			rememberMe
-		} = req.body;
-		const user = await User.findOne({ username });
-		const hashedPassword = crypto.SHA256(password).toString();
+// const loginUser = async (req, res) => {
+// 	// try {
+// 	// 	const { 
+// 	// 		username, 
+// 	// 		password,
+// 	// 		rememberMe
+// 	// 	} = req.body;
+// 	// 	const user = await User.findOne({ username });
+// 	// 	const hashedPassword = crypto.SHA256(password).toString();
 
-		if (!user) {
-			return res.status(404).json({ error: "User not found" });
-		} else if (user.password !== hashedPassword) {
-			return res.status(401).json({ error: "Wrong password" });
-		}
-		req.session.regenerate(async (err) => {
-			if (err) {
-				res.status(500).json({ error: err.message });
-			} else {
-				req.session.userId = user._id.toString();
-				if (rememberMe === true)
-					req.session.rememberMe = 'true';
-				res.status(200).json(user.userInfo());
-			}
-		});
-	} catch (error) {
-		res.status(500).json({ error: error.message });
-	}
+// 	// 	if (!user) {
+// 	// 		return res.status(404).json({ error: "User not found" });
+// 	// 	} else if (user.password !== hashedPassword) {
+// 	// 		return res.status(401).json({ error: "Wrong password" });
+// 	// 	}
+// 	// 	req.session.regenerate(async (err) => {
+// 	// 		if (err) {
+// 	// 			res.status(500).json({ error: err.message });
+// 	// 		} else {
+// 	// 			req.session.userId = user._id.toString();
+// 	// 			if (rememberMe === true)
+// 	// 				req.session.rememberMe = 'true';
+// 	// 			res.status(200).json(user.userInfo());
+// 	// 		}
+// 	// 	});
+// 	// } catch (error) {
+// 	// 	res.status(500).json({ error: error.message });
+// 	// }
+	
+// };
+
+const loginUser = (req, res, next) => {
+  passport.authenticate('local', (err, user, info) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+    if (!user) {
+      return res.status(401).json({ error: info.message });
+    }
+
+    req.logIn(user, (err) => {
+      if (err) {
+        return res.status(500).json({ error: err.message });
+      }
+
+      if (req.body.rememberMe === 'true') {
+        req.session.cookie.maxAge = 30 * 24 * 60 * 60 * 1000; // 30 days
+      }
+
+      return res.status(200).json(user.userInfo());
+    });
+  })(req, res, next);
 };
 
 const getLoggedInUser = async (req, res) => {
-	try {
-		const { userId, rememberMe } = req.session;
-		const user = await User.findById(userId);
-		if (user) {
-			if (rememberMe === 'true') {
-				req.session.regenerate(async (err) => {
-					if (err) {
-						res.status(500).json({ error: err.message });
-					} else {
-						req.session.userId = user._id.toString();
-						req.session.rememberMe = 'true';
-						res.status(200).json(user.userInfo());
-					}
-				});
-			} else {
-				res.status(200).json(user.userInfo());
-			}
-		} else {
-			res.status(404).json({ message: 'User not found' });
-		}
-	} catch (error) {
-	  res.status(500).json({ error: error.message });
+	if (req.isAuthenticated()) {
+		res.status(200).json(req.user.userInfo());
+	} else {
+		res.status(401).json({ error: 'Unauthorized' });
 	}
+	// try {
+	// 	const { userId, rememberMe } = req.session;
+	// 	const user = await User.findById(userId);
+	// 	if (user) {
+	// 		if (rememberMe === 'true') {
+	// 			req.session.regenerate(async (err) => {
+	// 				if (err) {
+	// 					res.status(500).json({ error: err.message });
+	// 				} else {
+	// 					req.session.userId = user._id.toString();
+	// 					req.session.rememberMe = 'true';
+	// 					res.status(200).json(user.userInfo());
+	// 				}
+	// 			});
+	// 		} else {
+	// 			res.status(200).json(user.userInfo());
+	// 		}
+	// 	} else {
+	// 		res.status(404).json({ message: 'User not found' });
+	// 	}
+	// } catch (error) {
+	//   res.status(500).json({ error: error.message });
+	// }
 };
 
 const logoutUser = async (req, res) => {
