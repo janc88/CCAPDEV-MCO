@@ -6,8 +6,6 @@ import session from "express-session";
 import MongoDBStore from "connect-mongodb-session"
 
 import passport from "passport";
-import { Strategy as LocalStrategy } from "passport-local";
-import crypto from "crypto-js";
 import User from "./models/User.js";
 
 import userRouter from "./routes/user.routes.js";
@@ -49,27 +47,6 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-passport.use(
-	new LocalStrategy(async (username, password, done) => {
-		try {
-			const user = await User.findOne({ username });
-
-			if (!user) {
-				return done(null, false, { message: 'User not found' });
-			}
-
-			const hashedPassword = crypto.SHA256(password).toString();
-
-			if (user.password !== hashedPassword) {
-				return done(null, false, { message: 'Wrong password' });
-			}
-
-			return done(null, user);
-		} catch (error) {
-			return done(error);
-		}
-	})
-);
 passport.serializeUser((user, done) => {
 	done(null, user.id);
 });

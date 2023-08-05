@@ -4,10 +4,29 @@ import Image from "../models/Image.js"
 import passport from "passport";
 
 import { createRequire } from "module"; 
+import { Strategy as LocalStrategy } from "passport-local";
 const require = createRequire(import.meta.url); 
 const defaults = require("../defaults/defaults.json") 
 import fs from "fs";
 import crypto from "crypto-js"
+
+
+passport.use(
+	new LocalStrategy(async (username, password, done) => {
+		try {
+			const user = await User.findOne({ username });
+			if (!user)
+				return done(null, false, { message: 'User not found' });
+			const hash = crypto.SHA256(password).toString();
+			if (user.password !== hash)
+				return done(null, false, { message: 'Wrong password' });
+			return done(null, user);
+		} catch (error) {
+			return done(error);
+		}
+	})
+);
+
 
 const getDefaultAvatar = async () => {
 	const avatar = defaults.user.avatar;
