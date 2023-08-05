@@ -85,7 +85,8 @@ const connectDB = (url) => {
 // const httpsServer = https.createServer(credentials, app);
 const startServer = async () => {
 	try {
-		// connectDB(process.env.MONGODB_URL);
+		connectDB(process.env.MONGODB_URL);
+		
 		// httpsServer.listen(process.env.PORT, () => {
 		// 	console.log(`HTTPS server is running on port ${process.env.PORT}`);
 		// });
