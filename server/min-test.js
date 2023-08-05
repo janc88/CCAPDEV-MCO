@@ -5,6 +5,8 @@ import mongoose from "mongoose";
 import session from "express-session";
 import MongoDBStore from "connect-mongodb-session"
 import User from "./models/user.js";
+import https from 'https';
+import fs from 'fs';
 
 const loginUser = async (req, res) => {
 	try {
@@ -51,7 +53,7 @@ app.use(
 		cookie: {
 			maxAge: 30 * 24 * 60 * 60 * 1000,
 			sameSite: "none",
-			// secure: true,
+			secure: true,
 		},
 		store: store,
 	})
@@ -59,7 +61,7 @@ app.use(
 
 app.get("/", async (req, res) => {
 	res.send({ 
-		message: "backend test 9",
+		message: "backend test 10",
 	});
 });
 
@@ -77,10 +79,19 @@ const connectDB = (url) => {
 		.catch((error) => console.log(error));
 };
 
+// const privateKey = fs.readFileSync('server.key', 'utf8');
+// const certificate = fs.readFileSync('server.cert', 'utf8');
+// const credentials = { key: privateKey, cert: certificate };
+// const httpsServer = https.createServer(credentials, app);
 const startServer = async () => {
 	try {
-		connectDB(process.env.MONGODB_URL);
-		app.listen(process.env.PORT, () => console.log("Server started on port", + process.env.PORT));
+		// connectDB(process.env.MONGODB_URL);
+		// httpsServer.listen(process.env.PORT, () => {
+		// 	console.log(`HTTPS server is running on port ${process.env.PORT}`);
+		// });
+		app.listen(process.env.PORT, () => {
+			console.log(`HTTP server is running on port ${process.env.PORT}`);
+		});
 	} catch (error) {
 		console.log(error);
 	}
