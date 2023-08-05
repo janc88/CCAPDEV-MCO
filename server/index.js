@@ -12,7 +12,10 @@ const loginUser = async (req, res) => {
 	try {
 		const user = await User.findOne({ username: "12345678" });
 		req.session.userId = user._id.toString();
-		res.status(200).json(user.userInfo());
+		res.status(200).json({
+			user: user.userInfo(),
+			session: req.sessionID,
+		});
 	} catch (error) {
 		res.status(500).json({ error: error.message });
 	}
@@ -23,9 +26,15 @@ const getLoggedInUser = async (req, res) => {
 	  const { userId } = req.session;
 	  const user = await User.findById(userId);
 	  if (user)
-		res.status(200).json(user.userInfo());
+		res.status(200).json({
+			user: user.userInfo(),
+			session: req.sessionID,
+		});
 	  else
-		res.status(404).json({ message: 'User not found' });
+		res.status(404).json({ 
+			message: 'User not found',
+			session: req.sessionID,
+		});
 	} catch (error) {
 	  res.status(500).json({ error: error.message });
 	}
@@ -36,17 +45,18 @@ dotenv.config();
 const app = express();
 
 app.use(express.json({ limit: "50mb" }));
-app.use(bodyParser.json({ limit: "50mb" }));
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieParser(process.env.SESSION_SECRET));
+// app.use(bodyParser.json({ limit: "50mb" }));
+// app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(cookieParser(process.env.SESSION_SECRET));
 
-app.use(function(req, res, next) {
-	res.header('Access-Control-Allow-Credentials', true);
-	res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE');
-	res.header("Access-Control-Allow-Origin", process.env.ORIGIN);
-	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-   Type, Accept, Authorization");
-	next();
-});
+// app.use(function(req, res, next) {
+// 	res.header('Access-Control-Allow-Credentials', true);
+// 	res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE');
+// 	res.header("Access-Control-Allow-Origin", process.env.ORIGIN);
+// 	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-   Type, Accept, Authorization");
+// 	next();
+// });
+// app.set('trust proxy', 1);
 
 app.use(cors({
 	origin: true,
@@ -63,7 +73,6 @@ const store = new (MongoDBStore(session))({
 	}
 });
 
-app.set('trust proxy', 1);
 app.use(
 	session({
 		secret: process.env.SESSION_SECRET,
@@ -80,7 +89,7 @@ app.use(
 
 app.get("/", async (req, res) => {
 	res.send({ 
-		message: "backend test 12",
+		message: "backend test 13",
 	});
 });
 
