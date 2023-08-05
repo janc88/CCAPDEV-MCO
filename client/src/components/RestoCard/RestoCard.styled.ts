@@ -26,6 +26,7 @@ export const RestoImg = styled.div<RestoImgProps>`
   background-position: center;
   height: 250px;
   position: relative;
+  transition: transform 0.2s;
 
   &:hover {
     width: 100%;
@@ -35,6 +36,7 @@ export const RestoImg = styled.div<RestoImgProps>`
     background-position: center;
     height: 250px;
     position: relative;
+    transform: scale(1.025);
   }
 `;
 
