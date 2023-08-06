@@ -1,15 +1,12 @@
 import styled from "styled-components";
 import { Edit, TrashAlt } from "@styled-icons/fa-solid";
 
-const ModalContainer = styled.div`
+export const DesktopModalContainer = styled.div`
   background-color: #f7f7f7;
   display: flex;
   flex-direction: column;
   align-items: center;
   position: relative;
-`;
-
-export const DesktopModalContainer = styled(ModalContainer)`
   border-radius: 7px;
   box-shadow: 0 0 32px rgba(0, 0, 0, 0.5);
   padding: 40px;

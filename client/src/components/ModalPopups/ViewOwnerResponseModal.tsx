@@ -146,9 +146,7 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps & Review> = ({
             <ReviewImgsContainer>
               {loadedImages.map((imageSrc, index) => (
                 <ImageReview
-                  // key={images[index].id}
                   src={imageSrc}
-                  // alt={images[index].alt}
                 />
               ))}
             </ReviewImgsContainer>

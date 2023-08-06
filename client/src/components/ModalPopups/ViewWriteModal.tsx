@@ -18,13 +18,11 @@ import {
   RatingText,
 } from "./ModalPopup";
 
-import StarRating from "../StarRating/StarRating";
 import ImageWithCloseButton from "./ImageClose";
 import Rating from "./Ratings";
 import { TitleBox, DescriptionBox } from "./InputWriteModal";
 import { useUserContext } from "../../contexts/UserContext";
 import { useReviewActions } from "../../contexts/ReviewHook";
-import { Review } from "../../contexts/ReviewHook";
 import { useLocation, useNavigate } from "react-router-dom";
 
 interface BaseModalWrapperProps {
