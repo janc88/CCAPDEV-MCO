@@ -172,7 +172,7 @@ export const useReviewActions = (data: ReviewActionsProps = {}): ReviewActionsTy
 		});
 		const data = await response.json();
 		if (!response.ok)
-			alert(JSON.stringify(data));
+			console.error(JSON.stringify(data));
 	}, [fetch]);
 
 	return {
