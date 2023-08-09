@@ -39,15 +39,11 @@ interface ReviewCardProps extends Review {
   showOverlay?: boolean;
 }
 
-const ReviewCard: React.FC<ReviewCardProps> = (review) => {
-  const [thumbsUpCount, setThumbsUpCount] = useState(review.votes);
-  const [thumbsDownCount, setThumbsDownCount] = useState(0);
-  const [isThumbsUpClicked, setIsThumbsUpClicked] = useState(
-    review.voteType === "up"
-  );
-  const [isThumbsDownClicked, setIsThumbsDownClicked] = useState(
-    review.voteType === "down"
-  );
+const ReviewCard: React.FC<ReviewCardProps> = (_review) => {
+  const [review, setReview] = useState<Review>(_review);
+  const voteCount = review.votes;
+  const voteType = review.voteType;
+  const [ isVoteDisabled, setIsVoteDisabled ] = useState(false);
 
   const [showResponseForm, setShowResponseForm] = useState(false);
   const [ownerResponse, setOwnerResponse] = useState<string>("");
@@ -91,46 +87,14 @@ const ReviewCard: React.FC<ReviewCardProps> = (review) => {
       : `${yearsDifference} ${yearsDifference === 1 ? "year" : "years"} ago`;
   };
 
-  const handleThumbsUpClick = () => {
-    if (isThumbsUpClicked) {
-      // Deselect thumbs-up
-      setIsThumbsUpClicked(false);
-      setThumbsUpCount((prevCount) => prevCount - 1);
-      voteReview(review.id, "none");
-    } else if (isThumbsDownClicked) {
-      // Change from thumbs-down to thumbs-up
-      setIsThumbsUpClicked(true);
-      setIsThumbsDownClicked(false);
-      setThumbsUpCount((prevCount) => prevCount + 1);
-      setThumbsDownCount((prevCount) => prevCount - 1);
-      voteReview(review.id, "up");
-    } else {
-      // Select thumbs-up
-      setIsThumbsUpClicked(true);
-      setThumbsUpCount((prevCount) => prevCount + 1);
-      voteReview(review.id, "up");
-    }
-  };
-
-  const handleThumbsDownClick = () => {
-    if (isThumbsDownClicked) {
-      // Deselect thumbs-down
-      setIsThumbsDownClicked(false);
-      setThumbsDownCount((prevCount) => prevCount - 1);
-      voteReview(review.id, "none");
-    } else if (isThumbsUpClicked) {
-      // Change from thumbs-up to thumbs-down
-      setIsThumbsUpClicked(false);
-      setIsThumbsDownClicked(true);
-      setThumbsUpCount((prevCount) => prevCount - 1);
-      setThumbsDownCount((prevCount) => prevCount + 1);
-      voteReview(review.id, "down");
-    } else {
-      // Select thumbs-down
-      setIsThumbsDownClicked(true);
-      setThumbsDownCount((prevCount) => prevCount + 1);
-      voteReview(review.id, "down");
-    }
+  const onVoteClick = async (_voteType: 'up' | 'down' | 'none') => {
+	if (isVoteDisabled) return;
+	setIsVoteDisabled(true);
+	if (_voteType === voteType)
+		_voteType = 'none';
+	const newReview = await voteReview(review.id, _voteType);
+	setReview(newReview);
+	setIsVoteDisabled(false);
   };
 
   const relativeTime = getTimeDifference(review.datePosted);
@@ -195,6 +159,7 @@ const ReviewCard: React.FC<ReviewCardProps> = (review) => {
           isModalVisible={showReviewModal}
           onBackdropClick={toggleReviewModal}
           relativeTime={relativeTime}
+		  onVote={onVoteClick}
         />
 
         <Footer>
@@ -203,27 +168,27 @@ const ReviewCard: React.FC<ReviewCardProps> = (review) => {
               <ThumbsUpIcon
                 onClick={() => {
                   if (user) {
-                    handleThumbsUpClick();
+                    onVoteClick('up');
                   } // If logged in
                   else {
                     toggleSmallModal();
                   }
                 }}
-                isClicked={isThumbsUpClicked}
+                isClicked={voteType === "up"}
               />
               /
               <ThumbsDownIcon
                 onClick={() => {
                   if (user) {
-                    handleThumbsDownClick();
+                    onVoteClick('down');
                   } // If logged in
                   else {
                     toggleSmallModal();
                   }
                 }}
-                isClicked={isThumbsDownClicked}
+                isClicked={voteType === "down"}
               />
-              <Helpful>Helpful ({thumbsUpCount - thumbsDownCount})</Helpful>
+              <Helpful>Helpful ({voteCount})</Helpful>
               {review.lastEdited && (
                 <LastEditContainer>
                   Edited ({new Date(review.lastEdited).toLocaleString()})
@@ -269,6 +234,7 @@ const ReviewCard: React.FC<ReviewCardProps> = (review) => {
               isModalVisible={isModalVisible}
               onBackdropClick={toggleModal}
               relativeTime={relativeTime}
+			  onVote={onVoteClick}
             />
 
             <SmallModal
@@ -280,7 +246,7 @@ const ReviewCard: React.FC<ReviewCardProps> = (review) => {
       </ReviewContentContainer>
       <ReviewImgContainer>
         <ReviewImg src={loadedImage || default_img} />
-        <RestoNameContainer showOverlay={review.showOverlay}>
+        <RestoNameContainer showOverlay={review.showOverlay}> {/* TODO: fix error */}
           <RestoName to={`/restaurants/${review.restaurant.id}`}>
             {review.restaurant.name}
           </RestoName>

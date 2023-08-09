@@ -37,7 +37,7 @@ interface ReviewActionsType extends UseReviewsType {
 	createReview: (data: ReviewData) => Promise<Review>;
 	editReview: (id: string, data: ReviewData) => Promise<Review>;
 	deleteReview: (id: string) => Promise<boolean>;
-	voteReview: (id: string, type: "up" | "down" | "none") => Promise<void>;
+	voteReview: (id: string, type: "up" | "down" | "none") => Promise<Review>;
 }
 
 export const useReviews = (): UseReviewsType => {
@@ -173,6 +173,11 @@ export const useReviewActions = (data: ReviewActionsProps = {}): ReviewActionsTy
 		const data = await response.json();
 		if (!response.ok)
 			console.error(JSON.stringify(data));
+		return {
+			...data,
+			datePosted: new Date(data.datePosted),
+			lastEdited: data.lastEdited && new Date(data.lastEdited),
+		};
 	}, [fetch]);
 
 	return {
