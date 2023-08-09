@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Edit } from '@styled-icons/fa-solid';
+import { Button } from '../../styles/Button.styled';
 
 export const EditReviewContainer = styled.div`
   display: flex;
@@ -169,6 +170,20 @@ export const ButtonContainer = styled.div`
 
     margin-bottom: 1.5rem;
     margin-right: 1rem;
+`;
+
+export const SaveButton = styled(Button)<{ isFormFilled: boolean }>`
+  background-color: ${({ isFormFilled }) => (isFormFilled ? '#ff794f' : '#666666')};
+  color: white;
+  width: 10rem;
+  margin: 0 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: ${({ isFormFilled }) => (isFormFilled ? 'pointer' : 'not-allowed')};  
+  &:hover {
+    cursor: ${({ isFormFilled }) => (isFormFilled ? 'pointer' : 'not-allowed')};
+  }
 `;
 
 

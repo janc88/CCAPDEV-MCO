@@ -16,6 +16,7 @@ import {
   Uploadtext,
   WriteRating,
   RatingText,
+  Optionaltext,
 } from "./ModalPopup";
 
 import ImageWithCloseButton from "./ImageClose";
@@ -44,17 +45,19 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps /*& Review*/ & { restaura
   const navigate = useNavigate();
   const [images, setImages] = useState<string[]>([]);
   const [imageFiles, setImageFiles] = useState<File[]>([]);
-
-  
   const [rating, setRating] = React.useState(0);
-  //const loadedImage = reviewProps.imgs[0];
-  const [starRating, setStarRating] = useState(0);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-
-  //const image = reviewProps.imgs[0];
   const { user } = useUserContext();
   const { createReview } = useReviewActions({ restoId: restaurantId });
+
+  const handleBackdropClick = () => {
+    setImages([]);
+    setRating(0);
+    setTitle('');
+    setDescription('');
+    onBackdropClick();
+  };
 
 
   const handleImageUpload = (event: ChangeEvent<HTMLInputElement>) => {
@@ -87,6 +90,8 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps /*& Review*/ & { restaura
 
     onBackdropClick();
   };
+
+  const isFormFilled = title.trim() !== '' && description.trim() !== '' && rating !== 0;
 
   const SaveModal = async () => {
     if (title.trim() === '' || description.trim() === '' || rating === 0) {
@@ -123,7 +128,7 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps /*& Review*/ & { restaura
   };
   
   return (
-    <Modal onBackdropClick={onBackdropClick}>
+    <Modal onBackdropClick={handleBackdropClick}>
       <DesktopModalContainer>
         <HeaderReview>Write A Review</HeaderReview>
   
@@ -155,7 +160,7 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps /*& Review*/ & { restaura
               <br />
               <div className="upload-container">
                 <label htmlFor="image-upload">
-                  <ImageIcon></ImageIcon> <Uploadtext>Upload Image</Uploadtext>
+                  <ImageIcon></ImageIcon> <Uploadtext>Upload Image</Uploadtext> <Optionaltext>(optional)</Optionaltext>
                 </label>
                 <input
                   id="image-upload"
@@ -183,7 +188,7 @@ const BaseModalWrapper: React.FC<BaseModalWrapperProps /*& Review*/ & { restaura
   
         <ButtonContainer>
           <CancelButton onClick={CancelModal}>Cancel</CancelButton>
-          <SaveButton onClick={SaveModal}>Post</SaveButton>
+          <SaveButton onClick={SaveModal} isFormFilled={isFormFilled} disabled={!isFormFilled}>Post</SaveButton>
         </ButtonContainer>
       </DesktopModalContainer>
     </Modal>

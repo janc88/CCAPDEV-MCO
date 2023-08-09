@@ -17,9 +17,10 @@ import {
   ImageContainer,
   RatingContainer,
   PhotoSubheader,
+  SaveButton,
 } from "./EditReviewPage.styled";
-import { CancelButton, SaveButton } from "../EditProfilePage/EditProfilePage.styled";
-import { FileContainer, ImageGrid, ImageIcon, ImgCardContainer, ImgContainer, RatingText, Uploadtext, WriteRating } from "../../components/ModalPopups/ModalPopup";
+import { CancelButton} from "../EditProfilePage/EditProfilePage.styled";
+import { FileContainer, ImageGrid, ImageIcon, ImgCardContainer, ImgContainer, Optionaltext, RatingText, Uploadtext, WriteRating } from "../../components/ModalPopups/ModalPopup";
 import ImageWithCloseButton from "../../components/ModalPopups/ImageClose";
 import Rating from "../../components/ModalPopups/Ratings";
 import { useReviewActions } from "../../contexts/ReviewHook";
@@ -35,6 +36,8 @@ export const EditReviewPage = () => {
   const [rating, setRating] = React.useState<number>(state.stars);
   const [updatedTitle, setUpdatedTitle] = useState<string>(state.title);
   const [updatedBody, setUpdatedBody] = useState<string>(state.body);
+
+  const isFormFilled = updatedTitle.trim() !== '' && updatedBody.trim() !== '' && rating !== 0;
 
   const handleImageUpload = (event: ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
@@ -124,7 +127,7 @@ export const EditReviewPage = () => {
               <br />
               <div className="upload-container">
                 <label htmlFor="image-upload">
-                  <ImageIcon></ImageIcon> <Uploadtext>Upload Image</Uploadtext>
+                  <ImageIcon></ImageIcon> <Uploadtext>Upload Image</Uploadtext> <Optionaltext>(optional)</Optionaltext>
                 </label>
                 <input
                   id="image-upload"
@@ -152,7 +155,7 @@ export const EditReviewPage = () => {
 
         <ButtonContainer>
           <CancelButton onClick={cancelModal}>Cancel</CancelButton>
-          <SaveButton onClick={saveModal}>Save</SaveButton>
+          <SaveButton onClick={saveModal} isFormFilled={isFormFilled} disabled={!isFormFilled}>Save</SaveButton>
         </ButtonContainer>
       </EditReviewContainer>
     </PageContainer>

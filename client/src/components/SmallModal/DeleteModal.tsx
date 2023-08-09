@@ -8,9 +8,8 @@ import {
 
 import { Divider } from "../../pages/styles/LoginPage.styled";
 import { useNavigate } from "react-router-dom";
-import { CancelButton, SaveButton, SaveCancelButtonContainer } from "../ModalPopups/ModalPopup";
+import { CancelButton, DeleteButton, SaveButton, SaveCancelButtonContainer } from "../ModalPopups/ModalPopup";
 import React from "react";
-import {useUserContext} from '../../contexts/UserContext';
 import { useReviewActions } from "../../contexts/ReviewHook";
 
 interface BaseModalWrapperProps {
@@ -56,7 +55,7 @@ const saveModal = async () => {
         </DeleteText>
         <SaveCancelButtonContainer>
           <CancelButton onClick={cancelModal}>Cancel</CancelButton>
-          <SaveButton onClick={saveModal}>Delete</SaveButton>
+          <DeleteButton onClick={saveModal}>Delete</DeleteButton>
         </SaveCancelButtonContainer>
       </DesktopSmallModalContainer>
     </Modal>

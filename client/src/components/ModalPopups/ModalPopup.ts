@@ -350,7 +350,21 @@ export const CancelButton = styled(Button)`
   justify-content: center;
 `;
 
-export const SaveButton = styled(Button)`
+export const SaveButton = styled(Button)<{ isFormFilled: boolean }>`
+  background-color: ${({ isFormFilled }) => (isFormFilled ? '#ff794f' : '#666666')};
+  color: white;
+  width: 10rem;
+  margin: 0 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: ${({ isFormFilled }) => (isFormFilled ? 'pointer' : 'not-allowed')};  
+  &:hover {
+    cursor: ${({ isFormFilled }) => (isFormFilled ? 'pointer' : 'not-allowed')};
+  }
+`;
+
+export const DeleteButton = styled(Button)`
   background-color: #ff794f;
   color: white;
   width: 10rem;
@@ -449,7 +463,12 @@ export const Uploadtext = styled.div`
   padding: 8px 16px;
   cursor: pointer;
   border: 2px solid black;
-  
+`;
+
+export const Optionaltext = styled.div`
+  display: inline-block;
+  font-size: 20px;
+  color: #999;
 `;
 
 export const WriteRating = styled.div`
