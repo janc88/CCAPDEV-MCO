@@ -59,7 +59,7 @@ export const useReviews = (): UseReviewsType => {
 			datePosted: new Date(review.datePosted),
 			lastEdited: review.lastEdited && new Date(review.lastEdited),
 		}));
-		console.log(fetchedReviews);
+		fetchedReviews.sort((a, b) => a.votes - b.votes);
 		return fetchedReviews;
 	}, [fetch]);
 
@@ -80,7 +80,7 @@ export const useReviews = (): UseReviewsType => {
 			datePosted: new Date(review.datePosted),
 			lastEdited: review.lastEdited && new Date(review.lastEdited),
 		}));
-		console.log(fetchedReviews);
+		fetchedReviews.sort((a, b) => a.votes - b.votes);
 		return fetchedReviews;
 	}, [fetch]);
 

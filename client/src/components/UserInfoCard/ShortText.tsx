@@ -51,7 +51,6 @@ function ShortText({
 		setIsOverflow(scrollHeight > clientHeight);
 	}, [textRef]);
 	const toggleExpandMore = () => setIsExpanded(!isExpanded);
-	console.log(`overflow: ${isOverflow}, expand: ${isExpanded}`);
 
 	return (
 		<FlexCol>

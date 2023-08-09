@@ -8,7 +8,6 @@ export interface userHook {
 
 export const useUser = (): userHook => {
 	const usernameExists = useCallback(async (username: String) => {
-		console.log('checking username availability')
 		const response = await fetch(`${process.env.REACT_APP_API_URL}/api/users/taken/${username}`, {
 			method: "GET"
 		});

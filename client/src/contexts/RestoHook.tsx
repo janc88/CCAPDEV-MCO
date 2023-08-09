@@ -22,7 +22,6 @@ interface RestaurantsType {
 export const useRestaurants = (): RestaurantsType => {
 	const fetchFeaturedRestaurants = useCallback(async () => {
 		const response = await fetch(`${process.env.REACT_APP_API_URL}/api/restaurants/featured`);
-		console.log(`${process.env.REACT_APP_API_URL}/api/restaurants/featured`)
 		return await response.json();
 	}, []);
 

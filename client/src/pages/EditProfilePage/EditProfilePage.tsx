@@ -37,7 +37,6 @@ function EditProfilePage() {
   const handleCancelPopup = () => setCancelPopup(false);
   const handleConfirmPopup = () => navigate("/profile");
   const handleSubmit = methods.handleSubmit(async (data) => {
-	console.log(data);
 	//ignore this error, linter does not recognize avatar
 	await updateUser(data.description || '', (data as any).avatar);
 	navigate("/profile");
