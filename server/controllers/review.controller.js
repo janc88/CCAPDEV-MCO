@@ -8,7 +8,7 @@ const sendReview = async (req, res, review, user) => {
 	let userId;
 	
 	if (user) {
-		userId = user._id;
+		userId = user._id.toString();
 	} else if (req.session) {
 		userId = req.session.userId;
 		if (!(await User.findById(userId)))
@@ -16,15 +16,15 @@ const sendReview = async (req, res, review, user) => {
 	}
 
 	if (userId)
-		res.status(200).json(review.userView(userId));
+		res.status(200).json(await review.userView(userId));
 	else
-		res.status(200).json(review.publicView());
+		res.status(200).json(await review.publicView());
 };
 const sendAllReviews = async (req, res, reviews, user) => {
 	let userId;
 	
 	if (user) {
-		userId = user._id;
+		userId = user._id.toString();
 	} else if (req.session) {
 		userId = req.session.userId;
 		if (!(await User.findById(userId)))
